@@ -6,6 +6,7 @@ package com.jeesite.modules.test.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeesite.modules.sys.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,6 +118,17 @@ public class TestDataController extends BaseController {
 	public String delete(TestData testData) {
 		testDataService.delete(testData);
 		return renderResult(Global.TRUE, text("删除数据成功！"));
+	}
+
+	/**
+	 * 删除数据
+	 */
+	@RequiresPermissions("test:testData:edit")
+	@RequestMapping(value = "excute")
+	@ResponseBody
+	public String excute(UserService userService) {
+		testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, "abc");
+		return "";
 	}
 	
 }
