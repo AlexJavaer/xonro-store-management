@@ -4,12 +4,12 @@
 #============================#
 
 # 产品或项目名称、软件开发公司名称
-productName: JeeSite Demo
-companyName: ThinkGem
+productName: xonro store management
+companyName: xonro
 
 # 产品版本、版权年份
-productVersion: V4.0
-copyrightYear: 2018
+productVersion: V1.0
+copyrightYear: 2019
 
 #是否演示模式
 demoMode: false
@@ -53,23 +53,23 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # 连接信息加密
-#  encrypt:
-#  
-#    # 加密连接用户名
-#    username: false
-#    # 加密连接密码
-#    password: true
+  # 连接信息加密
+  encrypt:
+
+    # 加密连接用户名
+    username: true
+    # 加密连接密码
+    password: true
 #
-#  # 数据库连接池配置
-#  pool:
-#  
-#    # 初始化连接数
-#    init: 1
-#    # 最小连接数
-#    minIdle: 3
-#    # 最大连接数
-#    maxActive: 20
+  # 数据库连接池配置
+  pool:
+
+    # 初始化连接数
+    init: 3
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20
 
 #  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
@@ -94,8 +94,8 @@ jdbc:
 #  jta:
 #    enabled: false
 
-#  # 表名前缀
-#  tablePrefix: js_
+  # 表名前缀
+  tablePrefix: js_
 
 #  # Druid连接池监控
 #  druid:
@@ -131,10 +131,10 @@ jdbc:
 #============================#
 
 # 管理基础路径
-#adminPath: /a
-#
+adminPath: /console
+
 # 前端基础路径
-#frontPath: /f
+frontPath: /portal
 #
 # 分页配置
 #page:
@@ -344,8 +344,8 @@ jdbc:
 # MyBatis 相关
 #mybatis:
 #
-#  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
-#  scanBasePackage: com.jeesite.modules
+  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
+scanBasePackage: com.jeesite.modules,com.xonro.modules
 #  
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
