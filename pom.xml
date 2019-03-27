@@ -9,7 +9,8 @@
 		<version>4.0.7-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	
+
+	<groupId>com.xonro</groupId>
 	<artifactId>xonro-store-management</artifactId>
 	<packaging>war</packaging>
 
@@ -115,8 +116,8 @@
 	</developers>
 	
 	<organization>
-		<name>JeeSite</name>
-		<url>http://jeesite.com</url>
+		<name>xonro</name>
+		<url>http://www.xonro.com</url>
 	</organization>
 	
 	<repositories>

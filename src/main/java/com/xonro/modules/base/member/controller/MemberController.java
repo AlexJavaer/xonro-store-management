@@ -1,9 +1,9 @@
-package com.jeesite.modules.base.member.controller;
+package com.xonro.modules.base.member.controller;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.base.member.entity.MemberInfo;
-import com.jeesite.modules.base.member.service.MemberInfoService;
+import com.xonro.modules.base.member.entity.MemberInfo;
+import com.xonro.modules.base.member.service.MemberInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

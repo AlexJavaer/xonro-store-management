@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.member.service;
+package com.xonro.modules.base.member.service;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.base.member.dao.MemberInfoDao;
-import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.xonro.modules.base.member.dao.MemberInfoDao;
+import com.xonro.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
