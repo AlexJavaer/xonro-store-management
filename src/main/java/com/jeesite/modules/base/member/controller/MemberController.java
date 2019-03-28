@@ -5,16 +5,12 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
-import com.jeesite.modules.test.entity.TestData;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +65,8 @@ public class MemberController extends BaseController{
      * 保存数据
      */
 
-    @PostMapping(value = "save")
+    //@PostMapping(value = "save")
+    @PostMapping({"save"})
     @ResponseBody
     public String save(@Validated MemberInfo MemberInfo) {
         memberInfoService.save(MemberInfo);

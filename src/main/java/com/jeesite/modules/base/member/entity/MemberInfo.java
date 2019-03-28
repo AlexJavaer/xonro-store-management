@@ -106,8 +106,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miId = miId;
 	}
 	
-	//@NotBlank(message="会员姓名不能为空")
-    @NotNull
+	@NotBlank(message="会员姓名不能为空")
 	@Length(min=0, max=128, message="会员姓名长度不能超过 128 个字符")
 	public String getMiName() {
 		return miName;
