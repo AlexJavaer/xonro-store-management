@@ -17,7 +17,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 /**
  * member_infoService
  * @author Cyrsta-hu
- * @version 2019-03-27
+ * @version 2019-03-28
  */
 @Service
 @Transactional(readOnly=true)

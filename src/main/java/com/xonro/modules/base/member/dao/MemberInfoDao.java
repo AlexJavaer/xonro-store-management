@@ -10,7 +10,7 @@ import com.xonro.modules.base.member.entity.MemberInfo;
 /**
  * member_infoDAO接口
  * @author Cyrsta-hu
- * @version 2019-03-27
+ * @version 2019-03-28
  */
 @MyBatisDao
 public interface MemberInfoDao extends CrudDao<MemberInfo> {

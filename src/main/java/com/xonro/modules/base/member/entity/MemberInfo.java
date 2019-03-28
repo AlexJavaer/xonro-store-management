@@ -19,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * member_infoEntity
  * @author Cyrsta-hu
- * @version 2019-03-27
+ * @version 2019-03-28
  */
 @Table(name="member_info", alias="a", columns={
 		@Column(name="mi_id", attrName="miId", label="会员编号", isPK=true),
