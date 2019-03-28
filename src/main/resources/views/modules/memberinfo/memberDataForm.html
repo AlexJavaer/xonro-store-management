@@ -1,0 +1,393 @@
+<% layout('/layouts/default.html', {title: '会员信息', libs: ['validate','fileupload','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+<style>
+
+	* {
+
+		margin: 0;
+
+		padding: 0;
+	}
+</style>
+<div class="box-body" style="background-color: #E9E7E7">
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(memberinfoData.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${memberinfoData}" action="${ctx}/memberinfo/save" method="post" class="form-horizontal">
+			<div class="box-body" style="padding:20px">
+				<div class="form-unit">${text('会员基本资料')}</div>
+				<div class="box-body">
+				<#form:hidden path="miId"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('会员编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="miId" maxlength="100"  class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('会员姓名')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="miName" maxlength="100" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required " style="color: red">*</span> ${text('公历生日')}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="miGregorianBirthday" readonly="true" maxlength="20" class="form-control required Wdate"
+						dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+					</div>
+				</div>
+			</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="">
+							<span class="required " style="color: red">*</span> ${text('会员性别')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="miSex" dictType="mi_sex" class="form-control required" />
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('手机号码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="miPhone" maxlength="100"  class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('进店渠道')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="miOutlets" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('标记状态')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="miMarkStatus" dictType="mi_mark_status" class="form-control required" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required " style="color: red">*</span> ${text('会员状态')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="miMemberStatus" dictType="mi_member_status" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<div class="box-footer" style="background-color: #E9E7E7;padding:5px" ></div>
+		<div class="box-body" style="padding:20px">
+			<div class="layui-tab">
+				<ul class="layui-tab-title" style="color: #1E9FFF">
+					<li class="layui-this">基本资料</li>
+					<li>标签</li>
+					<li>效果对比图</li>
+					<li>交易历史</li>
+					<li>沟通记录</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+                       <!--<div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">${text('会员头像')}：</label>
+                                    <div class="col-sm-10">
+                                        <#form:fileupload id="uploadImage" bizKey="${memberinfoData.miId}" bizType="mi_photo"
+                                        uploadType="image" class="" readonly="false"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('微信号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miWechatNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('星座')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:select path="miConstellation" dictType="mi_constellation" blankOption="true" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miCardNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('QQ号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miQqNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('血型')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:select path="miBloodType" dictType="mi_blood_type" blankOption="true" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miCardType" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('邮箱')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miZipCode" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('农历生日')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miGregorianBirthday" readonly="true" maxlength="20" class="form-control Wdate"
+                                        dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('身份证号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miIdNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('家庭电话')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miFamilyPhone" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('邮编')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miZipCode" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('消息类通知')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:radio path="miMessageNotice" dictType="mi_message_notice" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" title="">
+                                        <span class="required hide">*</span> ${text('家庭地址')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-10">
+                                        <#form:input path="miFamilyAddress" maxlength="200" class="form-control" width="400px"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('营销类通知')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:radio path="miMarketingNotice" dictType="mi_marketing_notice" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('职业')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miVocation" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('工作单位')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miWorkUnit" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('微信绑卡')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:radio path="	mi_wechat_binding_card" dictType="mi_wechat_binding_card" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('负责员工')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miResponsibleStaff" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('会员等级')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:select path="miMemberGrade" dictType="mi_member_grade" blankOption="true" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('发展潜质')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miDevelopmentPotential" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+					<div class="layui-tab-item">内容2</div>
+					<div class="layui-tab-item">内容3</div>
+					<div class="layui-tab-item">内容4</div>
+					<div class="layui-tab-item">内容5</div>
+				</div>
+			</div>
+		</div>
+    <div class="box-footer" style="background-color: #E9E7E7;padding:5px" ></div>
+			<div class="box-footer" style="padding:8px">
+				<div class="row" style="float:right;padding-right: 35px">
+					<div class="col-sm-offset-2 col-sm-12">
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+
+		</#form:form>
+	</div>
+</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+        //获取li的类属性名
+       var oLi1 = element.getElementsByClassName("layui-this");
+       //获取div的类属性名
+       var oDiv1 = element.getElementsByClassName("layui-tab-item layui-show");
+       for(var i=0;i<oLi1.length;i++){
+           oLi1[i].className="";
+	   }
+	   this.className="layui-this";
+       for (var j=0;j<oDiv1.length;j++){
+           oDiv1[j].className="hide";
+	   }
+	   oDiv1[this.index].className="show";
+
+
+        //…
+    });
+</script>

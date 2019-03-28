@@ -1,28 +1,27 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.xonro.modules.base.member.service;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package com.jeesite.modules.base.member.service;
 
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGenerate;
 import com.jeesite.common.service.CrudService;
-import com.xonro.modules.base.member.entity.MemberInfo;
-import com.xonro.modules.base.member.dao.MemberInfoDao;
+import com.jeesite.modules.base.member.dao.MemberInfoDao;
+import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import org.apache.commons.collections.MapUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * member_infoService
  * @author Cyrsta-hu
- * @version 2019-03-27
+ * @version 2019-03-26
  */
 @Service
 @Transactional(readOnly=true)
 public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
-	
+
 	/**
 	 * 获取单条数据
 	 * @param memberInfo
@@ -32,7 +31,7 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	public MemberInfo get(MemberInfo memberInfo) {
 		return super.get(memberInfo);
 	}
-	
+
 	/**
 	 * 查询分页数据
 	 * @param page 分页对象
@@ -43,7 +42,7 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	public Page<MemberInfo> findPage(Page<MemberInfo> page, MemberInfo memberInfo) {
 		return super.findPage(page, memberInfo);
 	}
-	
+
 	/**
 	 * 保存数据（插入或更新）
 	 * @param memberInfo
@@ -54,10 +53,9 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		super.save(memberInfo);
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(memberInfo.getId(), "memberInfo_image");
-		// 保存上传附件
-		FileUploadUtils.saveFileUpload(memberInfo.getId(), "memberInfo_file");
+
 	}
-	
+
 	/**
 	 * 更新状态
 	 * @param memberInfo
@@ -67,7 +65,7 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	public void updateStatus(MemberInfo memberInfo) {
 		super.updateStatus(memberInfo);
 	}
-	
+
 	/**
 	 * 删除数据
 	 * @param memberInfo
@@ -77,5 +75,5 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	public void delete(MemberInfo memberInfo) {
 		super.delete(memberInfo);
 	}
-	
+
 }
