@@ -70,6 +70,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'${text('会员姓名')}', name:'miName', index:'a.mi_name', width:150, align:"left", frozen:true,sortable:true, formatter: function(val, obj, row, act){
+		    console.log(row);
 			return '<a href="${ctx}/memberinfo/form?id='+row.id+'" class="btnList" data-title="${text('编辑数据')}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text('公历生日')}', name:'miGregorianBirthday', index:'a.mi_gregorian_birthday', width:150, align:"left"},
