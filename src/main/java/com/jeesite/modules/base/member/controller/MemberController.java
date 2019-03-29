@@ -46,7 +46,7 @@ public class MemberController extends BaseController{
     @RequestMapping(value = "listData")
     @ResponseBody
     public Page<MemberInfo> listData(MemberInfo MemberInfo, HttpServletRequest request, HttpServletResponse response) {
-       Page<MemberInfo> page = memberInfoService.findPage(new Page<MemberInfo>(request, response), MemberInfo);
+        Page<MemberInfo> page = memberInfoService.findPage(new Page<MemberInfo>(request, response), MemberInfo);
         return page;
 
     }
@@ -65,8 +65,7 @@ public class MemberController extends BaseController{
      * 保存数据
      */
 
-    //@PostMapping(value = "save")
-    @PostMapping({"save"})
+    @PostMapping(value="save")
     @ResponseBody
     public String save(@Validated MemberInfo MemberInfo) {
         memberInfoService.save(MemberInfo);

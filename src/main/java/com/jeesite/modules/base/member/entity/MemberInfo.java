@@ -3,24 +3,25 @@
  */
 package com.jeesite.modules.base.member.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import java.util.Date;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * member_infoEntity
  * @author Cyrsta-hu
- * @version 2019-03-26
+ * @version 2019-03-29
  */
 @Table(name="member_info", alias="a", columns={
-		@Column(name="mi_id", attrName="miId", label="会员编号", isPK=true),
+		@Column(name="mi_code", attrName="miCode", label="会员编号", isPK=true),
 		@Column(name="mi_name", attrName="miName", label="会员姓名", queryType=QueryType.LIKE),
 		@Column(name="mi_gregorian_birthday", attrName="miGregorianBirthday", label="公历生日"),
 		@Column(name="mi_sex", attrName="miSex", label="会员性别"),
@@ -48,16 +49,15 @@ import java.util.Date;
 		@Column(name="mi_responsible_staff", attrName="miResponsibleStaff", label="负责员工"),
 		@Column(name="mi_member_grade", attrName="miMemberGrade", label="会员等级"),
 		@Column(name="mi_development_potential", attrName="miDevelopmentPotential", label="发展潜质"),
+		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
-		@Column(name="create_user", attrName="createUser", label="创建用户"),
-		@Column(name="update_user", attrName="updateUser", label="更新用户"),
 	}, orderBy="a.update_date DESC"
 )
 public class MemberInfo extends DataEntity<MemberInfo> {
 	
 	private static final long serialVersionUID = 1L;
-	private String miId;		// 会员编号
+	private String miCode;		// 会员编号
 	private String miName;		// 会员姓名
 	private Date miGregorianBirthday;		// 公历生日
 	private String miSex;		// 会员性别
@@ -87,23 +87,21 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miDevelopmentPotential;		// 发展潜质
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
-	private String createUser;		// 创建用户
-	private String updateUser;		// 更新用户
 	
-	public MemberInfo() {
+	/*public MemberInfo() {
 		this(null);
 	}
 
 	public MemberInfo(String id){
 		super(id);
-	}
+	}*/
 	
-	public String getMiId() {
-		return miId;
+	public String getMiCode() {
+		return miCode;
 	}
 
-	public void setMiId(String miId) {
-		this.miId = miId;
+	public void setMiCode(String miCode) {
+		this.miCode = miCode;
 	}
 	
 	@NotBlank(message="会员姓名不能为空")
@@ -116,8 +114,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miName = miName;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	//@NotNull(message="公历生日不能为空")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getMiGregorianBirthday() {
 		return miGregorianBirthday;
 	}
@@ -126,7 +123,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miGregorianBirthday = miGregorianBirthday;
 	}
 	
-	//@NotBlank(message="会员性别不能为空")
 	@Length(min=0, max=2, message="会员性别长度不能超过 2 个字符")
 	public String getMiSex() {
 		return miSex;
@@ -136,7 +132,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miSex = miSex;
 	}
 	
-	//@NotNull(message="手机号码不能为空")
 	public Long getMiPhone() {
 		return miPhone;
 	}
@@ -145,7 +140,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miPhone = miPhone;
 	}
 	
-	//@NotBlank(message="进店渠道不能为空")
 	@Length(min=0, max=10, message="进店渠道长度不能超过 10 个字符")
 	public String getMiOutlets() {
 		return miOutlets;
@@ -155,7 +149,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miOutlets = miOutlets;
 	}
 	
-	//@NotBlank(message="标记状态不能为空")
 	@Length(min=0, max=2, message="标记状态长度不能超过 2 个字符")
 	public String getMiMarkStatus() {
 		return miMarkStatus;
@@ -165,7 +158,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miMarkStatus = miMarkStatus;
 	}
 	
-	//@NotBlank(message="会员状态不能为空")
 	@Length(min=0, max=2, message="会员状态长度不能超过 2 个字符")
 	public String getMiMemberStatus() {
 		return miMemberStatus;
@@ -367,23 +359,6 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
-	}
-	
-	@Length(min=0, max=64, message="创建用户长度不能超过 64 个字符")
-	public String getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-	
-	public String getUpdateUser() {
-		return updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
 	}
 	
 }

@@ -4,13 +4,12 @@
 package com.jeesite.modules.base.member.service;
 
 import com.jeesite.common.entity.Page;
-import com.jeesite.common.idgen.IdGenerate;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.service.DataScopeService;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,13 +54,10 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Override
 	@Transactional(readOnly=false)
 	public void save(MemberInfo memberInfo) {
-		if (memberInfo.getIsNewRecord()){
-			this.genIdAndValid(memberInfo, memberInfo.getMiId());
-			//this.dataScopeService.insertIfParentExists(memberInfo,"MemberInfo");
-		}
 		super.save(memberInfo);
+
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(memberInfo.getId(), "memberInfo_image");
+		//FileUploadUtils.saveFileUpload(memberInfo.getId(), "memberInfo_image");
 
 	}
 
