@@ -21,7 +21,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @version 2019-03-29
  */
 @Table(name="member_info", alias="a", columns={
-		@Column(name="mi_code", attrName="miCode", label="会员编号", isPK=true),
+		@Column(name="mi_code", attrName="miCode", label="会员编号",isPK = true),
 		@Column(name="mi_name", attrName="miName", label="会员姓名", queryType=QueryType.LIKE),
 		@Column(name="mi_gregorian_birthday", attrName="miGregorianBirthday", label="公历生日"),
 		@Column(name="mi_sex", attrName="miSex", label="会员性别"),
@@ -49,7 +49,6 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_responsible_staff", attrName="miResponsibleStaff", label="负责员工"),
 		@Column(name="mi_member_grade", attrName="miMemberGrade", label="会员等级"),
 		@Column(name="mi_development_potential", attrName="miDevelopmentPotential", label="发展潜质"),
-		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
 	}, orderBy="a.update_date DESC"
@@ -88,14 +87,14 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
 	
-	/*public MemberInfo() {
+	public MemberInfo() {
 		this(null);
 	}
 
 	public MemberInfo(String id){
 		super(id);
-	}*/
-	
+	}
+
 	public String getMiCode() {
 		return miCode;
 	}

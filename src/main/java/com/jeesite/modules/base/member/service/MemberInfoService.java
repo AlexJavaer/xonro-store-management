@@ -4,6 +4,7 @@
 package com.jeesite.modules.base.member.service;
 
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
@@ -44,6 +45,7 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	 */
 	@Override
 	public Page<MemberInfo> findPage(Page<MemberInfo> page, MemberInfo memberInfo) {
+
 		return super.findPage(page, memberInfo);
 	}
 
@@ -54,6 +56,9 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Override
 	@Transactional(readOnly=false)
 	public void save(MemberInfo memberInfo) {
+		if (memberInfo.getIsNewRecord()) {
+			memberInfo.setMiCode(IdGen.randomBase62(32).toLowerCase());
+		}
 		super.save(memberInfo);
 
 		// 保存上传图片
