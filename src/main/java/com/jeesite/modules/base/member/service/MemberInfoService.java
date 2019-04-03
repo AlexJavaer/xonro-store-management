@@ -61,8 +61,9 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
     @SuppressWarnings("all")
 	public void save(MemberInfo memberInfo) {
 		if (memberInfo.getIsNewRecord()) {
-			//memberInfo.setMiCode(IdGen.randomBase62(32).toLowerCase());
-			memberInfo.setMiCode(UUID.randomUUID().toString());
+			String officeCode = EmpUtils.getOffice().getOfficeCode();
+			String s = StringUtils.getRandomNum(3);
+			memberInfo.setMiCode(officeCode+s);
 		}
 		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String  office = EmpUtils.getOffice().getOfficeCode();

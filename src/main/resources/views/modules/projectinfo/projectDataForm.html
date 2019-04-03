@@ -1,0 +1,334 @@
+<% layout('/layouts/default.html', {title: '项目信息', libs: ['validate','fileupload','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+<style>
+
+	* {
+
+		margin: 0;
+
+		padding: 0;
+	}
+	.layui-card:last-child{
+		margin-bottom: 30px;
+	}
+	.layui-card-body {
+		border:solid 1px #F2F2F2;
+		border-top-width:2px;
+
+	}
+
+</style>
+<div class="box-body" style="padding: 20px; background-color: #F2F2F2">
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(projectInfoData.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${projectInfoData}" action="${ctx}/projectInfo/save" method="post" class="form-horizontal">
+			<div class="box-body" style="padding:20px">
+				<div class="form-unit">${text('项目基本资料')}</div>
+                <div class="layui-col-md12">
+                <div class="layui-card" style="border-width:1px 1px 1px 1px">
+				<div class="layui-card-body">
+				<#form:hidden path="project_code"/>
+				<div class="row">
+					<div class="col-xs-3">
+						<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('项目编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+                                <#form:hidden path="isNewRecord"/>
+                                <#form:input path="projectCode" maxlength="64" readonly="${!projectInfoData.isNewRecord}" value="projectInfoData.getProjectCode" class="form-control required"/>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('项目名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="projectName" maxlength="100" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required hide">*</span> ${text('计价单位')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="xpChargeUnit" maxlength="100" class="form-control required"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required hide">*</span> ${text('助记码')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="xpMnemonicCode" maxlength="100" class="form-control required"/>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+					<div class="row">
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('标准价格')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="xpNormPrice" maxlength="100" class="form-control required"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('折扣类别')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpDiscountCategory" dictType="xp_discount_cate" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('统计分类')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpStatisticalClass" dictType="xp_statistical_class" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('归属部门')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpStatisticalDept" dictType="xp_statistical_dept" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                </div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('计价方式')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:radio path="xpPricingMethod" dictType="xp_pricing_method" class="form-control" />
+
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('项目时长')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpProjectTime" maxlength="100" class="form-control "/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('安全次数')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpSafetyTimes" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('体验价格')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpExperiencePrice" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('统一会员价')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpUniformMomberPrice" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('项目预订价')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpProjectPrePricing" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('消费间隔')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpConsumptionInterval" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('回访间隔')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xpReturnInterval" maxlength="100" class="form-control"/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-1">${text('项目预定图')}：</label>
+										<div class="col-sm-11">
+											<#form:fileupload id="uploadImage" bizKey="${projectInfoData.id}" bizType="xrProjectinfo_image"
+											uploadType="image" class="" readonly="false"/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4">${text('服务岗位')}：</label>
+										<div class="col-sm-8">
+											<#form:input path="xpServicePosition" maxlength="100" class="form-control "/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('服务项目时长')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:select path="xpServiceTime" dictType="xp_service_time" blankOption="true" class="form-control " />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-1" title="">
+											<span class="required hide">*</span> ${text('项目预定描述')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-11">
+											<#form:input path="xpProjectPredescription" maxlength="100" class="form-control "/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
+							<div class="row">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4">${text('必须现金支付')}：</label>
+										<div class="col-sm-8">
+											<#form:radio path="xpIscash" dictType="xp_isCash" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('是否停用')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:select path="xpIsblockup" dictType="xp_isBlockUp" blankOption="true" class="form-control " />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-1" title="">
+											<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-11">
+											<#form:input path="xpRemarks" maxlength="100" class="form-control "/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="box-footer" style="padding:8px">
+				<div class="row" style="float:right;padding-right: 35px">
+					<div class="col-sm-offset-2 col-sm-12">
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
+<script>
+    $("#inputForm").validate({
+        submitHandler: function(form){
+            js.ajaxSubmitForm($(form), function(data){
+                js.showMessage(data.message);
+                if(data.result == Global.TRUE){
+                    js.closeCurrentTabPage(function(contentWindow){
+                        contentWindow.page();
+                    });
+                }
+            }, "json");
+        }
+    });
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    /*layui.use('element', function(){
+        var element = layui.element;
+        //获取li的类属性名
+       var oLi1 = element.getElementsByClassName('layui-this')[0];
+       //获取div的类属性名
+       var oDiv1 = element.getElementsByClassName('layui-tab-item layui-show')[0];
+       for(var i=0;i<oLi1.length;i++){
+           oLi1[i].className="";
+	   }
+	   this.className="layui-this";
+       for (var j=0;j<oDiv1.length;j++){
+           oDiv1[j].className="hide";
+	   }
+	   oDiv1[this.index].className="show";
+
+    });*/
+</script>
