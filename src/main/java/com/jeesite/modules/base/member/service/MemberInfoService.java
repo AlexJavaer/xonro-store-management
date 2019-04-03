@@ -10,10 +10,15 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.DataScopeService;
+import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 /**
  * member_infoService
@@ -22,10 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly=true)
+@SuppressWarnings("all")
 public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
-
-	@Autowired
-	private DataScopeService dataScopeService;
 
 	/**
 	 * 获取单条数据
@@ -55,14 +58,22 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	 */
 	@Override
 	@Transactional(readOnly=false)
+    @SuppressWarnings("all")
 	public void save(MemberInfo memberInfo) {
 		if (memberInfo.getIsNewRecord()) {
-			memberInfo.setMiCode(IdGen.randomBase62(32).toLowerCase());
+			//memberInfo.setMiCode(IdGen.randomBase62(32).toLowerCase());
+			memberInfo.setMiCode(UUID.randomUUID().toString());
 		}
+		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
+		String  office = EmpUtils.getOffice().getOfficeCode();
+		memberInfo.setUserCode(user);
+		memberInfo.setOfficeCode(office);
 		super.save(memberInfo);
 
 		// 保存上传图片
-		//FileUploadUtils.saveFileUpload(memberInfo.getId(), "memberInfo_image");
+		//FileUploadUtils.saveFileUpload(memberInfo.getMiCode(), "memberInfo_image");
+		// 保存上传附件
+		FileUploadUtils.saveFileUpload(memberInfo.getMiCode(),"memberInfo_file");
 
 	}
 

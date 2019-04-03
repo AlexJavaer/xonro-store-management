@@ -1,4 +1,4 @@
-package com.jeesite.modules.base.member.controller;
+package com.jeesite.modules.base.member.web.controller;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("${adminPath}/memberinfo")
+@RequestMapping("${adminPath}/memberInfo")
+@SuppressWarnings("all")
 public class MemberController extends BaseController{
 
     @Autowired
@@ -35,9 +36,9 @@ public class MemberController extends BaseController{
      */
 
     @RequestMapping(value = {"list", ""})
-    public String list(MemberInfo MemberInfo, Model model) {
-        model.addAttribute("memberinfoData", MemberInfo);
-        return "modules/memberinfo/memberDataList";
+    public String list(MemberInfo memberInfo, Model model) {
+        model.addAttribute("memberInfoData", memberInfo);
+        return "modules/memberInfo/memberDataList";
     }
 
     /**
@@ -45,8 +46,8 @@ public class MemberController extends BaseController{
      */
     @RequestMapping(value = "listData")
     @ResponseBody
-    public Page<MemberInfo> listData(MemberInfo MemberInfo, HttpServletRequest request, HttpServletResponse response) {
-        Page<MemberInfo> page = memberInfoService.findPage(new Page<MemberInfo>(request, response), MemberInfo);
+    public Page<MemberInfo> listData(MemberInfo memberInfo, HttpServletRequest request, HttpServletResponse response) {
+        Page<MemberInfo> page = memberInfoService.findPage(new Page<MemberInfo>(request, response), memberInfo);
         return page;
 
     }
@@ -56,9 +57,9 @@ public class MemberController extends BaseController{
      */
 
     @RequestMapping(value = "form")
-    public String form(MemberInfo MemberInfo, Model model) {
-        model.addAttribute("memberinfoData", MemberInfo);
-        return "modules/memberinfo/memberDataForm";
+    public String form(MemberInfo memberInfo, Model model) {
+        model.addAttribute("memberInfoData", memberInfo);
+        return "modules/memberInfo/memberDataForm";
     }
 
     /**

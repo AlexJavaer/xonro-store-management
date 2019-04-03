@@ -7,13 +7,13 @@
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
-				<a href="#" class="btn btn-default" id="btnRefreshTree" title="刷新"><i class="fa fa-refresh"></i> 刷新</a>
-					<a href="${ctx}/memberinfo/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<!--<a href="#" class="btn btn-default" id="btnRefreshTree" title="刷新"><i class="fa fa-refresh"></i> 刷新</a>-->
+					<a href="${ctx}/memberInfo/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${memberinfoData}" action="${ctx}/memberinfo/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${memberInfoData}" action="${ctx}/memberInfo/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('会员姓名')}：</label>
@@ -24,8 +24,8 @@
 				<div class="form-group">
             <label class="control-label">${text('公历生日')}：</label>
             <div class="control-inline">
-                <#form:input path="miGregorianBirthday" readonly="true" maxlength="20" class="form-control Wdate-datetime"
-                dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd ',isShowClear:false,onpicked:function(){testDatetime_lte.click()}});"/>
+                <#form:input path="miGregorianBirthday" readonly="true" maxlength="20" class="form-control Wdate-date"
+				dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){testDate_lte.click()}});"/>
             </div>
         </div>
             <div class="form-group">
@@ -69,29 +69,29 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text('会员姓名')}', name:'miName', index:'a.mi_name', width:150, align:"left", frozen:true,sortable:true, formatter: function(val, obj, row, act){
+		{header:'${text("会员姓名")}', name:'miName', index:'a.mi_name', width:150, align:"center", frozen:true,sortable:true, formatter: function(val, obj, row, act){
 		    console.log(row);
-			return '<a href="${ctx}/memberinfo/form?id='+row.id+'" class="btnList" data-title="${text('编辑数据')}">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/memberInfo/form?id='+row.miCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'${text('公历生日')}', name:'miGregorianBirthday', index:'a.mi_gregorian_birthday', width:150, align:"left"},
-        {header:'${text('会员性别')}', name:'miSex', index:'a.mi_sex', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('	mi_sex')}, val, '${text('未知')}', true);
+		{header:'${text("公历生日")}', name:'miGregorianBirthday', index:'a.mi_gregorian_birthday', width:150, align:"center"},
+        {header:'${text("会员性别")}', name:'miSex', index:'a.mi_sex', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('mi_sex')}, val, '${text("未知")}', true);
             }},
-        {header:'${text('会员卡号')}', name:'miCardNumber', index:'a.mi_card_number', width:150, align:"left"},
-        {header:'${text('手机号码')}', name:'miPhone', index:'a.mi_phone', width:150, align:"left"},
-		{header:'${text('进店渠道')}', name:'miOutlets', index:'a.mi_outlets', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('	mi_outlets')}, val, '${text('未知')}', true);
+        {header:'${text("会员卡号")}', name:'miCardNumber', index:'a.mi_card_number', width:150, align:"center"},
+        {header:'${text("手机号码")}', name:'miPhone', index:'a.mi_phone', width:150, align:"center"},
+		{header:'${text("进店渠道")}', name:'miOutlets', index:'a.mi_outlets', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('mi_outlets')}, val, '${text("未知")}', true);
 		}},
-        {header:'${text('标记状态')}', name:'miMarkStatus', index:'a.mi_mark_status', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('mi_mark_status')}, val, '${text('未知')}', true);
+        {header:'${text("标记状态")}', name:'miMarkStatus', index:'a.mi_mark_status', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('mi_mark_status')}, val, '${text("未知")}', true);
             }},
-        {header:'${text('会员状态')}', name:'miMemberStatus', index:'a.mi_member_status', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('mi_member_status')}, val, '${text('未知')}', true);
+        {header:'${text("会员状态")}', name:'miMemberStatus', index:'a.mi_member_status', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('mi_member_status')}, val, '${text("未知")}', true);
             }},
-		{header:'${text('操作')}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
-				actions.push('<a href="${ctx}/memberinfo/form?id='+row.id+'" class="btnList" title="${text('编辑数据')}"><i class="fa fa-pencil"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/memberinfo/delete?id='+row.id+'" class="btnList" title="${text('删除数据')}" data-confirm="${text('确认要删除该数据吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/memberInfo/form?id='+row.miCode+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/memberInfo/delete?id='+row.miCode+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			return actions.join('');
 		}}
 	],

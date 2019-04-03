@@ -1,13 +1,10 @@
+package com.jeesite.modules.base.member.entity;
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.member.entity;
-
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
@@ -51,8 +48,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_development_potential", attrName="miDevelopmentPotential", label="发展潜质"),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
+		@Column(name="mi_file", attrName="miFile", label="组织ID"),
 	}, orderBy="a.update_date DESC"
 )
+@SuppressWarnings("all")
 public class MemberInfo extends DataEntity<MemberInfo> {
 	
 	private static final long serialVersionUID = 1L;
@@ -86,6 +85,8 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miDevelopmentPotential;		// 发展潜质
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
+	private String miFile;//附件
+
 	
 	public MemberInfo() {
 		this(null);
@@ -113,7 +114,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miName = miName;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getMiGregorianBirthday() {
 		return miGregorianBirthday;
 	}
@@ -359,5 +360,12 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-	
+
+	public String getMiFile() {
+		return miFile;
+	}
+
+	public void setMiFile(String miFile) {
+		this.miFile = miFile;
+	}
 }
