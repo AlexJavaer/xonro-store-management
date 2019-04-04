@@ -1,0 +1,445 @@
+<% layout('/layouts/default.html', {title: '产品信息', libs: ['validate','fileupload','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+<style>
+
+	* {
+
+		margin: 0;
+
+		padding: 0;
+	}
+	.layui-card:last-child{
+		margin-bottom: 30px;
+	}
+	.layui-card-body {
+		border:solid 1px #F2F2F2;
+		border-top-width:2px;
+
+	}
+
+</style>
+<div class="box-body" style="padding: 20px; background-color: #F2F2F2">
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(productInfoData.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${productInfoData}" action="${ctx}/productInfo/save" method="post" class="form-horizontal">
+			<div class="box-body" style="padding:20px">
+				<div class="form-unit">${text('产品基本资料')}</div>
+                <div class="layui-col-md12">
+                <div class="layui-card" style="border-width:1px 1px 1px 1px">
+				<div class="layui-card-body">
+				<#form:hidden path="project_code"/>
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('产品编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+                                <#form:hidden path="isNewRecord"/>
+                                <#form:input path="productCode" maxlength="64" readonly="${!productInfoData.isNewRecord}" value="productInfoData.getProductCode" class="form-control required"/>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="productName" maxlength="100" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required hide">*</span> ${text('统计分类')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+								<#form:select path="xpdStatisticalClass" dictType="xpd_statistical_class" blankOption="true" class="form-control required" />
+                            </div>
+                        </div>
+                    </div>
+
+				</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('存放仓库')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpdDepository" dictType="xpd_depository" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('条形码')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="xpdBarCode" maxlength="100" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('助记码')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="xpdMnemonicCode" maxlength="100" class="form-control"/>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('折扣类别')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpdDiscountCategory" dictType="xpd_discount_category" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('建档日期')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="xpdFilingTime" readonly="true" maxlength="20" class="form-control Wdate"
+									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                </div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-tab">
+								<ul class="layui-tab-title" style="color: #1E9FFF">
+									<li class="layui-this">基本资料</li>
+									<li>库存历史</li>
+									<li>销售历史</li>
+									<li>门店出货价</li>
+								</ul>
+								<div class="layui-tab-content">
+									<div class="layui-tab-item layui-show">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="form-group">
+													<label class="control-label col-sm-1">${text('产品图')}：</label>
+													<div class="col-sm-11">
+														<#form:fileupload id="uploadImage" bizKey="${productInfoData.id}" bizType="xrProductinfo_image"
+														uploadType="image" class="" readonly="false"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('标准单位')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xpdStandardUnit" dictType="xpd_standard_unit" blankOption="true" class="form-control required" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<div class="control-label">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('标准价格(元/件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdNormPrice" maxlength="100" class="form-control required"/>
+													</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+											<div class="form-group">
+												<label class="control-label col-sm-4" title="">
+													<span class="required hide">*</span> ${text('每件含')}：<i class="fa icon-question hide"></i></label>
+												<div class="col-sm-8">
+													<#form:input path="xpdEachContaining" maxlength="100" class="form-control"/>
+												</div>
+											</div>
+										</div>
+
+										</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('可用时间(天)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdTime" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('进货单位')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xpdPurchaseUnit" dictType="xpd_purchase_unit" blankOption="true" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('进货成本(元/件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdPurchased" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+										</div>
+								<div class="row">
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label class="control-label col-sm-4" title="">
+													<span class="required hide">*</span> ${text('每含(件)')}：<i class="fa icon-question hide"></i></label>
+												<div class="col-sm-8">
+													<#form:input path="xpdEach" maxlength="100" class="form-control"/>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label class="control-label col-sm-4" title="">
+													<span class="required hide">*</span> ${text('供应商')}：<i class="fa icon-question hide"></i></label>
+												<div class="col-sm-8">
+													<#form:select path="xpdSupplier" dictType="xpd_supplier" blankOption="true" class="form-control" />
+												</div>
+											</div>
+										</div>
+									</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('消耗单位')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xpdMarketintUnit" dictType="xpd_marketint_unit" blankOption="true" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('消耗成本(元/件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdConsumptionCost" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('销售成本(元/件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdMarketintCost" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label class="control-label col-sm-4" title="">
+													<span class="required hide">*</span> ${text('保质期(天)')}：<i class="fa icon-question hide"></i></label>
+												<div class="col-sm-8">
+													<#form:input path="xpdQualityTime" maxlength="100" class="form-control"/>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="form-group">
+												<label class="control-label col-sm-4" title="">
+													<span class="required hide">*</span> ${text('规格描述')}：<i class="fa icon-question hide"></i></label>
+												<div class="col-sm-8">
+													<#form:input path="xpdRuleDesccription" maxlength="100" class="form-control"/>
+												</div>
+											</div>
+										</div>
+									</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('会员价格')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdMembershipPrices" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('门店价格')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdStorePrice" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('回访间隔(天)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdReturnInterval" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('最高存量(件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdMaxStock" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('安全存量(件)')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xpdSafetyStock" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('是否赠送')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:radio path="xpdIsgift" dictType="xpd_isGift" class="form-control" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('是否停用')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+
+														<#form:radio path="xpdIsdiscountinued" dictType="xpd_isDiscountinue" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('停止销售')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:radio path="xpdEndSale" dictType="xpd_end_sale" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('可拷贝成本价格')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:radio path="xpdCopyCostPrice" dictType="xpd_copy_cost_price" class="form-control" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<div class="col-sm-4"><span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></div>
+														<div class="col-sm-8"><#form:textarea path="xpdRemarks" rows="4" maxlength="200" class="form-control"/></div>
+												    </label>
+													<!--<div class="col-sm-8">-->
+														<!---->
+													<!--</div>-->
+												</div>
+											</div>
+
+										</div>
+
+
+									</div>
+									<div class="layui-tab-item">
+										<div>
+											<table id="dataGridMoneyHistory"></table>
+										</div>
+										内容2
+									</div>
+									<div class="layui-tab-item">内容3</div>
+									<div class="layui-tab-item">内容4</div>
+								</div>
+							</div>
+						</div>
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
+			<div class="box-footer" style="padding:8px">
+				<div class="row" style="float:right;padding-right: 35px">
+					<div class="col-sm-offset-2 col-sm-12">
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
+<script>
+    $("#inputForm").validate({
+        submitHandler: function(form){
+            js.ajaxSubmitForm($(form), function(data){
+                js.showMessage(data.message);
+                if(data.result == Global.TRUE){
+                    js.closeCurrentTabPage(function(contentWindow){
+                        contentWindow.page();
+                    });
+                }
+            }, "json");
+        }
+    });
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+   layui.use('element', function(){
+        var element = layui.element;
+        //获取li的类属性名
+       var oLi1 = element.getElementsByClassName('layui-this')[0];
+       //获取div的类属性名
+       var oDiv1 = element.getElementsByClassName('layui-tab-item layui-show')[0];
+       for(var i=0;i<oLi1.length;i++){
+           oLi1[i].className="";
+	   }
+	   this.className="layui-this";
+       for (var j=0;j<oDiv1.length;j++){
+           oDiv1[j].className="hide";
+	   }
+	   oDiv1[this.index].className="show";
+
+    });
+</script>
