@@ -1,20 +1,4 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : hyy
- Source Server Type    : MySQL
- Source Server Version : 50725
- Source Host           : localhost:3306
- Source Schema         : xonro_store_management
-
- Target Server Type    : MySQL
- Target Server Version : 50725
- File Encoding         : 65001
-
- Date: 29/03/2019 21:23:46
-*/
-
-SET NAMES utf8mb4;
+ET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -187,8 +171,8 @@ INSERT INTO `js_sys_dict_data` VALUES ('1109024251243151360', '0', '0,', 40, '00
 INSERT INTO `js_sys_dict_data` VALUES ('1109024251696136192', '0', '0,', 50, '0000000050,', '1', 0, '审核', '审核', '4', 'msg_inner_msg_status', '1', '', '', '', '0', 'system', '2019-03-22 17:29:21', 'system', '2019-03-22 17:29:21', NULL, '0', 'JeeSite', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1109024252929261568', '0', '0,', 60, '0000000060,', '1', 0, '驳回', '驳回', '5', 'msg_inner_msg_status', '1', '', 'color:#f00;', '', '0', 'system', '2019-03-22 17:29:21', 'system', '2019-03-22 17:29:21', NULL, '0', 'JeeSite', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1109024253348691968', '0', '0,', 70, '0000000070,', '1', 0, '草稿', '草稿', '9', 'msg_inner_msg_status', '1', '', '', '', '0', 'system', '2019-03-22 17:29:21', 'system', '2019-03-22 17:29:21', NULL, '0', 'JeeSite', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `js_sys_dict_data` VALUES ('1110433222404087808', '0', '0,', 30, '0000000030,', '1', 0, '别人推荐', '别人推荐', '01', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-03-26 14:48:06', 'system', '2019-03-26 14:48:06', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `js_sys_dict_data` VALUES ('1110433309570113536', '0', '0,', 60, '0000000060,', '1', 0, '网上了解', '网上了解', '02', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-03-26 14:48:27', 'system', '2019-03-26 14:48:27', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1110433222404087808', '0', '0,', 30, '0000000030,', '1', 0, '朋友介绍', '朋友介绍', '01', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-03-26 14:48:06', 'system', '2019-04-07 17:23:38', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1110433309570113536', '0', '0,', 60, '0000000060,', '1', 0, '广告传单', '广告传单', '02', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-03-26 14:48:27', 'system', '2019-04-07 17:23:47', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1110433802023346176', '0', '0,', 30, '0000000030,', '1', 0, '男', '男', '01', 'mi_sex', '0', '', '', '', '0', 'system', '2019-03-26 14:50:24', 'system', '2019-03-26 14:50:24', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1110433838270521344', '0', '0,', 60, '0000000060,', '1', 0, '女', '女', '02', 'mi_sex', '0', '', '', '', '0', 'system', '2019-03-26 14:50:33', 'system', '2019-03-26 14:50:33', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1110434138704322560', '0', '0,', 30, '0000000030,', '1', 0, '已标记', '已标记', '01', 'mi_mark_status', '0', '', '', '', '0', 'system', '2019-03-26 14:51:44', 'system', '2019-03-26 14:51:44', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -226,5 +210,116 @@ INSERT INTO `js_sys_dict_data` VALUES ('1110440715825979392', '0', '0,', 30, '00
 INSERT INTO `js_sys_dict_data` VALUES ('1110440763645239296', '0', '0,', 60, '0000000060,', '1', 0, '白银会员', '白银会员', '02', 'mi_member_grade', '0', '', '', '', '0', 'system', '2019-03-26 15:18:04', 'system', '2019-03-26 15:18:04', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1110440801280729088', '0', '0,', 90, '0000000090,', '1', 0, '黄金会员', '黄金会员', '03', 'mi_member_grade', '0', '', '', '', '0', 'system', '2019-03-26 15:18:13', 'system', '2019-03-26 15:18:13', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1110440872080580608', '0', '0,', 120, '0000000120,', '1', 0, '钻石会员', '钻石会员', '04', 'mi_member_grade', '0', '', '', '', '0', 'system', '2019-03-26 15:18:30', 'system', '2019-03-26 15:18:30', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113279743984562176', '0', '0,', 30, '0000000030,', '1', 0, '其他类', '其他类', '011', 'xp_discount_cate', '0', '', '', '', '0', 'system', '2019-04-03 11:19:09', 'system', '2019-04-03 11:19:09', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280015905484800', '0', '0,', 30, '0000000030,', '1', 0, '其他类', '其他类', '011', 'xp_statistical_class', '0', '', '', '', '0', 'system', '2019-04-03 11:20:14', 'system', '2019-04-03 11:20:14', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280313164197888', '0', '0,', 30, '0000000030,', '1', 0, '医疗组', '医疗组', '001', 'xp_statistical_dept', '0', '', '', '', '0', 'system', '2019-04-03 11:21:25', 'system', '2019-04-03 11:21:25', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280431514873856', '0', '0,', 60, '0000000060,', '1', 0, '按摩组', '按摩组', '002', 'xp_statistical_dept', '0', '', '', '', '0', 'system', '2019-04-03 11:21:53', 'system', '2019-04-03 11:21:53', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280493116616704', '0', '0,', 90, '0000000090,', '1', 0, '美容组', '美容组', '003', 'xp_statistical_dept', '0', '', '', '', '0', 'system', '2019-04-03 11:22:08', 'system', '2019-04-03 11:22:08', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280745253007360', '0', '0,', 30, '0000000030,', '1', 0, '按次', '按次', '01', 'xp_pricing_method', '0', '', '', '', '0', 'system', '2019-04-03 11:23:08', 'system', '2019-04-03 11:23:08', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113280825993359360', '0', '0,', 60, '0000000060,', '1', 0, '按小时', '按小时', '02', 'xp_pricing_method', '0', '', '', '', '0', 'system', '2019-04-03 11:23:27', 'system', '2019-04-03 11:23:27', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113281095422865408', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xp_isCash', '0', '', '', '', '0', 'system', '2019-04-03 11:24:32', 'system', '2019-04-03 11:24:32', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113281128918577152', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xp_isCash', '0', '', '', '', '0', 'system', '2019-04-03 11:24:40', 'system', '2019-04-03 11:24:40', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113281315879677952', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xp_isBlockUp', '0', '', '', '', '0', 'system', '2019-04-03 11:25:24', 'system', '2019-04-03 11:25:24', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113281364810428416', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xp_isBlockUp', '0', '', '', '', '0', 'system', '2019-04-03 11:25:36', 'system', '2019-04-03 11:25:36', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113284701320540160', '0', '0,', 30, '0000000030,', '1', 0, '30分钟', '30分钟', '01', 'xp_service_time', '0', '', '', '', '0', 'system', '2019-04-03 11:38:51', 'system', '2019-04-03 11:38:51', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113284748212858880', '0', '0,', 60, '0000000060,', '1', 0, '1小时', '1小时', '02', 'xp_service_time', '0', '', '', '', '0', 'system', '2019-04-03 11:39:02', 'system', '2019-04-03 11:39:02', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113284786926284800', '0', '0,', 90, '0000000090,', '1', 0, '2小时', '2小时', '03', 'xp_service_time', '0', '', '', '', '0', 'system', '2019-04-03 11:39:12', 'system', '2019-04-03 11:39:12', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113677919134482432', '0', '0,', 30, '0000000030,', '1', 0, '身体管理器', '身体管理器', '01', 'xpd_statistical_class', '0', '', '', '', '0', 'system', '2019-04-04 13:41:22', 'system', '2019-04-04 13:41:22', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113678152300036096', '0', '0,', 30, '0000000030,', '1', 0, '总仓库', '总仓库', '01', 'xpd_depository', '0', '', '', '', '0', 'system', '2019-04-04 13:42:17', 'system', '2019-04-04 13:42:17', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113678490449018880', '0', '0,', 30, '0000000030,', '1', 0, '身体管理器', '身体管理器', '01', 'xpd_discount_category', '0', '', '', '', '0', 'system', '2019-04-04 13:43:38', 'system', '2019-04-04 13:43:38', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113678813989240832', '0', '0,', 30, '0000000030,', '1', 0, 'J-件', 'J-件', '01', 'xpd_standard_unit', '0', '', '', '', '0', 'system', '2019-04-04 13:44:55', 'system', '2019-04-04 13:44:55', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113679427368452096', '0', '0,', 30, '0000000030,', '1', 0, '芜湖服装公司', '芜湖服装公司', '01', 'xpd_purchase_unit', '0', '', '', '', '0', 'system', '2019-04-04 13:47:21', 'system', '2019-04-04 13:47:21', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113679614736400384', '0', '0,', 30, '0000000030,', '1', 0, '芜湖制造公司', '芜湖制造公司', '01', 'xpd_supplier', '0', '', '', '', '0', 'system', '2019-04-04 13:48:06', 'system', '2019-04-04 13:48:06', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113679851181899776', '0', '0,', 30, '0000000030,', '1', 0, '芜湖美丽妈妈', '芜湖美丽妈妈', '01', 'xpd_marketint_unit', '0', '', '', '', '0', 'system', '2019-04-04 13:49:02', 'system', '2019-04-04 13:49:02', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680014742978560', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xpd_isGift', '0', '', '', '', '0', 'system', '2019-04-04 13:49:41', 'system', '2019-04-04 13:49:41', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680070980206592', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xpd_isGift', '0', '', '', '', '0', 'system', '2019-04-04 13:49:55', 'system', '2019-04-04 13:49:55', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680206045184000', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xpd_isDiscountinue', '0', '', '', '', '0', 'system', '2019-04-04 13:50:27', 'system', '2019-04-04 13:50:27', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680240778215424', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xpd_isDiscountinue', '0', '', '', '', '0', 'system', '2019-04-04 13:50:35', 'system', '2019-04-04 13:50:35', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680371489505280', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xpd_end_sale', '0', '', '', '', '0', 'system', '2019-04-04 13:51:06', 'system', '2019-04-04 13:51:06', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680402384748544', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xpd_end_sale', '0', '', '', '', '0', 'system', '2019-04-04 13:51:14', 'system', '2019-04-04 13:51:14', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680570098188288', '0', '0,', 30, '0000000030,', '1', 0, '是', '是', '01', 'xpd_copy_cost_price', '0', '', '', '', '0', 'system', '2019-04-04 13:51:54', 'system', '2019-04-04 13:51:54', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113680600783716352', '0', '0,', 60, '0000000060,', '1', 0, '否', '否', '02', 'xpd_copy_cost_price', '0', '', '', '', '0', 'system', '2019-04-04 13:52:01', 'system', '2019-04-04 13:52:01', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113687739707228160', '0', '0,', 60, '0000000060,', '1', 0, '诚美面护国产', '诚美面护国产', '02', 'xpd_discount_category', '0', '', '', '', '0', 'system', '2019-04-04 14:20:23', 'system', '2019-04-04 14:20:23', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1113688010910924800', '0', '0,', 60, '0000000060,', '1', 0, '诚美面护国产', '诚美面护国产', '02', 'xpd_statistical_class', '0', '', '', '', '0', 'system', '2019-04-04 14:21:28', 'system', '2019-04-04 14:21:28', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1114821217365938176', '0', '0,', 90, '0000000090,', '1', 0, '电视广告', '电视广告', '03', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-04-07 17:24:25', 'system', '2019-04-07 17:24:25', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1114821248273764352', '0', '0,', 120, '0000000120,', '1', 0, '口碑', '口碑', '04', 'mi_outlets', '0', '', '', '', '0', 'system', '2019-04-07 17:24:33', 'system', '2019-04-07 17:24:33', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115064993621598208', '0', '0,', 10, '0000000010,', '1', 0, '总部', '总部', '01', 'XS_LEVEL', '0', '', '', '', '0', 'system', '2019-04-08 09:33:06', 'system', '2019-04-08 09:33:06', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065048986411008', '0', '0,', 20, '0000000020,', '1', 0, '事业部', '事业部', '02', 'XS_LEVEL', '0', '', '', '', '0', 'system', '2019-04-08 09:33:19', 'system', '2019-04-08 09:33:19', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065210609721344', '0', '0,', 30, '0000000030,', '1', 0, '地区', '地区', '03', 'XS_LEVEL', '0', '', '', '', '0', 'system', '2019-04-08 09:33:58', 'system', '2019-04-08 09:33:58', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065282860802048', '0', '0,', 40, '0000000040,', '1', 0, '区域', '区域', '04', 'XS_LEVEL', '0', '', '', '', '0', 'system', '2019-04-08 09:34:15', 'system', '2019-04-08 09:34:15', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065338582130688', '0', '0,', 50, '0000000050,', '1', 0, '门店', '门店', '05', 'XS_LEVEL', '0', '', '', '', '0', 'system', '2019-04-08 09:34:28', 'system', '2019-04-08 09:34:28', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065853571358720', '0', '0,', 10, '0000000010,', '1', 0, '美容', '美容', '01', 'XS_MANAGE_SCOPE', '0', '', '', '', '0', 'system', '2019-04-08 09:36:31', 'system', '2019-04-08 09:36:31', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065926292201472', '0', '0,', 20, '0000000020,', '1', 0, '美发', '美发', '02', 'XS_MANAGE_SCOPE', '0', '', '', '', '0', 'system', '2019-04-08 09:36:48', 'system', '2019-04-08 09:36:48', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115065986727927808', '0', '0,', 30, '0000000030,', '1', 0, '足浴', '足浴', '03', 'XS_MANAGE_SCOPE', '0', '', '', '', '0', 'system', '2019-04-08 09:37:03', 'system', '2019-04-08 09:37:03', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1115066040813477888', '0', '0,', 40, '0000000040,', '1', 0, '美甲', '美甲', '04', 'XS_MANAGE_SCOPE', '0', '', '', '', '0', 'system', '2019-04-08 09:37:16', 'system', '2019-04-08 09:37:16', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for js_sys_dict_type
+-- ----------------------------
+DROP TABLE IF EXISTS `js_sys_dict_type`;
+CREATE TABLE `js_sys_dict_type`  (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编号',
+  `dict_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典名称',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典类型',
+  `is_sys` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '是否系统字典',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '状态（0正常 1删除 2停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '创建者',
+  `create_date` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '更新者',
+  `update_date` datetime(0) NOT NULL COMMENT '更新时间',
+  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_sys_dict_type_is`(`is_sys`) USING BTREE,
+  INDEX `idx_sys_dict_type_status`(`status`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of js_sys_dict_type
+-- ----------------------------
+INSERT INTO `js_sys_dict_type` VALUES ('1109024193751826432', '是否', 'sys_yes_no', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024193969930240', '状态', 'sys_status', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194104147968', '显示隐藏', 'sys_show_hide', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194238365696', '国际化语言类型', 'sys_lang_type', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194351611904', '客户端设备类型', 'sys_device_type', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194464858112', '菜单归属系统', 'sys_menu_sys_code', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194607464448', '菜单类型', 'sys_menu_type', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194750070784', '菜单权重', 'sys_menu_weight', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024194880094208', '区域类型', 'sys_area_type', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195056254976', '机构类型', 'sys_office_type', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195177889792', '查询状态', 'sys_search_status', '1', '0', 'system', '2019-03-22 17:29:07', 'system', '2019-03-22 17:29:07', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195286941696', '用户性别', 'sys_user_sex', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195471491072', '用户状态', 'sys_user_status', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195584737280', '用户类型', 'sys_user_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024195999973376', '角色分类', 'sys_role_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196129996800', '角色数据范围', 'sys_role_data_scope', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196239048704', '岗位分类', 'sys_post_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196348100608', '日志类型', 'sys_log_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196448763904', '作业分组', 'sys_job_group', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196553621504', '作业错过策略', 'sys_job_misfire_instruction', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196666867712', '作业状态', 'sys_job_status', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196784308224', '作业任务类型', 'sys_job_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024196897554432', '作业任务事件', 'sys_job_event', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024197002412032', '消息类型', 'sys_msg_type', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024197174378496', '推送状态', 'sys_msg_push_status', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1109024197287624704', '读取状态', 'sys_msg_read_status', '1', '0', 'system', '2019-03-22 17:29:08', 'system', '2019-03-22 17:29:08', NULL);
+INSERT INTO `js_sys_dict_type` VALUES ('1110432420390248448', '进店渠道', 'mi_outlets', '0', '0', 'system', '2019-03-26 14:44:55', 'system', '2019-03-26 14:44:55', '01：别人推荐，02：网上了解');
+INSERT INTO `js_sys_dict_type` VALUES ('1110433718338592768', '会员性别', 'mi_sex', '0', '0', 'system', '2019-03-26 14:50:04', 'system', '2019-03-26 14:50:04', '01:男，02:女');
+INSERT INTO `js_sys_dict_type` VALUES ('1110434035612524544', '标记状态', 'mi_mark_status', '0', '0', 'system', '2019-03-26 14:51:20', 'system', '2019-03-26 14:51:20', '01：已标记，02：未标记');
+INSERT INTO `js_sys_dict_type` VALUES ('1110434367021260800', '会员状态', 'mi_member_status', '0', '0', 'system', '2019-03-26 14:52:39', 'system', '2019-03-26 14:52:39', '01:有效，02:无效');
+INSERT INTO `js_sys_dict_type` VALUES ('1110434628208959488', '星座', 'mi_constellation', '0', '0', 'system', '2019-03-26 14:53:41', 'system', '2019-03-26 14:53:41', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110436342274203648', '血型', 'mi_blood_type', '0', '0', 'system', '2019-03-26 15:00:30', 'system', '2019-03-26 15:00:30', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110436784169295872', '消息类通知', 'mi_message_notice', '0', '0', 'system', '2019-03-26 15:02:15', 'system', '2019-03-26 15:02:15', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110437050511794176', '营销类通知', 'mi_marketing_notice', '0', '0', 'system', '2019-03-26 15:03:18', 'system', '2019-03-26 15:03:18', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110437353751584768', '微信绑卡', 'mi_wechat_binding_card', '0', '0', 'system', '2019-03-26 15:04:31', 'system', '2019-03-26 15:04:31', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110440143915851776', '卡类别', 'mi_card_type', '0', '0', 'system', '2019-03-26 15:15:36', 'system', '2019-03-26 15:15:36', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1110440595000664064', '会员等级', 'mi_member_grade', '0', '0', 'system', '2019-03-26 15:17:23', 'system', '2019-03-26 15:17:23', '');
 
 SET FOREIGN_KEY_CHECKS = 1;
