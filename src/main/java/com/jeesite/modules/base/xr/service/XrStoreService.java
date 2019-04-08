@@ -1,24 +1,19 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.store.service;
+package com.jeesite.modules.base.xr.service;
 
-import java.util.List;
-
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.modules.sys.utils.EmpUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.base.store.entity.XrStore;
-import com.jeesite.modules.base.store.dao.XrStoreDao;
-import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.base.xr.entity.XrStore;
+import com.jeesite.modules.base.xr.dao.XrStoreDao;
 
 /**
- * xr_storeInfoService
- * @author Crysta-hu
+ * xr_storeService
+ * @author Alex
  * @version 2019-04-08
  */
 @Service
@@ -53,16 +48,7 @@ public class XrStoreService extends CrudService<XrStoreDao, XrStore> {
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrStore xrStore) {
-		if(xrStore.getIsNewRecord()){
-			String officeCode = EmpUtils.getOffice().getOfficeCode();
-			String s = StringUtils.getRandomStr(3);
-			xrStore.setXsCode(officeCode+s);
-		}
 		super.save(xrStore);
-		// 保存上传图片
-		FileUploadUtils.saveFileUpload(xrStore.getXsCode(), "xrStore_image");
-		// 保存上传附件
-		//FileUploadUtils.saveFileUpload(xrStore.getId(), "xrStore_file");
 	}
 	
 	/**

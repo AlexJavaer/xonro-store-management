@@ -1,22 +1,23 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.store.entity;
+package com.jeesite.modules.base.xr.entity;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
- * xr_storeInfoEntity
- * @author Crysta-hu
+ * xr_storeEntity
+ * @author Alex
  * @version 2019-04-08
  */
 @Table(name="xr_store", alias="a", columns={
@@ -34,6 +35,7 @@ import java.util.Date;
 		@Column(name="xs_logo_photo", attrName="xsLogoPhoto", label="门店logo"),
 		@Column(name="xs_photo", attrName="xsPhoto", label="门店展示图片"),
 		@Column(name="xs_lng", attrName="xsLng", label="经度"),
+		@Column(includeEntity=DataEntity.class),
 		@Column(name="xs_lat", attrName="xsLat", label="纬度"),
 	}, orderBy="a.update_date DESC"
 )
@@ -55,7 +57,7 @@ public class XrStore extends DataEntity<XrStore> {
 	private String xsPhoto;		// 门店展示图片
 	private Long xsLng;		// 经度
 	private Long xsLat;		// 纬度
-
+	
 	public XrStore() {
 		this(null);
 	}
