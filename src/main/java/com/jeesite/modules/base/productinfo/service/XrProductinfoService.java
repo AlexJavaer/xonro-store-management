@@ -57,7 +57,7 @@ public class XrProductinfoService extends CrudService<XrProductinfoDao, XrProduc
 		if(xrProductinfo.getIsNewRecord()){
 			String officeCode = EmpUtils.getOffice().getOfficeCode();
 			String s = StringUtils.getRandomNum(3);
-			xrProductinfo.setProductCode(officeCode+s);
+            xrProductinfo.setProductCode(officeCode+s);
 		}
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();

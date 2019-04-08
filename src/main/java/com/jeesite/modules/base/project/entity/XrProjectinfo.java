@@ -18,7 +18,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * xr_projectinfoEntity
  * @author Crysta-hu
- * @version 2019-04-03
+ * @version 2019-04-08
  */
 @Table(name="xr_projectinfo", alias="a", columns={
 		@Column(name="project_code", attrName="projectCode", label="项目编号", isPK=true),

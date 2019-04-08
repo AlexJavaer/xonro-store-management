@@ -10,7 +10,7 @@ import com.jeesite.modules.base.project.entity.XrProjectinfo;
 /**
  * xr_projectinfoDAO接口
  * @author Crysta-hu
- * @version 2019-04-03
+ * @version 2019-04-08
  */
 @MyBatisDao
 public interface XrProjectinfoDao extends CrudDao<XrProjectinfo> {
