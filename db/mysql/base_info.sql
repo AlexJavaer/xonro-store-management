@@ -172,6 +172,9 @@ CREATE TABLE `xr_projectinfo`  (
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ----------------------------
 -- Table structure for xr_store
 -- ----------------------------
@@ -198,6 +201,8 @@ CREATE TABLE `xr_store`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
+  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '组织ID',
   PRIMARY KEY (`xs_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
@@ -205,4 +210,48 @@ CREATE TABLE `xr_store`  (
 -- Records of xr_store
 -- ----------------------------
 
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for xr_member_recharge
+-- ----------------------------
+DROP TABLE IF EXISTS `xr_member_recharge`;
+CREATE TABLE `xr_member_recharge`  (
+  `xmr_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '异地单号',
+  `xmr_date` date NULL DEFAULT NULL COMMENT '异动日期',
+  `mi_card_number` bigint(30) NULL DEFAULT NULL COMMENT '会员卡号',
+  `mi_card_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '卡类别',
+  `mi_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员编号',
+  `mi_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员姓名',
+  `xmr_account_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '账户类别',
+  `mi_outlets` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '进店渠道',
+  `transaction_mode` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '异动方式01:存款，02:取款，03:欠款,04:还款',
+  `xmr_reserve_value` decimal(30, 0) UNSIGNED NULL DEFAULT NULL COMMENT '储值应收',
+  `xmr_save_money` decimal(30, 0) NULL DEFAULT NULL COMMENT '储值金额',
+  `xmr_produce_project_amount` decimal(30, 0) NULL DEFAULT NULL COMMENT '品项金额',
+  `xmr_package_amount` decimal(30, 0) NULL DEFAULT NULL COMMENT '套餐金额',
+  `xmr_gift_account` decimal(30, 0) NULL DEFAULT NULL COMMENT '赠送账户',
+  `xmr_donation_amout` decimal(30, 0) NULL DEFAULT NULL COMMENT '赠送金额',
+  `xmr_current_balance` decimal(30, 0) NULL DEFAULT NULL COMMENT '当前余额',
+  `xmr_latest_balance` decimal(30, 0) NULL DEFAULT NULL COMMENT '最新余额',
+  `xmr_payment_mode` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '支付方式01:现金;02:银行卡支付；03：微信转账;04:支付宝转账',
+  `xmr_recharge_valid_time` date NULL DEFAULT NULL COMMENT '充值有效日期',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
+  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '组织ID',
+  `xmr_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态',
+  `xs_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店编号',
+  `XS_FUll_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店名称',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
+  PRIMARY KEY (`xmr_code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of xr_member_recharge
+-- ----------------------------
 
