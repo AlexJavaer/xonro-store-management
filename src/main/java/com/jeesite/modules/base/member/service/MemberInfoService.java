@@ -49,6 +49,8 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Override
 	public Page<MemberInfo> findPage(Page<MemberInfo> page, MemberInfo memberInfo) {
 
+
+
 		return super.findPage(page, memberInfo);
 	}
 

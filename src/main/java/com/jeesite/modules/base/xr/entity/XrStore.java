@@ -37,6 +37,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="xs_lng", attrName="xsLng", label="经度"),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="xs_lat", attrName="xsLat", label="纬度"),
+		@Column(name="user_code", attrName="userCode", label="用户ID"),
+		@Column(name="office_code", attrName="officeCode", label="组织ID"),
 	}, orderBy="a.update_date DESC"
 )
 public class XrStore extends DataEntity<XrStore> {
@@ -57,6 +59,8 @@ public class XrStore extends DataEntity<XrStore> {
 	private String xsPhoto;		// 门店展示图片
 	private Long xsLng;		// 经度
 	private Long xsLat;		// 纬度
+	private String userCode;		// 用户ID
+	private String officeCode;		// 组织ID
 	
 	public XrStore() {
 		this(null);
@@ -201,6 +205,24 @@ public class XrStore extends DataEntity<XrStore> {
 
 	public void setXsLat(Long xsLat) {
 		this.xsLat = xsLat;
+	}
+
+	@Length(min=0, max=64, message="用户ID长度不能超过 64 个字符")
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+
+	@Length(min=0, max=64, message="组织ID长度不能超过 64 个字符")
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 	
 }

@@ -1,0 +1,359 @@
+<% layout('/layouts/default.html', {title: '会员充值信息', libs: ['validate','fileupload','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+<style>
+
+	* {
+
+		margin: 0;
+
+		padding: 0;
+	}
+	.layui-card:last-child{
+		margin-bottom: 30px;
+	}
+	.layui-card-body {
+		border:solid 1px #F2F2F2;
+		border-top-width:2px;
+
+	}
+
+</style>
+<div class="box-body" style="padding: 20px; background-color: #F2F2F2">
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i>  ${text(xrMemberRecharge.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${xrMemberRecharge}" action="${ctx}/xrMemberRecharge/save" method="post" class="form-horizontal">
+			<div class="box-body" style="padding:20px">
+				<div class="form-unit">${text('会员充值单据基本信息')}</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
+							<#form:hidden path="xmrCode"/>
+							<!--div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('门店名称')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="xsFullName" maxlength="200" class="form-control required"/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required hide">*</span> ${text('门店编号')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:hidden path="isNewRecord"/>
+											<#form:input path="xsCode" maxlength="64" readonly="${!xrMemberRecharge.isNewRecord}" value="xrMemberRecharge.getXmrCode" class="form-control required"/>
+										</div>
+									</div>
+								</div>
+							</div>-->
+				<div class="row">
+					<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="">
+							<span class="required hide">*</span> ${text('异动日期')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-8">
+							<#form:input path="xmrDate" readonly="true" maxlength="20" class="form-control required Wdate"
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+						</div>
+					</div>
+				</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('异动单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
+								<#form:input path="xmrCode" maxlength="64" readonly="${!xrMemberRecharge.isNewRecord}" value="xrMemberRecharge.getXmrCode" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="miCardNumber" maxlength="30" class="form-control required digits"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="miCardType" dictType="mi_card_type" class="form-control required" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('会员姓名')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="miName" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('会员编号')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="miCode" maxlength="64" class="form-control required"/>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                </div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-tab">
+								<ul class="layui-tab-title" style="color: #1E9FFF">
+									<li class="layui-this">基本信息</li>
+									<li>购买品项</li>
+									<li>购买套餐</li>
+								</ul>
+								<div class="layui-tab-content">
+									<div class="layui-tab-item layui-show">
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('账户类别')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xmrAccountType" dictType="xmr_account_type" blankOption="true" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('进店渠道')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="miOutlets" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="form-group">
+													<label class="control-label col-sm-2" title="">
+														<span class="required hide">*</span> ${text('异动方式')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-10">
+														<#form:radio path="transactionMode" dictType="transaction_mode" blankOption="true" class="form-control"  />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('储值应收')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xmrReserveValue" class="form-control digits"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('储值金额')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xmrSaveMoney" class="form-control digits"/>
+													</div>
+												</div>
+											</div>
+										</div>
+
+								<div class="row">
+									<div class="col-xs-6">
+										<div class="form-group">
+											<label class="control-label col-sm-4" title="">
+												<span class="required hide">*</span> ${text('品项金额')}：<i class="fa icon-question hide"></i></label>
+											<div class="col-sm-8">
+												<#form:input path="xmrProduceProjectAmount" class="form-control digits"/>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-6">
+										<div class="form-group">
+											<label class="control-label col-sm-4" title="">
+												<span class="required hide">*</span> ${text('套餐金额')}：<i class="fa icon-question hide"></i></label>
+											<div class="col-sm-8">
+												<#form:input path="xmrPackageAmount" class="form-control digits"/>
+											</div>
+										</div>
+									</div>
+									</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('赠送账户')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xmrGiftAccount" class="form-control digits"/>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('赠送金额')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xmrDonationAmout" class="form-control digits"/>
+													</div>
+												</div>
+											</div>
+										</div>
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label class="control-label col-sm-4" title="">
+															<span class="required hide">*</span> ${text('当前余额')}：<i class="fa icon-question hide"></i></label>
+														<div class="col-sm-8">
+															<#form:input path="xmrCurrentBalance" class="form-control digits"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label class="control-label col-sm-4" title="">
+															<span class="required hide">*</span> ${text('最新余额')}：<i class="fa icon-question hide"></i></label>
+														<div class="col-sm-8">
+															<#form:hidden path="isNewRecord"/>
+															<#form:input path="xmrCode" maxlength="64" readonly="${!xrMemberRecharge.isNewRecord}" value="xrMemberRecharge.getXmrLatestBalance" class="form-control digits"/>
+														</div>
+													</div>
+												</div>
+											</div>
+										<div class="row">
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('支付方式')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xmrPaymentMode" dictType="xmr_payment_mode" blankOption="true" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-4" title="">
+														<span class="required hide">*</span> ${text('充值有效日期')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:input path="xmrRechargeValidTime" readonly="true" maxlength="20" class="form-control required Wdate"
+														dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+													</div>
+												</div>
+											</div>
+									</div>
+											<div class="row">
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label class="control-label col-sm-4" title="">
+															<span class="required hide">*</span> ${text('更新者')}：<i class="fa icon-question hide"></i></label>
+														<div class="col-sm-8">
+															<#form:input path="updateBy" maxlength="64" class="form-control"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label class="control-label col-sm-4" title="">
+															<span class="required hide">*</span> ${text('更新时间')}：<i class="fa icon-question hide"></i></label>
+														<div class="col-sm-8">
+															<#form:input path="updateDate" class="form-control"/>
+														</div>
+													</div>
+												</div>
+											</div>
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="form-group">
+													<label class="control-label col-sm-2" title="">
+														<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-10">
+														<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+										<div class="layui-tab-item">内容2</div>
+									<div class="layui-tab-item">内容3</div>
+								</div>
+							</div>
+						</div>
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	<div class="box-footer" style="padding:8px">
+		<div class="row" style="float:right;padding-right: 35px">
+			<div class="col-sm-offset-2 col-sm-12">
+				<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+				<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+			</div>
+		</div>
+	</div>
+		</#form:form>
+	</div>
+</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
+<script>
+    $("#inputForm").validate({
+        submitHandler: function(form){
+            js.ajaxSubmitForm($(form), function(data){
+                js.showMessage(data.message);
+                if(data.result == Global.TRUE){
+                    js.closeCurrentTabPage(function(contentWindow){
+                        contentWindow.page();
+                    });
+                }
+            }, "json");
+        }
+    });
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+   layui.use('element', function(){
+        var element = layui.element;
+        //获取li的类属性名
+       var oLi1 = element.getElementsByClassName('layui-this')[0];
+       //获取div的类属性名
+       var oDiv1 = element.getElementsByClassName('layui-tab-item layui-show')[0];
+       for(var i=0;i<oLi1.length;i++){
+           oLi1[i].className="";
+	   }
+	   this.className="layui-this";
+       for (var j=0;j<oDiv1.length;j++){
+           oDiv1[j].className="hide";
+	   }
+	   oDiv1[this.index].className="show";
+
+    });
+</script>

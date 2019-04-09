@@ -8,6 +8,15 @@
 
 		padding: 0;
 	}
+
+    .layui-card:last-child{
+        margin-bottom: 30px;
+    }
+    .layui-card-body {
+        border:solid 1px #F2F2F2;
+        border-top-width:2px;
+
+    }
 </style>
 <div class="box-body" style="padding: 20px; background-color: #F2F2F2">
 <div class="main-content">
@@ -23,7 +32,9 @@
 		<#form:form id="inputForm" model="${memberInfoData}" action="${ctx}/memberInfo/save" method="post" class="form-horizontal">
 			<div class="box-body" style="padding:20px">
 				<div class="form-unit">${text('会员基本资料')}</div>
-				<div class="box-body">
+                    <div class="layui-col-md12">
+                        <div class="layui-card" style="border-width:1px 1px 1px 1px">
+                            <div class="layui-card-body">
 				<#form:hidden path="mi_code"/>
 				<div class="row">
 					<div class="col-xs-6">
@@ -109,17 +120,20 @@
 					</div>
 				</div>
 			</div>
-		<div class="box-footer" style="background-color: #F2F2F2;padding:5px" ></div>
-		<div class="box-body" style="padding:20px">
-			<div class="layui-tab">
+              </div>
+                </div>
+                <div class="layui-col-md12">
+                 <div class="layui-card">
+                 <div class="layui-card-body">
+                 <div class="layui-tab">
 				<ul class="layui-tab-title" style="color: #1E9FFF">
-					<li class="layui-this">基本资料</li>
-					<li>交易历史</li>
-					<li>沟通记录</li>
-				</ul>
+                     <li class="layui-this">基本资料</li>
+                     <li>交易历史</li>
+                     <li>沟通记录</li>
+                     </ul>
 				<div class="layui-tab-content">
 					<div class="layui-tab-item layui-show">
-                       <!--<div class="row">
+                      <!-- <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">${text('会员头像')}：</label>
@@ -134,9 +148,56 @@
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miCardNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide" id="email_notice">*</span> ${text('邮箱')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="mi_email" maxlength="200" class="form-control required" id="email" value="" oninput="checkEmail()" htmlEscape="false" maxlength="64"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('身份证号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miIdNumber" id="phone1" class="form-control" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
                                         <span class="required hide">*</span> ${text('微信号')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
                                         <#form:input path="miWechatNumber" maxlength="200" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" title="">
+                                        <span class="required hide">*</span> ${text('QQ号')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miQqNumber" maxlength="200" class="form-control"/>
                                     </div>
                                 </div>
                             </div>
@@ -152,62 +213,14 @@
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4" title="">
-                                        <span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="miCardNumber" maxlength="200" class="form-control"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" title="">
-                                        <span class="required hide">*</span> ${text('QQ号')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="miQqNumber" maxlength="200" class="form-control"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" title="">
                                         <span class="required hide">*</span> ${text('血型')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
                                         <#form:select path="miBloodType" dictType="mi_blood_type" blankOption="true" class="form-control" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" title="">
-                                        <span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" title="">
-                                        <span class="required hide" id="email_notice">*</span> ${text('邮箱')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="mi_email" maxlength="200" class="form-control" id="email" value="" oninput="checkEmail()" htmlEscape="false" maxlength="64"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" title="">
-                                        <span class="required hide">*</span> ${text('身份证号')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="miIdNumber" id="phone1" class="form-control" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11"/>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4" title="">
@@ -217,8 +230,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label col-sm-4" title="">
@@ -248,7 +259,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
@@ -261,23 +271,25 @@
                                 </div>
                             </div>
                         </div>
-                </div>
+                    </div>
 					<div class="layui-tab-item">
-                        <table id="dataGridMoneyHistory"></table>内容4</div>
+                        <table id="dataGridMoneyHistory"></table>内容4
+                    </div>
 					<div class="layui-tab-item">内容5</div>
 				</div>
 			</div>
 		</div>
-    <div class="box-footer" style="background-color: #F2F2F2;padding:5px" ></div>
-			<div class="box-footer" style="padding:8px">
-				<div class="row" style="float:right;padding-right: 35px">
-					<div class="col-sm-offset-2 col-sm-12">
-							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
-						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
-					</div>
-				</div>
-			</div>
-
+         </div>
+          </div>
+            </div>
+                <div class="box-footer" style="padding:8px;background: white">
+                    <div class="row" style="float:right;padding-right: 35px">
+                        <div class="col-sm-offset-2 col-sm-12">
+                            <button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+                            <button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+                        </div>
+                    </div>
+                </div>
 		</#form:form>
 	</div>
 </div>

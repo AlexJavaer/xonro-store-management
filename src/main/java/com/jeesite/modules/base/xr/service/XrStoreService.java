@@ -3,6 +3,9 @@
  */
 package com.jeesite.modules.base.xr.service;
 
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.sys.utils.EmpUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,7 @@ import com.jeesite.modules.base.xr.dao.XrStoreDao;
  */
 @Service
 @Transactional(readOnly=true)
+@SuppressWarnings("all")
 public class XrStoreService extends CrudService<XrStoreDao, XrStore> {
 	
 	/**
@@ -48,7 +52,15 @@ public class XrStoreService extends CrudService<XrStoreDao, XrStore> {
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrStore xrStore) {
+
+		if(xrStore.getIsNewRecord()){
+			String officeCode = EmpUtils.getOffice().getOfficeCode();
+			String s = StringUtils.getRandomNum(3);
+			xrStore.setXsCode(officeCode+s);
+		}
 		super.save(xrStore);
+		// 保存上传图片
+		FileUploadUtils.saveFileUpload(xrStore.getId(),"xrStore_image");
 	}
 	
 	/**

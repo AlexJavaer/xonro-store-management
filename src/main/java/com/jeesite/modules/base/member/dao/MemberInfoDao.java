@@ -7,6 +7,9 @@ import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * member_infoDAO接口
  * @author Cyrsta-hu
@@ -14,5 +17,7 @@ import com.jeesite.modules.base.member.entity.MemberInfo;
  */
 @MyBatisDao
 public interface MemberInfoDao extends CrudDao<MemberInfo> {
+
+    /*public List<Map<String, Object>> findListForMap(Map<String, Object> params);*/
 	
 }

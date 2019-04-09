@@ -45,7 +45,7 @@ public class XrStoreController extends BaseController {
 	/**
 	 * 查询列表
 	 */
-	@RequiresPermissions("xr:xrStore:view")
+	/*@RequiresPermissions("xr:xrStore:view")*/
 	@RequestMapping(value = {"list", ""})
 	public String list(XrStore xrStore, Model model) {
 		model.addAttribute("xrStore", xrStore);
@@ -55,7 +55,7 @@ public class XrStoreController extends BaseController {
 	/**
 	 * 查询列表数据
 	 */
-	@RequiresPermissions("xr:xrStore:view")
+	/*@RequiresPermissions("xr:xrStore:view")*/
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<XrStore> listData(XrStore xrStore, HttpServletRequest request, HttpServletResponse response) {
@@ -66,7 +66,7 @@ public class XrStoreController extends BaseController {
 	/**
 	 * 查看编辑表单
 	 */
-	@RequiresPermissions("xr:xrStore:view")
+	/*@RequiresPermissions("xr:xrStore:view")*/
 	@RequestMapping(value = "form")
 	public String form(XrStore xrStore, Model model) {
 		model.addAttribute("xrStore", xrStore);
@@ -76,7 +76,7 @@ public class XrStoreController extends BaseController {
 	/**
 	 * 保存xr_store
 	 */
-	@RequiresPermissions("xr:xrStore:edit")
+	/*@RequiresPermissions("xr:xrStore:edit")*/
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated XrStore xrStore) {
@@ -87,7 +87,7 @@ public class XrStoreController extends BaseController {
 	/**
 	 * 删除xr_store
 	 */
-	@RequiresPermissions("xr:xrStore:edit")
+	/*@RequiresPermissions("xr:xrStore:edit")*/
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(XrStore xrStore) {

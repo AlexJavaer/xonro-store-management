@@ -1,0 +1,94 @@
+<% layout('/layouts/default.html', {title: '会员充值管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('会员充值信息')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+					<a href="${ctx}/xrMemberRecharge/form" class="btn btn-default btnTool" title="${text('新增')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${xrMemberRecharge}" action="${ctx}/xrMemberRecharge/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('异动日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="xmrDate" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员卡号')}：</label>
+					<div class="control-inline">
+						<#form:input path="miCardNumber" maxlength="30" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('卡类别')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="miCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员姓名')}：</label>
+					<div class="control-inline">
+						<#form:input path="miName" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+        {header:'${text('门店编号')}', name:'xsCode', index:'a.xs_code', width:150, align:"center"},
+        {header:'${text('异动单号')}', name:'xmrCode', index:'a.xmr_date', width:150, align:"center",frozen:true, formatter: function(val, obj, row, act){
+    return '<a href="${ctx}/xrMemberRecharge/form?xmrCode='+row.xmrCode+'" class="btnList" data-title="${text('编辑member_recharge')}">'+(val||row.id)+'</a>';
+}},
+		{header:'${text('异动日期')}', name:'xmrDate', index:'a.xmr_date', width:150, align:"center"},
+		{header:'${text('会员卡号')}', name:'miCardNumber', index:'a.mi_card_number', width:150, align:"center"},
+		{header:'${text('账户类别')}', name:'xmrAccountType', index:'a.xmr_account_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text('异动方式')}', name:'transactionMode', index:'a.transaction_mode', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('transaction_mode')}, val, '${text("未知")}', true);
+            }},
+		{header:'${text('储值金额')}', name:'xmrSaveMoney', index:'a.xmr_save_money', width:150, align:"center"},
+		{header:'${text('品项金额')}', name:'xmrProduceProjectAmount', index:'a.xmr_produce_project_amount', width:150, align:"center"},
+		{header:'${text('充值有效日期')}', name:'xmrRechargeValidTime', index:'a.xmr_recharge_valid_time', width:150, align:"center"},
+        {header:'${text('创建者')}', name:'updateBy', index:'a.update_by', width:150, align:"left"},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('更新者')}', name:'updateBy', index:'a.update_by', width:150, align:"left"},
+		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text('备注')}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+				actions.push('<a href="${ctx}/xrMemberRecharge/form?xmrCode='+row.xmrCode+'" class="btnList" title="${text('编辑member_recharge')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/xrMemberRecharge/delete?xmrCode='+row.xmrCode+'" class="btnList" title="${text('删除member_recharge')}" data-confirm="${text('确认要删除该member_recharge吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
