@@ -11,113 +11,86 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 29/03/2019 17:41:47
+ Date: 11/04/2019 09:27:39
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for member_info
+-- Table structure for xr_store
 -- ----------------------------
-DROP TABLE IF EXISTS `member_info`;
-CREATE TABLE `member_info`  (
-  `mi_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '会员编号',
-  `mi_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '会员姓名',
-  `mi_gregorian_birthday` datetime(0) NOT NULL COMMENT '公历生日',
-  `mi_sex` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '会员性别',
-  `mi_phone` int(20) NOT NULL COMMENT '手机号码',
-  `mi_outlets` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '进店渠道,例如01：别人推荐，02：网上了解',
-  `mi_mark_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标记状态:01：已标记，02：未标记',
-  `mi_member_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '会员状态:01:有效，02:无效',
-  `mi_wechat_number` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信号',
-  `mi_qq_number` int(20) NULL DEFAULT NULL COMMENT 'QQ号码',
-  `mi_email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `mi_family_phone` int(11) NULL DEFAULT NULL COMMENT '家庭电话',
-  `mi_constellation` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '星座',
-  `mi_blood_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '血型01:A,02:B,03:AB,04:O,05:其他',
-  `mi_zip_code` int(10) NULL DEFAULT NULL COMMENT '邮编',
-  `mi_family_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '家庭住址',
-  `mi_vocation` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '职业',
-  `mi_work_unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '工作单位',
-  `mi_card_number` int(30) NULL DEFAULT NULL COMMENT '会员卡号',
-  `mi_card_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '卡类别',
-  `mi_id_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '身份证号',
-  `mi_message_notice` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '消息类通知01:发送,02:不发送',
-  `mi_marketing_notice` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '营销类通知01:发送,02:不发送',
-  `mi_wechat_binding_card` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信绑卡01:微信,02:小程序',
-  `mi_photo` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员头像',
-  `mi_responsible_staff` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '负责员工',
-  `mi_member_grade` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员等级',
-  `mi_development_potential` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '发展潜质',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态（0正常 1删除 2停用）',
-  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
-  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '组织ID',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+DROP TABLE IF EXISTS `xr_store`;
+CREATE TABLE `xr_store`  (
+  `xs_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编号',
+  `XS_FUll_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '店铺全称',
+  `XS_SHORT_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '店铺简称',
+  `XS_CHAIN_CODE` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '连锁代码',
+  `XS_PHONE` bigint(64) NOT NULL COMMENT '电话',
+  `XS_ADDRESS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '地址',
+  `XS_LEVEL` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '门店级别',
+  `XS_WE_PUBLIC_ACCOUNT` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信公众号',
+  `XS_WEBSITE` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '网址',
+  `XS_MANAGE_SCOPE` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '经营范围',
+  `XS_OPENTIME` datetime(0) NULL DEFAULT NULL COMMENT '开业时间',
+  `XS_LOGO_PHOTO` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店logo',
+  `XS_PHOTO` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店展示图片',
+  `XS_LNG` int(50) NULL DEFAULT NULL COMMENT '经度',
+  `STATUS` int(1) NULL DEFAULT NULL COMMENT '状态（0正常 1删除 2停用）',
+  `XS_Lat` int(50) NULL DEFAULT NULL COMMENT '纬度',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新用户',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
-  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`mi_code`) USING BTREE
+  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
+  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '组织ID',
+  PRIMARY KEY (`xs_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of member_info
+-- Records of xr_store
 -- ----------------------------
-
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for xr_productinfo
+-- Table structure for xr_stock_control
 -- ----------------------------
-DROP TABLE IF EXISTS `xr_productinfo`;
-CREATE TABLE `xr_productinfo`  (
-  `product_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品编号',
-  `product_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品名称',
-  `xpd_statistical_class` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '统计分类01:身体管理器',
-  `xpd_depository` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存放仓库01:总仓库',
-  `xpd_bar_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '条形码',
-  `xpd_mnemonic_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '助记码',
-  `xpd_discount_category` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '折扣类别01:身体管理器',
-  `xpd_filing_time` date NOT NULL COMMENT '建档时间',
-  `xpd_standard_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标准单位01:J-件',
-  `xpd_norm_price` decimal(30, 2) NOT NULL COMMENT '标准价格单位:元/件',
-  `xpd_each_containing` bigint(30) NULL DEFAULT NULL COMMENT '每件含',
-  `xpd_time` bigint(30) NULL DEFAULT NULL COMMENT '可用时间单位:天',
-  `xpd_purchase_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '进货单位01:件',
-  `xpd_purchased` bigint(30) NULL DEFAULT NULL COMMENT '进货成本单位:元/件',
-  `xpd_each` bigint(30) NULL DEFAULT NULL COMMENT '每含单位:件',
-  `xpd_supplier` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '供应商01:芜湖制造公司',
-  `xpd_marketint_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '消耗单位02:芜湖美丽妈妈',
-  `xpd_consumption_cost` decimal(30, 2) NULL DEFAULT NULL COMMENT '消耗成本单位:元',
-  `xpd_marketint_cost` decimal(30, 2) NULL DEFAULT NULL COMMENT '销售成本单位:元/件',
-  `xpd_quality_time` bigint(30) NULL DEFAULT NULL COMMENT '保质期单位:天',
-  `xpd_rule_desccription` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '规格描述',
-  `xpd_membership_prices` decimal(30, 2) NULL DEFAULT NULL COMMENT '会员价格',
-  `xpd_store_price` decimal(30, 2) NULL DEFAULT NULL COMMENT '门店价格',
-  `xpd_return_interval` bigint(30) NULL DEFAULT NULL COMMENT '回访间隔单位:天',
-  `xpd_max_stock` bigint(30) NULL DEFAULT NULL COMMENT '最高存量单位:件',
-  `xpd_safety_stock` bigint(30) NULL DEFAULT NULL COMMENT '安全存量单位:件',
-  `xpd_isGift` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '是否赠送01:是;02:否',
-  `xpd_isDiscountinued` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '是否停用01:是;02:否',
-  `xpd_end_sale` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '停止销售01:是;02:否',
-  `xpd_copy_cost_price` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '可拷贝成本价格01:是;02:否',
-  `xpd_remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '产品备注',
-  `status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态',
-  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
-  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '组织ID',
+DROP TABLE IF EXISTS `xr_stock_control`;
+CREATE TABLE `xr_stock_control`  (
+  `matter_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '物料编号',
+  `matter_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '物料名称',
+  `xsc_in_time` date NULL DEFAULT NULL COMMENT '入库时间',
+  `xsc_in_numr` bigint(30) NULL DEFAULT NULL COMMENT '入库数量',
+  `xsc_in_emp` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '入库员工姓名',
+  `xsc_in_current_num` bigint(30) NULL DEFAULT NULL COMMENT '入库前当前库存',
+  `xsc_in_new_num` bigint(30) NULL DEFAULT NULL COMMENT '入库后最新库存',
+  `xsc_out_emp` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '物料领用人',
+  `xsc_out_time` date NULL DEFAULT NULL COMMENT '物料领用日期',
+  `xsc_out_num` bigint(30) NULL DEFAULT NULL COMMENT '领用数量',
+  `xsc_out_current_num` bigint(30) NULL DEFAULT NULL COMMENT '出库前当前存量',
+  `xsc_out_new_num` bigint(30) NULL DEFAULT NULL COMMENT '出库后最新存量：当前存量-消耗成本/销售成本',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`product_code`) USING BTREE
+  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
+  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '组织ID',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态',
+  `product_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '产品名称',
+  `product_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '产品编号',
+  `xpd_statistical_class` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '统计分类',
+  `xpd_depository` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '存放仓库',
+  `xpd_max_stock` bigint(30) NULL DEFAULT NULL COMMENT '最高存量',
+  `xpd_safety_stock` bigint(30) NULL DEFAULT NULL COMMENT '安全存量',
+  PRIMARY KEY (`matter_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of xr_productinfo
+-- Records of xr_stock_control
 -- ----------------------------
 
 
@@ -169,46 +142,62 @@ CREATE TABLE `xr_projectinfo`  (
 -- Records of xr_projectinfo
 -- ----------------------------
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for xr_store
+-- Table structure for xr_productinfo
 -- ----------------------------
-DROP TABLE IF EXISTS `xr_store`;
-CREATE TABLE `xr_store`  (
-  `xs_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编号',
-  `XS_FUll_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '店铺全称',
-  `XS_SHORT_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '店铺简称',
-  `XS_CHAIN_CODE` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '连锁代码',
-  `XS_PHONE` bigint(64) NOT NULL COMMENT '电话',
-  `XS_ADDRESS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '地址',
-  `XS_LEVEL` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '门店级别',
-  `XS_WE_PUBLIC_ACCOUNT` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信公众号',
-  `XS_WEBSITE` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '网址',
-  `XS_MANAGE_SCOPE` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '经营范围',
-  `XS_OPENTIME` datetime(0) NULL DEFAULT NULL COMMENT '开业时间',
-  `XS_LOGO_PHOTO` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店logo',
-  `XS_PHOTO` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店展示图片',
-  `XS_LNG` int(50) NULL DEFAULT NULL COMMENT '经度',
-  `STATUS` int(1) NULL DEFAULT NULL COMMENT '状态（0正常 1删除 2停用）',
-  `XS_Lat` int(50) NULL DEFAULT NULL COMMENT '纬度',
-  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
-  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+DROP TABLE IF EXISTS `xr_productinfo`;
+CREATE TABLE `xr_productinfo`  (
+  `product_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品编号',
+  `product_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品名称',
+  `xpd_statistical_class` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '统计分类01:身体管理器',
+  `xpd_depository` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '存放仓库01:总仓库',
+  `xpd_bar_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '条形码',
+  `xpd_mnemonic_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '助记码',
+  `xpd_discount_category` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '折扣类别01:身体管理器',
+  `xpd_filing_time` date NOT NULL COMMENT '建档时间',
+  `xpd_standard_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '标准单位01:J-件',
+  `xpd_norm_price` decimal(30, 2) NOT NULL COMMENT '标准价格单位:元/件',
+  `xpd_each_containing` bigint(30) NULL DEFAULT NULL COMMENT '每件含',
+  `xpd_time` bigint(30) NULL DEFAULT NULL COMMENT '可用时间单位:天',
+  `xpd_purchase_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '进货单位01:件',
+  `xpd_purchased` bigint(30) NULL DEFAULT NULL COMMENT '进货成本单位:元/件',
+  `xpd_each` bigint(30) NULL DEFAULT NULL COMMENT '每含单位:件',
+  `xpd_supplier` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '供应商01:芜湖制造公司',
+  `xpd_marketint_unit` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '消耗单位02:芜湖美丽妈妈',
+  `xpd_consumption_cost` decimal(30, 2) NULL DEFAULT NULL COMMENT '消耗成本单位:元',
+  `xpd_marketint_cost` decimal(30, 2) NULL DEFAULT NULL COMMENT '销售成本单位:元/件',
+  `xpd_quality_time` bigint(30) NULL DEFAULT NULL COMMENT '保质期单位:天',
+  `xpd_rule_desccription` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '规格描述',
+  `xpd_membership_prices` decimal(30, 2) NULL DEFAULT NULL COMMENT '会员价格',
+  `xpd_store_price` decimal(30, 2) NULL DEFAULT NULL COMMENT '门店价格',
+  `xpd_return_interval` bigint(30) NULL DEFAULT NULL COMMENT '回访间隔单位:天',
+  `xpd_max_stock` bigint(30) NULL DEFAULT NULL COMMENT '最高存量单位:件',
+  `xpd_safety_stock` bigint(30) NULL DEFAULT NULL COMMENT '安全存量单位:件',
+  `xpd_isGift` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '是否赠送01:是;02:否',
+  `xpd_isDiscountinued` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '是否停用01:是;02:否',
+  `xpd_end_sale` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '停止销售01:是;02:否',
+  `xpd_copy_cost_price` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '可拷贝成本价格01:是;02:否',
+  `xpd_remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '产品备注',
+  `status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态',
   `user_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户ID',
-  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '组织ID',
-  PRIMARY KEY (`xs_code`) USING BTREE
+  `office_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '组织ID',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
+  `state` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态',
+  PRIMARY KEY (`product_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of xr_store
+-- Records of xr_productinfo
 -- ----------------------------
+
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -218,7 +207,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `xr_member_recharge`;
 CREATE TABLE `xr_member_recharge`  (
-  `xmr_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '异地单号',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '异地单号',
   `xmr_date` date NULL DEFAULT NULL COMMENT '异动日期',
   `mi_card_number` bigint(30) NULL DEFAULT NULL COMMENT '会员卡号',
   `mi_card_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '卡类别',
@@ -248,10 +237,12 @@ CREATE TABLE `xr_member_recharge`  (
   `xs_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店编号',
   `XS_FUll_NAME` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '门店名称',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建者',
-  PRIMARY KEY (`xmr_code`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xr_member_recharge
 -- ----------------------------
+
+
 
