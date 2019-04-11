@@ -54,11 +54,11 @@ public class XrProductinfoService extends CrudService<XrProductinfoDao, XrProduc
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrProductinfo xrProductinfo) {
-		if(xrProductinfo.getIsNewRecord()){
+		/*if(xrProductinfo.getIsNewRecord()){
 			String officeCode = EmpUtils.getOffice().getOfficeCode();
 			String s = StringUtils.getRandomNum(3);
             xrProductinfo.setProductCode(officeCode+s);
-		}
+		}*/
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();

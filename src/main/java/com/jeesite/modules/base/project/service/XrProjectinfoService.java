@@ -5,6 +5,9 @@ package com.jeesite.modules.base.project.service;
 
 import java.util.List;
 
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +54,17 @@ public class XrProjectinfoService extends CrudService<XrProjectinfoDao, XrProjec
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrProjectinfo xrProjectinfo) {
+
+		if(xrProjectinfo.getIsNewRecord()){
+			String officeCode = EmpUtils.getOffice().getOfficeCode();
+			String s = StringUtils.getRandomNum(3);
+			xrProjectinfo.setProjectCode(officeCode+s);
+		}
+
+		String user = UserUtils.getUser().getCurrentUser().getUserCode();
+		String office = EmpUtils.getOffice().getOfficeCode();
+		xrProjectinfo.setUserCode(user);
+		xrProjectinfo.setOfficeCode(office);
 		super.save(xrProjectinfo);
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(xrProjectinfo.getId(), "xrProjectinfo_image");

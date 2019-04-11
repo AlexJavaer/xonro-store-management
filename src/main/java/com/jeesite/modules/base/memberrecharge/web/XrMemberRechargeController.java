@@ -6,10 +6,14 @@ package com.jeesite.modules.base.memberrecharge.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
-import com.jeesite.modules.base.xr.entity.XrStore;
 import com.jeesite.modules.base.xr.service.XrStoreService;
+import com.jeesite.modules.sys.entity.Office;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +28,9 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
 import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * member_rechargeController
@@ -45,7 +52,7 @@ public class XrMemberRechargeController extends BaseController {
 	private XrStoreService xrStoreService;
 
 
-	
+
 	/**
 	 * 获取数据
 	 */
@@ -53,7 +60,7 @@ public class XrMemberRechargeController extends BaseController {
 	public XrMemberRecharge get(String xmrCode, boolean isNewRecord) {
 		return xrMemberRechargeService.get(xmrCode, isNewRecord);
 	}
-	
+
 	/**
 	 * 查询列表
 	 */
@@ -62,14 +69,14 @@ public class XrMemberRechargeController extends BaseController {
 		model.addAttribute("xrMemberRecharge", xrMemberRecharge);
 		return "modules/memberrecharge/xrMemberRechargeList";
 	}
-	
+
 	/**
 	 * 查询列表数据
 	 */
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<XrMemberRecharge> listData(XrMemberRecharge xrMemberRecharge, HttpServletRequest request, HttpServletResponse response) {
-		Page<XrMemberRecharge> page = xrMemberRechargeService.findPage(new Page<XrMemberRecharge>(request, response), xrMemberRecharge); 
+		Page<XrMemberRecharge> page = xrMemberRechargeService.findPage(new Page<XrMemberRecharge>(request, response), xrMemberRecharge);
 		return page;
 	}
 
@@ -78,6 +85,10 @@ public class XrMemberRechargeController extends BaseController {
 	 */
 	@RequestMapping(value = "form")
 	public String form(XrMemberRecharge xrMemberRecharge, Model model) {
+		if (xrMemberRecharge.getIsNewRecord()) {
+			String  ids = xrMemberRecharge.getId();
+			xrMemberRecharge.setId(ids+1);
+		}
 		model.addAttribute("xrMemberRecharge", xrMemberRecharge);
 		return "modules/memberrecharge/xrMemberRechargeForm";
 	}
@@ -89,31 +100,31 @@ public class XrMemberRechargeController extends BaseController {
 	@ResponseBody
 	public String save(@Validated XrMemberRecharge xrMemberRecharge) {
 		xrMemberRechargeService.save(xrMemberRecharge);
-		return renderResult(Global.TRUE, text("保存member_recharge成功！"));
+		return renderResult(Global.TRUE, text("保存会员充值资料成功！"));
 	}
-	
+
 	/**
 	 * 停用member_recharge
 	 */
-	@RequestMapping(value = "disable")
+	/*@RequestMapping(value = "disable")
 	@ResponseBody
 	public String disable(XrMemberRecharge xrMemberRecharge) {
 		xrMemberRecharge.setStatus(XrMemberRecharge.STATUS_DISABLE);
 		xrMemberRechargeService.updateStatus(xrMemberRecharge);
 		return renderResult(Global.TRUE, text("停用member_recharge成功"));
 	}
-	
-	/**
+
+	*//**
 	 * 启用member_recharge
-	 */
+	 *//*
 	@RequestMapping(value = "enable")
 	@ResponseBody
 	public String enable(XrMemberRecharge xrMemberRecharge) {
 		xrMemberRecharge.setStatus(XrMemberRecharge.STATUS_NORMAL);
 		xrMemberRechargeService.updateStatus(xrMemberRecharge);
 		return renderResult(Global.TRUE, text("启用member_recharge成功"));
-	}
-	
+	}*/
+
 	/**
 	 * 删除member_recharge
 	 */
@@ -121,7 +132,34 @@ public class XrMemberRechargeController extends BaseController {
 	@ResponseBody
 	public String delete(XrMemberRecharge xrMemberRecharge) {
 		xrMemberRechargeService.delete(xrMemberRecharge);
-		return renderResult(Global.TRUE, text("删除member_recharge成功！"));
+		return renderResult(Global.TRUE, text("删除会员充值资料成功！"));
 	}
-	
+
+	/*@RequiresPermissions({"user"})*/
+	@RequestMapping({"treeData"})
+	@ResponseBody
+	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode, String isShowFullName, String ctrlPermi,String miCode,String miName ) {
+		List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		MemberInfo where =  new MemberInfo();
+		where.setStatus("0");
+		where.setMiCode(miCode);
+		List<MemberInfo> list = this.memberInfoService.findList(where);
+
+		for(int i = 0; i < list.size(); ++i) {
+			MemberInfo mi = (MemberInfo)list.get(i);
+			if ("0".equals(mi.getStatus()) && (!StringUtils.isNotBlank(excludeCode) || !mi.getId().equals(excludeCode) && !mi.getMiCode().contains("," + excludeCode + ",")) && (!StringUtils.isNotBlank(miCode))) {
+				Map<String, Object> map = MapUtils.newHashMap();
+				map.put("miCode", mi.getMiCode());
+				String name = mi.getMiName();
+				if ("true".equals(isShowFullName) || "1".equals(isShowFullName)) {
+					name = mi.getMiName();
+				}
+
+				mapList.add(map);
+			}
+		}
+
+		return mapList;
+	}
+
 }

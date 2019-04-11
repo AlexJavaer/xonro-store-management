@@ -26,7 +26,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 @Transactional(readOnly=true)
 @SuppressWarnings("all")
 public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, XrMemberRecharge> {
-	
+
 	/**
 	 * 获取单条数据
 	 * @param xrMemberRecharge
@@ -36,7 +36,7 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	public XrMemberRecharge get(XrMemberRecharge xrMemberRecharge) {
 		return super.get(xrMemberRecharge);
 	}
-	
+
 	/**
 	 * 查询分页数据
 	 * @param page 分页对象
@@ -47,7 +47,7 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	public Page<XrMemberRecharge> findPage(Page<XrMemberRecharge> page, XrMemberRecharge xrMemberRecharge) {
 		return super.findPage(page, xrMemberRecharge);
 	}
-	
+
 	/**
 	 * 保存数据（插入或更新）
 	 * @param xrMemberRecharge
@@ -56,9 +56,15 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	@Transactional(readOnly=false)
 	public void save(XrMemberRecharge xrMemberRecharge) {
 		if(xrMemberRecharge.getIsNewRecord()){
-			String officeCode = EmpUtils.getOffice().getOfficeCode();
+			//String officeCode = EmpUtils.getOffice().getOfficeCode();
 			String s = StringUtils.getRandomNum(3);
-			xrMemberRecharge.setXmrCode(officeCode+s);
+			xrMemberRecharge.setId(s);
+
+
+
+
+
+
 			//最新余额变动
 		/*Long newBalance;
 		if(xrMemberRecharge.getXmrGiftAccount()!= null && "".equals(xrMemberRecharge.getXmrGiftAccount())){
@@ -77,7 +83,7 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(xrMemberRecharge.getId(), "xrMemberRecharge_file");
 	}
-	
+
 	/**
 	 * 更新状态
 	 * @param xrMemberRecharge
@@ -87,7 +93,7 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	public void updateStatus(XrMemberRecharge xrMemberRecharge) {
 		super.updateStatus(xrMemberRecharge);
 	}
-	
+
 	/**
 	 * 删除数据
 	 * @param xrMemberRecharge
@@ -97,5 +103,5 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	public void delete(XrMemberRecharge xrMemberRecharge) {
 		super.delete(xrMemberRecharge);
 	}
-	
+
 }

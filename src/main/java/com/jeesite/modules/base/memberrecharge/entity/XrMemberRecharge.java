@@ -7,7 +7,9 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jeesite.modules.base.member.entity.MemberInfo;
 import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotNull;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -17,10 +19,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * memberRechargeEntity
  * @author Crysta-hu
- * @version 2019-04-09
+ * @version 2019-04-10
  */
 @Table(name="xr_member_recharge", alias="a", columns={
-		@Column(name="xmr_code", attrName="xmrCode", label="异地单号", isPK=true),
+		@Column(name="id", attrName="id", label="异地单号", isPK=true),
 		@Column(name="xmr_date", attrName="xmrDate", label="异动日期"),
 		@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
 		@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
@@ -39,18 +41,28 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="xmr_latest_balance", attrName="xmrLatestBalance", label="最新余额"),
 		@Column(name="xmr_payment_mode", attrName="xmrPaymentMode", label="支付方式"),
 		@Column(name="xmr_recharge_valid_time", attrName="xmrRechargeValidTime", label="充值有效日期"),
+		@Column(name="xs_code", attrName="xsCode", label="门店编号"),
+		@Column(name="xs_full_name", attrName="xsFullName", label="门店名称", queryType=QueryType.LIKE),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
-		@Column(name="xmr_status", attrName="xmrStatus", label="状态"),
-		@Column(name="xs_code", attrName="xsCode", label="门店编号"),
-		@Column(name="xs_full_name", attrName="xsFullName", label="门店名称", queryType=QueryType.LIKE),
+		@Column(name="xmr_status", attrName="xmrStatus", label="状态")}
+		, joinTable={
+		@JoinTable(type=Type.LEFT_JOIN, entity= MemberInfo.class, attrName="miName", alias="mn10",
+				on="mn10.office_code = a.office_code", columns={
+				@Column(name="mi_code", label="产品编码", isPK=true),
+				@Column(name="mi_name", label="产品名称", isQuery=false),
+				@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
+				@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
+		}),
+
+
 	}, orderBy="a.update_date DESC"
 )
 public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	
 	private static final long serialVersionUID = 1L;
-	private String xmrCode;		// 异地单号
+	private String id;
 	private Date xmrDate;		// 异动日期
 	private Long miCardNumber;		// 会员卡号
 	private String miCardType;		// 卡类别
@@ -74,7 +86,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	private String xmrStatus;		// 状态
 	private String xsCode;		// 门店编号
 	private String xsFullName;		// 门店名称
-	
+
 	public XrMemberRecharge() {
 		this(null);
 	}
@@ -82,15 +94,16 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	public XrMemberRecharge(String id){
 		super(id);
 	}
-	
-	public String getXmrCode() {
-		return xmrCode;
+	@Override
+	public String getId() {
+		return id;
 	}
 
-	public void setXmrCode(String xmrCode) {
-		this.xmrCode = xmrCode;
+	@Override
+	public void setId(String id) {
+		this.id = id;
 	}
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getXmrDate() {
 		return xmrDate;
@@ -170,6 +183,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 		this.xmrReserveValue = xmrReserveValue;
 	}
 	
+	@NotNull(message="储值金额不能为空")
 	public Long getXmrSaveMoney() {
 		return xmrSaveMoney;
 	}
