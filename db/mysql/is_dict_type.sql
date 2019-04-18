@@ -262,8 +262,15 @@ INSERT INTO `js_sys_dict_data` VALUES ('1115180541698297856', '0', '0,', 30, '00
 INSERT INTO `js_sys_dict_data` VALUES ('1115180586942255104', '0', '0,', 40, '0000000040,', '1', 0, '支付宝转账', '支付宝转账', '04', 'xmr_payment_mode', '0', '', '', '', '0', 'system', '2019-04-08 17:12:26', 'system', '2019-04-08 17:12:26', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1115264143575351296', '0', '0,', 10, '0000000010,', '1', 0, '储值账户', '储值账户', '01', 'xmr_account_type', '0', '', '', '', '0', 'system', '2019-04-08 22:44:27', 'system', '2019-04-08 22:44:27', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `js_sys_dict_data` VALUES ('1115264207978889216', '0', '0,', 20, '0000000020,', '1', 0, '疗程账户', '疗程账户', '02', 'xmr_account_type', '0', '', '', '', '0', 'system', '2019-04-08 22:44:42', 'system', '2019-04-08 22:44:42', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117962412052152320', '0', '0,', 30, '0000000030,', '1', 0, '会员', '会员', '01', 'cm_is_member', '0', '', '', '', '0', 'system', '2019-04-16 09:26:24', 'system', '2019-04-16 09:26:24', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117962479005827072', '0', '0,', 40, '0000000040,', '1', 0, '非会员', '非会员', '02', 'cm_is_member', '0', '', '', '', '0', 'system', '2019-04-16 09:26:40', 'system', '2019-04-16 09:26:40', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117962929532796928', '0', '0,', 10, '0000000010,', '1', 0, '新客', '新客', '01', 'cm_customer_type', '0', '', '', '', '0', 'system', '2019-04-16 09:28:28', 'system', '2019-04-16 09:28:28', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117963002333331456', '0', '0,', 20, '0000000020,', '1', 0, '老客', '老客', '02', 'cm_customer_type', '0', '', '', '', '0', 'system', '2019-04-16 09:28:45', 'system', '2019-04-16 09:28:45', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117963463396392960', '0', '0,', 30, '0000000030,', '1', 0, '有效', '有效', '01', 'cm_status', '0', '', '', '', '0', 'system', '2019-04-16 09:30:35', 'system', '2019-04-16 09:30:35', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `js_sys_dict_data` VALUES ('1117963520363429888', '0', '0,', 20, '0000000020,', '1', 0, '无效', '无效', '02', 'cm_status', '0', '', '', '', '0', 'system', '2019-04-16 09:30:49', 'system', '2019-04-16 09:30:49', '', '0', 'JeeSite', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
 
 
 
@@ -280,7 +287,7 @@ SET FOREIGN_KEY_CHECKS = 1;
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 09/04/2019 19:16:33
+ Date: 18/04/2019 18:55:16
 */
 
 SET NAMES utf8mb4;
@@ -369,5 +376,8 @@ INSERT INTO `js_sys_dict_type` VALUES ('1115065573890973696', '经营范围', 'X
 INSERT INTO `js_sys_dict_type` VALUES ('1115179631551107072', '异动方式', 'transaction_mode', '0', '0', 'system', '2019-04-08 17:08:38', 'system', '2019-04-08 17:08:38', '');
 INSERT INTO `js_sys_dict_type` VALUES ('1115180111509508096', '支付方式', 'xmr_payment_mode', '0', '0', 'system', '2019-04-08 17:10:32', 'system', '2019-04-08 17:10:32', '');
 INSERT INTO `js_sys_dict_type` VALUES ('1115264025593774080', '账户类别', 'xmr_account_type', '0', '0', 'system', '2019-04-08 22:43:59', 'system', '2019-04-08 22:43:59', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1117962327444652032', '是否是会员', 'cm_is_member', '0', '0', 'system', '2019-04-16 09:26:04', 'system', '2019-04-16 09:26:04', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1117962837669150720', '客户种类', 'cm_customer_type', '0', '0', 'system', '2019-04-16 09:28:06', 'system', '2019-04-16 09:28:06', '');
+INSERT INTO `js_sys_dict_type` VALUES ('1117963365950128128', '单据状态', 'cm_status', '0', '0', 'system', '2019-04-16 09:30:12', 'system', '2019-04-16 09:30:12', '');
 
 SET FOREIGN_KEY_CHECKS = 1;
