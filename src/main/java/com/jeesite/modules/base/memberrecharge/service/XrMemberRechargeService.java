@@ -4,10 +4,15 @@
 package com.jeesite.modules.base.memberrecharge.service;
 
 import java.util.List;
-
+import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
+import com.jeesite.modules.base.member.dao.MemberInfoDao;
+import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.xr.dao.XrStoreDao;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +32,11 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 @SuppressWarnings("all")
 public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, XrMemberRecharge> {
 
+	@Autowired
+	private XrMemberRechargeDao xrMemberRechargeDao;
+	private MemberInfoDao memberInfoDao;
+	private XrStoreDao xrStoreDao;
+
 	/**
 	 * 获取单条数据
 	 * @param xrMemberRecharge
@@ -45,8 +55,22 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	 */
 	@Override
 	public Page<XrMemberRecharge> findPage(Page<XrMemberRecharge> page, XrMemberRecharge xrMemberRecharge) {
+		QueryDataScope sss = xrMemberRecharge.getSqlMap().getDataScope().addFilter("dsf", "Office",
+				"a.office_code", "a.user_code", DataScope.CTRL_PERMI_MANAGE);
 		return super.findPage(page, xrMemberRecharge);
 	}
+
+	/*public Page findPageByParam(Map map) {
+		//获取page对象
+		Page page = (Page)map.get("xrMemberRecharge");
+		//查询关联后的会员充值数据表
+		List list= xrMemberRechargeDao.findPageBYParam(map);
+		page.setList(list);
+		//查询统计总条数
+		page.setCount(xrMemberRechargeDao.byParamCount(map));
+		//返回page
+		return page;
+	}*/
 
 	/**
 	 * 保存数据（插入或更新）
@@ -55,7 +79,7 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrMemberRecharge xrMemberRecharge) {
-		if(xrMemberRecharge.getIsNewRecord()){
+		if(!xrMemberRecharge.getIsNewRecord()){
 			//String officeCode = EmpUtils.getOffice().getOfficeCode();
 			String s = StringUtils.getRandomNum(3);
 			xrMemberRecharge.setId(s);
@@ -102,6 +126,10 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	@Transactional(readOnly=false)
 	public void delete(XrMemberRecharge xrMemberRecharge) {
 		super.delete(xrMemberRecharge);
+	}
+
+	public List<MemberInfo> findDataMemberList(MemberInfo memberInfo) {
+		return this.memberInfoDao.findList(memberInfo);
 	}
 
 }

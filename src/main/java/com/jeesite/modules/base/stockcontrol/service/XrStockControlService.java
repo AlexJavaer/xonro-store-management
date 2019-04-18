@@ -5,7 +5,9 @@ package com.jeesite.modules.base.stockcontrol.service;
 
 import java.util.List;
 
+import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,8 @@ public class XrStockControlService extends CrudService<XrStockControlDao, XrStoc
 	 */
 	@Override
 	public Page<XrStockControl> findPage(Page<XrStockControl> page, XrStockControl xrStockControl) {
+		QueryDataScope sss = xrStockControl.getSqlMap().getDataScope().addFilter("dsf", "Office",
+				"a.office_code", "a.user_code", DataScope.CTRL_PERMI_MANAGE);
 		return super.findPage(page, xrStockControl);
 	}
 	

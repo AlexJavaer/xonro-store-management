@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.provider.InsertSqlProvider;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.xr.service.XrStoreService;
+import com.jeesite.modules.config.MyBatisConfig;
 import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.test.entity.TestTree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
 import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +80,14 @@ public class XrMemberRechargeController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<XrMemberRecharge> listData(XrMemberRecharge xrMemberRecharge, HttpServletRequest request, HttpServletResponse response) {
+		//实例化page对象
+		/*Page page = new Page<XrMemberRecharge>(request, response);
+		//设置分页数
+		page.setPageSize(20);
+		//参数map
+		Map map=new HashMap();
+		map.put("xrMemberRecharge",xrMemberRecharge);
+		page = xrMemberRechargeService.findPageByParam(map);*/
 		Page<XrMemberRecharge> page = xrMemberRechargeService.findPage(new Page<XrMemberRecharge>(request, response), xrMemberRecharge);
 		return page;
 	}
@@ -84,11 +96,12 @@ public class XrMemberRechargeController extends BaseController {
 	 * 查看编辑表单
 	 */
 	@RequestMapping(value = "form")
-	public String form(XrMemberRecharge xrMemberRecharge, Model model) {
+	public String form(XrMemberRecharge xrMemberRecharge, Model model,MemberInfo memberInfo) {
 		if (xrMemberRecharge.getIsNewRecord()) {
 			String  ids = xrMemberRecharge.getId();
 			xrMemberRecharge.setId(ids+1);
 		}
+
 		model.addAttribute("xrMemberRecharge", xrMemberRecharge);
 		return "modules/memberrecharge/xrMemberRechargeForm";
 	}
@@ -136,20 +149,34 @@ public class XrMemberRechargeController extends BaseController {
 	}
 
 	/*@RequiresPermissions({"user"})*/
-	@RequestMapping({"treeData"})
+	/*@RequestMapping({"treeData"})
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode, String isShowFullName, String ctrlPermi,String miCode,String miName ) {
-		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		MemberInfo where =  new MemberInfo();
-		where.setStatus("0");
-		where.setMiCode(miCode);
-		List<MemberInfo> list = this.memberInfoService.findList(where);
+	public String  treeData( ) {
+		*//*List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		*//**//*MemberInfo where =  new MemberInfo();*//**//*
+		*//**//*where.setStatus("0");
+		where.setMiCode(miCode);*//**//*
+		List<MemberInfo> list = this.memberInfoService.findList(new MemberInfo());
 
 		for(int i = 0; i < list.size(); ++i) {
 			MemberInfo mi = (MemberInfo)list.get(i);
+			// 过滤非正常的数据
+			if (!TestTree.STATUS_NORMAL.equals(mi.getStatus())){
+				continue;
+			}
+			// 过滤被排除的编码（包括所有子级）
+			if (StringUtils.isNotBlank(excludeCode)){
+				if (mi.getId().equals(excludeCode)){
+					continue;
+				}
+				if (mi.getMiCode().contains("," + excludeCode + ",")){
+					continue;
+				}
+			}
 			if ("0".equals(mi.getStatus()) && (!StringUtils.isNotBlank(excludeCode) || !mi.getId().equals(excludeCode) && !mi.getMiCode().contains("," + excludeCode + ",")) && (!StringUtils.isNotBlank(miCode))) {
 				Map<String, Object> map = MapUtils.newHashMap();
-				map.put("miCode", mi.getMiCode());
+				map.put("id", mi.getId());
+				map.put("pId", mi.getMiCode());
 				String name = mi.getMiName();
 				if ("true".equals(isShowFullName) || "1".equals(isShowFullName)) {
 					name = mi.getMiName();
@@ -159,7 +186,10 @@ public class XrMemberRechargeController extends BaseController {
 			}
 		}
 
-		return mapList;
+		return mapList;*//*
+		return "modules/xrMemberRecharge/xrMemberRechargeTabList";
 	}
+*/
+
 
 }

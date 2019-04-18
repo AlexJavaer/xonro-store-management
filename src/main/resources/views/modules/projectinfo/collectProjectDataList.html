@@ -1,0 +1,105 @@
+<% layout('/layouts/default.html', {title: '项目信息管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('项目信息')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${projectInfoData}" action="${ctx}/projectInfo/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('项目编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectCode" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+            <div class="form-group">
+                <label class="control-label">${text('项目名称')}：</label>
+                <div class="control-inline">
+					<#form:input path="projectName" maxlength="200" class="form-control width-120"/>
+                </div>
+            </div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+		<div class="row">
+			<div class="col-xs-10 pr10">
+				<table id="dataGrid"></table>
+				<div id="dataGridPage"></div>
+			</div>
+			<div class="col-xs-2 pl0">
+				<div id="selectData" class="tags-input"></div>
+			</div>
+		</div>
+		</div>
+	<div class="box-footer" style="padding:8px">
+		<div class="row" style="float:right;padding-right: 35px">
+			<div class="layui-layer-btn"><a class="layui-layer-btn0"><i class="fa fa-check"></i> 确定</a><a class="layui-layer-btn1"><i class="fa fa-close"></i> 关闭</a></div>
+		</div>
+	</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+/*var selectData = ${isNotBlank(selectData!) ? selectData! : "{\}"},
+selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("项目编号")}', name:'projectCode', index:'a.project_code', width:150, align:"center", frozen:true,sortable:true, formatter: function(val, obj, row, act){
+		    console.log(row);
+			return '<a href="${ctx}/projectInfo/form?id='+row.projectCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("项目名称")}', name:'projectName', index:'a.project_name', width:150, align:"center"},
+        {header:'${text("标准价格")}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"center"},
+        {header:'${text("折扣类别")}', name:'miCardNumber', index:'a.mi_card_number', width:150, align:"center",formatter: function(val, obj, row, act){
+    		return js.getDictLabel(${@DictUtils.getDictListJson('xp_discount_cate')}, val, '${text("未知")}', true);
+		}},
+        {header:'${text("统计分类")}', name:'xpStatisticalClass', index:'a.xp_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){
+    		return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_class')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("归属部门")}', name:'xpStatisticalDept', index:'a.xp_statistical_dept', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_dept')}, val, '${text("未知")}', true);
+		}},
+        {header:'${text("回访间隔天数")}', name:'xpReturnInterval', index:'a.xp_return_interval', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('mi_mark_status')}, val, '${text("未知")}', true);
+		}},
+        {header:'${text("助记码")}', name:'xpMnemonicCode', index:'a.xp_mnemonic_code', width:150, align:"center"},
+        {header:'${text("停用")}', name:'xpIsblockup', index:'a.xp_isblockup', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('xp_isBlockUp')}, val, '${text("未知")}', true);
+            }},
+        {header:'${text("备注")}', name:'xpRemarks', index:'a.xp_remarks', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+				actions.push('<a href="${ctx}/projectInfo/form?id='+row.projectCode+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/projectInfo/delete?id='+row.projectCode+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			return actions.join('');
+		}},
+
+        {header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){
+                return JSON.stringify(row);
+            }},
+	],
+    autoGridHeight: function(){
+        var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 73;
+        $('.tags-input').height($('.ui-jqgrid').height() - 10);
+        return height;
+    },
+    showCheckbox: '${checkbox!}' == 'true',
+
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+        $.each(selectData, function(key, value){
+            dataGrid.dataGrid('setSelectRow', key);
+        });
+        initSelectTag();
+	}
+});*/
+</script>

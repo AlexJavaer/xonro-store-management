@@ -6,3 +6,63 @@
     background: url("../image/bg.jpg") no-repeat center top;
     background-size: cover;
 }
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+}
+
+.layui-card:last-child{
+    margin-bottom: 30px;
+}
+.layui-card-body {
+    border:solid 1px #F2F2F2;
+    border-top-width:2px;
+    position: relative;
+
+}
+.layui-tab-brief>.layui-tab-title .layui-this {
+    font-size: 16px;
+    font-weight: bold;
+}
+.form-unit {
+    font-size: 18px;
+}
+
+.form-group .control-label {
+    font-weight: bolder;
+}
+.layui-card-body{
+    padding: 20px 15px;
+}
+
+.box-main>.box-header .box-title {
+    font-size: 16px;
+}
+
+.btn-default {
+    background-color: #c1e111;
+}
+
+.ui-jqgrid .ui-jqgrid-htable th div {
+    font-weight: 700;
+}
+.form-control {
+    border-radius: 5px;
+}
+
+.select2-container .select2-selection--multiple {
+    border-radius: 5px;
+}
+.select2-container .select2-selection--single{
+    border-radius: 5px;
+}
+.layui-tab-title{
+    padding-left: 25px;
+}
+
+.layui-tab-title li {
+    font-weight: bold;
+}

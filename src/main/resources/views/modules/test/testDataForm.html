@@ -262,8 +262,8 @@ $("#testDataChildDataGrid").dataGrid({
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('treeselectTpl', {
-						id: 'user_'+editOptions.id, title: '用户选择', 
-						name: 'testUser.userCode', value: val.split('|')[0], 
+						id: 'user_'+editOptions.id, title: '用户选择',
+                        name: 'testUser.userCode', value: val.split('|')[0],
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
 					});

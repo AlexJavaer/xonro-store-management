@@ -20,7 +20,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author Crysta-hu
  * @version 2019-04-10
  */
-@Table(name="xr_stock_control", alias="a", columns={
+@Table(name="xr_stock_control", alias="a",extWhereKeys="dsf", columns={
 		@Column(name="matter_code", attrName="matterCode", label="物料编号", isPK=true),
 		@Column(name="matter_name", attrName="matterName", label="物料名称", queryType=QueryType.LIKE),
 		@Column(name="xsc_in_time", attrName="xscInTime", label="入库时间"),

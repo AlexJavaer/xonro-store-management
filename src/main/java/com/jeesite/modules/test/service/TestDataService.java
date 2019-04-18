@@ -80,15 +80,15 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		FileUploadUtils.saveFileUpload(testData.getId(), "testData_file");
 		// 保存 TestData子表
 		for (TestDataChild testDataChild : testData.getTestDataChildList()){
-			if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
-				testDataChild.setTestData(testData);
-				if (testDataChild.getIsNewRecord()){
-					testDataChild.preInsert();
-					testDataChildDao.insert(testDataChild);
-				}else{
-					testDataChild.preUpdate();
-					testDataChildDao.update(testDataChild);
-				}
+					if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
+						testDataChild.setTestData(testData);
+						if (testDataChild.getIsNewRecord()){
+							testDataChild.preInsert();
+							testDataChildDao.insert(testDataChild);
+						}else{
+							testDataChild.preUpdate();
+							testDataChildDao.update(testDataChild);
+						}
 			}else{
 				testDataChildDao.delete(testDataChild);
 			}

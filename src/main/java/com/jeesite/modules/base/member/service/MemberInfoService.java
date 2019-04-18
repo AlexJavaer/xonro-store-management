@@ -3,22 +3,21 @@
  */
 package com.jeesite.modules.base.member.service;
 
+import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
-import com.jeesite.common.idgen.IdGen;
-import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.DataScopeService;
+import com.jeesite.modules.sys.entity.RoleDataScope;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.util.List;
 
 /**
  * member_infoService
@@ -29,6 +28,8 @@ import java.util.UUID;
 @Transactional(readOnly=true)
 @SuppressWarnings("all")
 public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
+	@Autowired
+	private MemberInfoDao memberInfoDao;
 
 	/**
 	 * 获取单条数据
@@ -49,11 +50,12 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Override
 	public Page<MemberInfo> findPage(Page<MemberInfo> page, MemberInfo memberInfo) {
 
-
-
+		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
+		/*List<MemberInfo> dataList = memberInfoDao.findDataList();*/
+		QueryDataScope sss = memberInfo.getSqlMap().getDataScope().addFilter("dsf", "Office",
+				"a.office_code", "a.user_code", DataScope.CTRL_PERMI_MANAGE);
 		return super.findPage(page, memberInfo);
 	}
-
 	/**
 	 * 保存数据（插入或更新）
 	 * @param memberInfo
@@ -62,11 +64,6 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Transactional(readOnly=false)
     @SuppressWarnings("all")
 	public void save(MemberInfo memberInfo) {
-		if (memberInfo.getIsNewRecord()) {
-			/*String officeCode = EmpUtils.getOffice().getOfficeCode();
-			String s = StringUtils.getRandomNum(3);
-			memberInfo.setMiCode(officeCode+s);*/
-		}
 		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String  office = EmpUtils.getOffice().getOfficeCode();
 		memberInfo.setUserCode(user);
@@ -99,5 +96,13 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	public void delete(MemberInfo memberInfo) {
 		super.delete(memberInfo);
 	}
+
+	public List<MemberInfo> findDataMemberList(MemberInfo memberInfo) {
+		return this.memberInfoDao.findList(memberInfo);
+	}
+
+
+
+
 
 }

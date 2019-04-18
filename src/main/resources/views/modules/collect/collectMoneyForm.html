@@ -1,0 +1,391 @@
+<% layout('/layouts/default.html', {title: '订单管理', libs: ['validate','fileupload','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+<style>
+
+    .layui-card:last-child{
+        margin-bottom: 30px;
+    }
+    .layui-card-body {
+        border:solid 1px #F2F2F2;
+        border-top-width:2px;
+        padding: 20px 15px;
+    }
+    .layui-tab-content{
+        padding:30px;
+    }
+
+    @media (min-width: 768px){
+        .col-sm-1 {
+            width: 12.333333%;
+        }
+    }
+</style>
+<div class="box-body" style="padding: 20px; background-color: #F2F2F2">
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(collectMoney.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${collectMoney}" action="${ctx}/collectMoney/save" method="post" class="form-horizontal">
+			<div class="box-body" style="padding:20px">
+				<div class="form-unit">${text('基本信息')}</div>
+                <div class="layui-col-md12">
+                    <div class="layui-card" style="border-width:1px 1px 1px 1px">
+                        <div class="layui-card-body">
+				<#form:hidden path="cmCode"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('消费日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmDate" readonly="true" maxlength="20" class="form-control required Wdate"
+								dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('消费门店编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmStoreCode" maxlength="128" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('消费门店名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmStoreName" maxlength="2" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>-->
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('客户姓名')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmCustomerName" maxlength="128" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('客户进店渠道')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('客户种类')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmCustomerType" dictType="cm_customer_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('客户性别')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('手机号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmCustomerPhone" maxlength="20" class="form-control digits phone required" id="phone"/>
+								<div style="color: red" id="phoneJs"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('是否是会员')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" id="form-cmIsMember"/>
+							</div>
+						</div>
+					</div>
+				</div>
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group" id="form-cmMemberCard" style="display: none">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide" >*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:input path="cmMemberCard" maxlength="20" class="form-control digits" />
+										</div>
+
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group" id="form-cmMemberType" style="display: none">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide">*</span> ${text('会员卡类别')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" id="cmMemberType"/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="form-unit">${text('账户余额')}</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('账户类别')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountType" maxlength="20" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('余额')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountBalance" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+				</div>-->
+				<!--<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('欠款')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountDebt" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+				</div>-->
+				<div class="form-unit">${text('支付明细')}</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('支付方式')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="cmPaymentType" dictType="xmr_payment_mode" blankOption="true" class="form-control required" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('金额')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmPaymentMoney" class="form-control digits required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-1" title="">
+								<span class="required hide">*</span> ${text('备注说明')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="cmRemarks" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+								<ul class="layui-tab-title">
+                                    <li class="layui-this">项目消费</li>
+                                    <li>购买产品</li>
+                                </ul>
+                                <div class="layui-tab-content">
+                                    <div class="layui-tab-item layui-show">
+										<h4 class="form-unit" style="font-size:16px">${text('项目消费表')}</h4>
+										<div class="ml10 mr10">
+											<table id="projectInfoDataChildDataGrid"></table>
+												<a href="#" id="projectInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择项目')}</a>
+											</div>
+									</div>
+                                    <div class="layui-tab-item">
+										<h4 class="form-unit" style="font-size:16px">${text('购买产品表')}</h4>
+										<div class="ml10 mr10">
+											<table id="productInfoDataChildDataGrid"></table>
+											<a href="#" id="productInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('请选择产品')}</a>
+										</div>
+									</div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+							</div>
+					<div class="box-footer" style="padding:8px">
+						<div class="row" style="float:right;padding-right: 35px">
+							<div class="col-sm-offset-2 col-sm-12">
+								<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+								<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+							</div>
+						</div>
+					</div>
+		</#form:form>
+	</div>
+</div>
+</div>
+<% } %>
+
+<script>
+
+	/*$("#projectInfoDataChildDataGridAddRowBtn").click(function () {
+        layer.open({
+            type: 2,
+            title:"项目选择",
+            area: ['1300px', '500px'],
+            shade: 0,
+			zIndex:45,
+			content:"${ctx}/projectInfo/collectProductDataList",
+           /!* btn: ['确认', '关闭'],
+            yes: function(){
+                layer.closeAll();
+            },
+            btn1: function(){
+                layer.closeAll();
+            },*!/
+        });
+    });*/
+</script>
+<script>
+    // 初始化projectInfoDataChildDataGrid对象
+    $('#projectInfoDataChildDataGrid').dataGrid({
+        searchForm: $("#inputForm"),
+        columnModel: [
+            {header:'${text("项目名称")}', name:'projectName', index:'a.project_name', width:150, align:"center"},
+            {header:'${text("项目编号")}', name:'projectCode', index:'a.project_code', width:150, align:"center", frozen:true,sortable:true, formatter: function(val, obj, row, act){
+                    return '<a href="${ctx}/projectInfo/form?id='+row.projectCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
+                }},
+            {header:'${text("标准价格")}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"center"},
+            {header:'${text("备注")}', name:'xpRemarks', index:'a.xp_remarks', width:150, align:"center"},
+            {header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
+                    var actions = [];
+                    actions.push('<a href="#" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+                    actions.push('<a href="#" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    return actions.join('');
+                }}
+        ],
+        // 加载成功后执行事件
+        ajaxSuccess: function(data){
+
+        }
+    });
+</script>
+
+<script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
+<script>
+
+	//点击是是会员会显示会员卡号和卡类别
+	$("input[name='cmIsMember']").click(function(){
+
+	    if($(this).val() == "01"){
+	        alert("01");
+            $("cmMemberCard").show();
+            $("form-cmMemberType").show();
+		}
+
+	});
+
+
+
+
+    //验证手机号
+
+    //手机号验证
+    function checkTel(str){
+        var phoneReg = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        if(phoneReg.test(str)){
+            $("#phoneJs").html("手机号码格式正确");
+            $("#phoneJs").css("color","green");
+        }else{
+            $("#phoneJs").html("手机号码格式错误");
+            $("#phoneJs").css("color","red");
+        }
+    }
+
+    $("#phone").blur(function() {
+        var str = $(this).val();
+        checkTel(str);
+    });
+    $("#inputForm").validate({
+        submitHandler: function(form){
+                js.ajaxSubmitForm($(form), function(data){
+                    js.showMessage(data.message);
+                    if(data.result == Global.TRUE){
+                        js.closeCurrentTabPage(function(contentWindow){
+                            contentWindow.page();
+                        });
+                    }
+                }, "json");
+
+        }
+    });
+</script>
+
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+        //获取li的类属性名
+        var oLi1 = element.getElementsByClassName('layui-this')[0];
+        //获取div的类属性名
+        var oDiv1 = element.getElementsByClassName('layui-tab-item layui-show')[0];
+        for(var i=0;i<oLi1.length;i++){
+            oLi1[i].className="";
+        }
+        this.className="layui-this";
+        for (var j=0;j<oDiv1.length;j++){
+            oDiv1[j].className="hide";
+        }
+        oDiv1[this.index].className="show";
+
+    });
+</script>

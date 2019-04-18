@@ -1,13 +1,17 @@
 <% layout('/layouts/default.html', {title: '门店管理', libs: ['validate']}){ %>
-<!--<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">-->
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
 <style>
-
-	* {
-
-		margin: 0;
-
-		padding: 0;
+	.layui-card-body {
+		padding: 30px 15px;
 	}
+
+	@media (min-width: 768px){
+        .col-sm-1 {
+            width: 12.333333%;
+        }
+
+    }
+
 </style>
 <div class="box-body" style="padding: 20px; background-color: #F2F2F2">
 	<div class="main-content">
@@ -23,11 +27,14 @@
 			<#form:form id="inputForm" model="${xrStore}" action="${ctx}/xr/xrStore/save" method="post" class="form-horizontal">
 			<div class="box-body" style="padding:20px">
 				<div class="form-unit">${text('门店基本信息')}</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
 							<#form:hidden path="xsCode"/>
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required ">*</span> ${text('店铺全称')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsFullName" maxlength="128" class="form-control required"/>
@@ -36,7 +43,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required ">*</span> ${text('店铺简称')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsShortName" maxlength="128" class="form-control required"/>
@@ -47,7 +54,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required ">*</span> ${text('连锁代码')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsChainCode" maxlength="128" class="form-control required"/>
@@ -56,7 +63,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required " id="phone_notice">*</span> ${text('电话')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsPhone" maxlength="64" class="form-control required digits" id="phone"/>
@@ -67,7 +74,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required ">*</span> ${text('地址')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsAddress" maxlength="255" class="form-control required"/>
@@ -76,7 +83,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required ">*</span> ${text('门店级别')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:select path="xsLevel" dictType="XS_LEVEL" blankOption="true" class="form-control" />
@@ -87,7 +94,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('微信公众号')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsWePublicAccount" maxlength="128" class="form-control"/>
@@ -96,7 +103,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('网址')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsWebsite" maxlength="255" class="form-control"/>
@@ -107,7 +114,7 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('经营范围')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:select path="xsManageScope" dictType="XS_MANAGE_SCOPE" multiple="true" blankOption="true" class="form-control" />
@@ -116,7 +123,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="form-group">
-										<label class="control-label col-sm-4" title="">
+										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('开业时间')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
 											<#form:input path="xsOpentime" readonly="true" maxlength="20" class="form-control Wdate"
@@ -160,7 +167,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<label class="control-label col-sm-2" title="">
+										<label class="control-label col-sm-1" title="">
 											<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-10">
 											<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
@@ -169,6 +176,9 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
 			<div class="box-footer" style="padding:8px;background: white">
 				<div class="row" style="float:right;padding-right: 35px">
 					<div class="col-sm-offset-2 col-sm-10">

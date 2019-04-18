@@ -3,7 +3,7 @@
 <mapper namespace="com.jeesite.modules.base.productinfo.dao.XrProductinfoDao">
 	
 	<!-- 查询数据
-	<select id="findList" resultType="XrProductinfo">
+	<select id="findList" resultType="Productinfo">
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<where>

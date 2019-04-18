@@ -3,7 +3,9 @@
  */
 package com.jeesite.modules.base.xr.service;
 
+import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,8 @@ public class XrStoreService extends CrudService<XrStoreDao, XrStore> {
 	 */
 	@Override
 	public Page<XrStore> findPage(Page<XrStore> page, XrStore xrStore) {
+		QueryDataScope sss = xrStore.getSqlMap().getDataScope().addFilter("dsf", "Office",
+				"a.office_code", "a.user_code", DataScope.CTRL_PERMI_MANAGE);
 		return super.findPage(page, xrStore);
 	}
 	

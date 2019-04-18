@@ -85,5 +85,18 @@ public class ProjectController extends BaseController{
         return renderResult(Global.TRUE, text("删除数据成功！"));
     }
 
+    /**
+     * 订单页面添加消费项目
+     * @param xrProjectinfo
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = {"collectProductDataList", ""})
+    public String collectProductDataList(XrProjectinfo xrProjectinfo, Model model) {
+        model.addAttribute("projectInfoData", xrProjectinfo);
+        return "modules/projectInfo/collectProjectDataList";
+    }
+
+
 
 }

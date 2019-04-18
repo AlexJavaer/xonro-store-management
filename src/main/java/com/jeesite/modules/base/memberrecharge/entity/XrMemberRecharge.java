@@ -21,7 +21,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author Crysta-hu
  * @version 2019-04-10
  */
-@Table(name="xr_member_recharge", alias="a", columns={
+@Table(name="xr_member_recharge", alias="a",extWhereKeys="dsf", columns={
 		@Column(name="id", attrName="id", label="异地单号", isPK=true),
 		@Column(name="xmr_date", attrName="xmrDate", label="异动日期"),
 		@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
@@ -46,17 +46,15 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
-		@Column(name="xmr_status", attrName="xmrStatus", label="状态")}
-		, joinTable={
+		@Column(name="xmr_status", attrName="xmrStatus", label="状态"),
+	/*	joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity= MemberInfo.class, attrName="miName", alias="mn10",
 				on="mn10.office_code = a.office_code", columns={
-				@Column(name="mi_code", label="产品编码", isPK=true),
-				@Column(name="mi_name", label="产品名称", isQuery=false),
+				@Column(name="mi_code", attrName="miCode",label="产品编码", isPK=true),
+				@Column(name="mi_name", attrName="miName",label="产品名称", isQuery=false),
 				@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
 				@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
-		}),
-
-
+		}),*/
 	}, orderBy="a.update_date DESC"
 )
 public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {

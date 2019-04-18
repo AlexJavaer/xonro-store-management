@@ -1,10 +1,13 @@
-package com.jeesite.modules.base.member.entity;
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
+package com.jeesite.modules.base.member.entity;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
@@ -15,10 +18,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * member_infoEntity
  * @author Cyrsta-hu
- * @version 2019-03-29
+ * @version 2019-04-18
  */
 @Table(name="member_info", alias="a", columns={
-		@Column(name="mi_code", attrName="miCode", label="会员编号",isPK = true),
+		@Column(name="mi_code", attrName="miCode", label="会员编号", isPK=true),
 		@Column(name="mi_name", attrName="miName", label="会员姓名", queryType=QueryType.LIKE),
 		@Column(name="mi_gregorian_birthday", attrName="miGregorianBirthday", label="公历生日"),
 		@Column(name="mi_sex", attrName="miSex", label="会员性别"),
@@ -46,12 +49,12 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_responsible_staff", attrName="miResponsibleStaff", label="负责员工"),
 		@Column(name="mi_member_grade", attrName="miMemberGrade", label="会员等级"),
 		@Column(name="mi_development_potential", attrName="miDevelopmentPotential", label="发展潜质"),
+		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
-		@Column(name="mi_file", attrName="miFile", label="组织ID"),
+		@Column(name="mi_file", attrName="miFile", label="附件"),
 	}, orderBy="a.update_date DESC"
 )
-@SuppressWarnings("all")
 public class MemberInfo extends DataEntity<MemberInfo> {
 	
 	private static final long serialVersionUID = 1L;
@@ -85,8 +88,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miDevelopmentPotential;		// 发展潜质
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
-	private String miFile;//附件
-
+	private String miFile;		// 附件
 	
 	public MemberInfo() {
 		this(null);
@@ -95,7 +97,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public MemberInfo(String id){
 		super(id);
 	}
-
+	
 	public String getMiCode() {
 		return miCode;
 	}
@@ -114,7 +116,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miName = miName;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getMiGregorianBirthday() {
 		return miGregorianBirthday;
 	}
@@ -360,7 +362,8 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-
+	
+	@Length(min=0, max=500, message="附件长度不能超过 500 个字符")
 	public String getMiFile() {
 		return miFile;
 	}
@@ -368,4 +371,5 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public void setMiFile(String miFile) {
 		this.miFile = miFile;
 	}
+	
 }

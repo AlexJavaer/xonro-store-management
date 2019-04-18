@@ -1,13 +1,12 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.project.entity;
+package com.jeesite.modules.base.collect.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.jeesite.common.entity.DataEntity;
@@ -16,11 +15,11 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
- * xr_projectinfoEntity
+ * collectMoneyEntity
  * @author Crysta-hu
- * @version 2019-04-08
+ * @version 2019-04-16
  */
-@Table(name="xr_projectinfo", alias="a",extWhereKeys="dsf", columns={
+@Table(name="xr_projectinfo", alias="a", columns={
 		@Column(name="project_code", attrName="projectCode", label="项目编号", isPK=true),
 		@Column(name="project_name", attrName="projectName", label="项目名称", queryType=QueryType.LIKE),
 		@Column(name="xp_charge_unit", attrName="xpChargeUnit", label="计价单位"),
@@ -47,11 +46,11 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="store_code", attrName="storeCode", label="店铺编号"),
 		@Column(name="user_code", attrName="userCode", label="用户编号"),
-		@Column(name="office_code", attrName="officeCode", label="机构编号"),
+		@Column(name="office_code", attrName="officeCode.cmCode", label="机构编号"),
 		@Column(name="xp_remarks", attrName="xpRemarks", label="备注"),
-	}, orderBy="a.update_date DESC"
+	}, orderBy="a.create_date ASC"
 )
-public class XrProjectinfo extends DataEntity<XrProjectinfo> {
+public class Projectinfo extends DataEntity<Projectinfo> {
 	
 	private static final long serialVersionUID = 1L;
 	private String projectCode;		// 项目编号
@@ -63,7 +62,7 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	private String xpStatisticalClass;		// 统计分类011:其他类
 	private String xpStatisticalDept;		// 归属部门003：美容组
 	private String xpPricingMethod;		// 计价方式01:按次,02:按小时
-	private Long xpProjectTime;		// 项目时长
+	private Date xpProjectTime;		// 项目时长
 	private Date xpIsdisplayTime;		// 是否展示计时
 	private Long xpSafetyTimes;		// 安全次数
 	private Double xpExperiencePrice;		// 体验价格
@@ -79,15 +78,16 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	private String xpIsblockup;		// 是否停用01:是,02:否
 	private String storeCode;		// 店铺编号
 	private String userCode;		// 用户编号
-	private String officeCode;		// 机构编号
+	private CollectMoney officeCode;		// 机构编号 父类
 	private String xpRemarks;		// 备注
 	
-	public XrProjectinfo() {
+	public Projectinfo() {
 		this(null);
 	}
 
-	public XrProjectinfo(String id){
-		super(id);
+
+	public Projectinfo(CollectMoney officeCode){
+		this.officeCode = officeCode;
 	}
 	
 	public String getProjectCode() {
@@ -170,16 +170,17 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	public void setXpPricingMethod(String xpPricingMethod) {
 		this.xpPricingMethod = xpPricingMethod;
 	}
-
-	public Long getXpProjectTime() {
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getXpProjectTime() {
 		return xpProjectTime;
 	}
 
-	public void setXpProjectTime(Long xpProjectTime) {
+	public void setXpProjectTime(Date xpProjectTime) {
 		this.xpProjectTime = xpProjectTime;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd ")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getXpIsdisplayTime() {
 		return xpIsdisplayTime;
 	}
@@ -309,11 +310,11 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	}
 	
 	@Length(min=0, max=64, message="机构编号长度不能超过 64 个字符")
-	public String getOfficeCode() {
+	public CollectMoney getOfficeCode() {
 		return officeCode;
 	}
 
-	public void setOfficeCode(String officeCode) {
+	public void setOfficeCode(CollectMoney officeCode) {
 		this.officeCode = officeCode;
 	}
 	

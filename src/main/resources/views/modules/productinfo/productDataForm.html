@@ -1,20 +1,22 @@
 <% layout('/layouts/default.html', {title: '产品信息', libs: ['validate','fileupload','dataGrid']}){ %>
 <link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
 <style>
-
-	* {
-
-		margin: 0;
-
-		padding: 0;
-	}
 	.layui-card:last-child{
 		margin-bottom: 30px;
 	}
 	.layui-card-body {
 		border:solid 1px #F2F2F2;
 		border-top-width:2px;
+		padding: 20px 15px;
+	}
+	.layui-tab-content{
+		padding:30px;
+	}
 
+	@media (min-width: 768px){
+		.col-sm-1 {
+			width: 12.333333%;
+		}
 	}
 
 </style>
@@ -37,59 +39,60 @@
 				<div class="layui-card-body">
 				<#form:hidden path="project_code"/>
 				<div class="row">
-					<div class="col-xs-4">
+					<div class="col-xs-6">
 						<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('产品编号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-                                <#form:hidden path="isNewRecord"/>
+								<#form:hidden path="isNewRecord"/>
                                 <#form:input path="productCode" maxlength="64" readonly="${!productInfoData.isNewRecord}" value="productInfoData.getProductCode" class="form-control required"/>
 
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-4">
+					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
+							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="productName" maxlength="100" class="form-control required "/>
 							</div>
 						</div>
 					</div>
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" title="">
-                                <span class="required hide">*</span> ${text('统计分类')}：<i class="fa icon-question hide"></i></label>
-                            <div class="col-sm-8">
-								<#form:select path="xpdStatisticalClass" dictType="xpd_statistical_class" blankOption="true" class="form-control required" />
-                            </div>
-                        </div>
-                    </div>
-
 				</div>
 					<div class="row">
-						<div class="col-xs-4">
+						<div class="col-xs-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
+									<span class="required hide">*</span> ${text('统计分类')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="xpdStatisticalClass" dictType="xpd_statistical_class" blankOption="true" class="form-control required" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('存放仓库')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
 									<#form:select path="xpdDepository" dictType="xpd_depository" blankOption="true" class="form-control required" />
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-4">
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('条形码')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
 									<#form:input path="xpdBarCode" maxlength="100" class="form-control"/>
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-4">
+						<div class="col-xs-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('助记码')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
 									<#form:input path="xpdMnemonicCode" maxlength="100" class="form-control"/>
@@ -99,18 +102,18 @@
 
 					</div>
 					<div class="row">
-						<div class="col-xs-4">
+						<div class="col-xs-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('折扣类别')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
 									<#form:select path="xpdDiscountCategory" dictType="xpd_discount_category" blankOption="true" class="form-control required" />
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-4">
+						<div class="col-xs-6">
 							<div class="form-group">
-								<label class="control-label col-sm-4" title="">
+								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('建档日期')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
 									<#form:input path="xpdFilingTime" readonly="true" maxlength="20" class="form-control Wdate"
@@ -125,8 +128,8 @@
 				<div class="layui-col-md12">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							<div class="layui-tab">
-								<ul class="layui-tab-title" style="color: #1E9FFF">
+							<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+								<ul class="layui-tab-title">
 									<li class="layui-this">基本资料</li>
 									<li>库存历史</li>
 									<li>销售历史</li>
@@ -138,7 +141,7 @@
 											<div class="col-xs-12">
 												<div class="form-group">
 													<label class="control-label col-sm-1">${text('产品图')}：</label>
-													<div class="col-sm-11">
+													<div class="col-sm-10">
 														<#form:fileupload id="uploadImage" bizKey="${productInfoData.id}" bizType="xrProductinfo_image"
 														uploadType="image" class="" readonly="false"/>
 													</div>
@@ -148,18 +151,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('标准单位')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:select path="xpdStandardUnit" dictType="xpd_standard_unit" blankOption="true" class="form-control required" />
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('标准价格(元/件)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdNormPrice" maxlength="100" class="form-control required"/>
 													</div>
 												</div>
@@ -168,18 +171,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('每件含')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdEachContaining" maxlength="100" class="form-control"/>
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('可用时间(天)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdTime" maxlength="100" class="form-control"/>
 													</div>
 												</div>
@@ -189,18 +192,18 @@
 								<div class="row">
 									<div class="col-xs-6">
 										<div class="form-group">
-											<label class="control-label col-sm-2" title="">
+											<label class="control-label col-sm-3" title="">
 												<span class="required hide">*</span> ${text('进货单位')}：<i class="fa icon-question hide"></i></label>
-											<div class="col-sm-10">
+											<div class="col-sm-8">
 												<#form:select path="xpdPurchaseUnit" dictType="xpd_purchase_unit" blankOption="true" class="form-control" />
 											</div>
 										</div>
 									</div>
 									<div class="col-xs-6">
 										<div class="form-group">
-											<label class="control-label col-sm-2" title="">
+											<label class="control-label col-sm-3" title="">
 												<span class="required hide">*</span> ${text('进货成本(元/件)')}：<i class="fa icon-question hide"></i></label>
-											<div class="col-sm-10">
+											<div class="col-sm-8">
 												<#form:input path="xpdPurchased" maxlength="100" class="form-control"/>
 											</div>
 										</div>
@@ -209,18 +212,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('每含(件)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdEach" maxlength="100" class="form-control"/>
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('供应商')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:select path="xpdSupplier" dictType="xpd_supplier" blankOption="true" class="form-control" />
 													</div>
 												</div>
@@ -229,18 +232,18 @@
 											<div class="row">
 												<div class="col-xs-6">
 													<div class="form-group">
-														<label class="control-label col-sm-2" title="">
+														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('消耗单位')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-10">
+														<div class="col-sm-8">
 															<#form:select path="xpdMarketintUnit" dictType="xpd_marketint_unit" blankOption="true" class="form-control" />
 														</div>
 													</div>
 												</div>
 												<div class="col-xs-6">
 													<div class="form-group">
-														<label class="control-label col-sm-2" title="">
+														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('消耗成本(元/件)')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-10">
+														<div class="col-sm-8">
 															<#form:input path="xpdConsumptionCost" maxlength="100" class="form-control"/>
 														</div>
 													</div>
@@ -249,18 +252,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('销售成本(元/件)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdMarketintCost" maxlength="100" class="form-control"/>
 													</div>
 												</div>
 											</div>
 										<div class="col-xs-6">
 											<div class="form-group">
-												<label class="control-label col-sm-2" title="">
+												<label class="control-label col-sm-3" title="">
 													<span class="required hide">*</span> ${text('保质期(天)')}：<i class="fa icon-question hide"></i></label>
-												<div class="col-sm-10">
+												<div class="col-sm-8">
 													<#form:input path="xpdQualityTime" maxlength="100" class="form-control"/>
 												</div>
 											</div>
@@ -271,7 +274,7 @@
 													<div class="form-group">
 														<label class="control-label col-sm-1" title="">
 															<span class="required hide">*</span> ${text('规格描述')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-11">
+														<div class="col-sm-10">
 															<#form:input path="xpdRuleDesccription" maxlength="100" class="form-control"/>
 														</div>
 													</div>
@@ -280,18 +283,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('会员价格')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdMembershipPrices" maxlength="100" class="form-control"/>
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('门店价格')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdStorePrice" maxlength="100" class="form-control"/>
 													</div>
 												</div>
@@ -301,9 +304,9 @@
 											<div class="row">
 												<div class="col-xs-6">
 													<div class="form-group">
-														<label class="control-label col-sm-2" title="">
+														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('回访间隔(天)')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-10">
+														<div class="col-sm-8">
 															<#form:input path="xpdReturnInterval" maxlength="100" class="form-control"/>
 														</div>
 													</div>
@@ -312,18 +315,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('最高存量(件)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdMaxStock" maxlength="100" class="form-control"/>
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('安全存量(件)')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:input path="xpdSafetyStock" maxlength="100" class="form-control"/>
 													</div>
 												</div>
@@ -333,18 +336,18 @@
 										<div class="row">
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('是否赠送')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 														<#form:radio path="xpdIsgift" dictType="xpd_isGift" class="form-control" />
 													</div>
 												</div>
 											</div>
 											<div class="col-xs-6">
 												<div class="form-group">
-													<label class="control-label col-sm-2" title="">
+													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('是否停用')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-10">
+													<div class="col-sm-8">
 
 														<#form:radio path="xpdIsdiscountinued" dictType="xpd_isDiscountinue" class="form-control" />
 													</div>
@@ -355,18 +358,18 @@
 											<div class="row">
 												<div class="col-xs-6">
 													<div class="form-group">
-														<label class="control-label col-sm-2" title="">
+														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('停止销售')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-10">
+														<div class="col-sm-8">
 															<#form:radio path="xpdEndSale" dictType="xpd_end_sale" class="form-control" />
 														</div>
 													</div>
 												</div>
 												<div class="col-xs-6">
 													<div class="form-group">
-														<label class="control-label col-sm-2" title="">
+														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('可拷贝成本价格')}：<i class="fa icon-question hide"></i></label>
-														<div class="col-sm-10">
+														<div class="col-sm-8">
 															<#form:radio path="xpdCopyCostPrice" dictType="xpd_copy_cost_price" class="form-control" />
 														</div>
 													</div>
@@ -378,7 +381,7 @@
 													<label class="control-label col-sm-1" title="">
 														<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i>
 													</label>
-														<div class="col-sm-11">
+														<div class="col-sm-10">
 															<#form:textarea path="xpdRemarks" rows="4" maxlength="200" class="form-control"/>
 														</div>
 												</div>
