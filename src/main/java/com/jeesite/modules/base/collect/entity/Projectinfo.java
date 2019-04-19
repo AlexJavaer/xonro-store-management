@@ -21,6 +21,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  */
 @Table(name="xr_projectinfo", alias="a", columns={
 		@Column(name="project_code", attrName="projectCode", label="项目编号", isPK=true),
+		@Column(name="cm_code_id", attrName="collectMoney.cmCode", label="父表主键"),
 		@Column(name="project_name", attrName="projectName", label="项目名称", queryType=QueryType.LIKE),
 		@Column(name="xp_charge_unit", attrName="xpChargeUnit", label="计价单位"),
 		@Column(name="xp_mnemonic_code", attrName="xpMnemonicCode", label="助记码"),
@@ -54,6 +55,7 @@ public class Projectinfo extends DataEntity<Projectinfo> {
 	
 	private static final long serialVersionUID = 1L;
 	private String projectCode;		// 项目编号
+	private CollectMoney collectMoney;   //父表主键
 	private String projectName;		// 项目名称
 	private String xpChargeUnit;		// 计价单位
 	private String xpMnemonicCode;		// 助记码
@@ -89,7 +91,15 @@ public class Projectinfo extends DataEntity<Projectinfo> {
 	public Projectinfo(CollectMoney officeCode){
 		this.officeCode = officeCode;
 	}
-	
+
+	public CollectMoney getCollectMoney() {
+		return collectMoney;
+	}
+
+	public void setCollectMoney(CollectMoney collectMoney) {
+		this.collectMoney = collectMoney;
+	}
+
 	public String getProjectCode() {
 		return projectCode;
 	}

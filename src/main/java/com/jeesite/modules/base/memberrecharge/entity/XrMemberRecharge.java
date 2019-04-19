@@ -102,7 +102,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 		this.id = id;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getXmrDate() {
 		return xmrDate;
 	}
@@ -247,7 +247,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 		this.xmrPaymentMode = xmrPaymentMode;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getXmrRechargeValidTime() {
 		return xmrRechargeValidTime;
 	}

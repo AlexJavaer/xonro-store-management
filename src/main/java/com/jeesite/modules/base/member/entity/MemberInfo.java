@@ -116,7 +116,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miName = miName;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getMiGregorianBirthday() {
 		return miGregorianBirthday;
 	}

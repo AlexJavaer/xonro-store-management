@@ -1,0 +1,281 @@
+<% layout('/layouts/default.html', {title: 'collectMoney管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('collectMoney管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('collect:collectMoney:edit')){ %>
+					<a href="${ctx}/collect/collectMoney/form" class="btn btn-default btnTool" title="${text('新增collectMoney')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${collectMoney}" action="${ctx}/collect/collectMoney/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('消费日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmDate" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('消费门店编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmStoreCode" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('消费门店名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmStoreName" maxlength="2" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员卡号')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmMemberCard" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员卡类别')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('客户姓名')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmCustomerName" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('客户性别')}：</label>
+					<div class="control-inline">
+						<#form:radio path="cmCustomerSex" dictType="mi_sex" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('客户种类')}：</label>
+					<div class="control-inline">
+						<#form:radio path="cmCustomerType" dictType="cm_customer_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('客户进店渠道')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('手机号')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmCustomerPhone" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('客数')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmCustomerNum" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否是会员')}：</label>
+					<div class="control-inline">
+						<#form:radio path="cmIsMember" dictType="cm_is_member" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员积分')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmMemberIntegrate" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('账户类别')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmAccountType" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('余额')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmAccountBalance" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('欠款')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmAccountDebt" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('支付方式')}：</label>
+					<div class="control-inline">
+						<#form:radio path="cmPaymentType" dictType="xmr_payment_mode" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('金额')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmPaymentMoney" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注说明')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmRemarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员编号ID')}：</label>
+					<div class="control-inline">
+						<#form:input path="miCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('用户ID')}：</label>
+					<div class="control-inline">
+						<#form:input path="userCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('组织ID')}：</label>
+					<div class="control-inline">
+						<#form:input path="officeCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectName" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('标准价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpNormPrice" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="productCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpRemarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="productName" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('消费日期')}', name:'cmDate', index:'a.cm_date', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/collect/collectMoney/form?cmCode='+row.cmCode+'" class="btnList" data-title="${text('编辑collectMoney')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('消费门店编号')}', name:'cmStoreCode', index:'a.cm_store_code', width:150, align:"left"},
+		{header:'${text('消费门店名称')}', name:'cmStoreName', index:'a.cm_store_name', width:150, align:"left"},
+		{header:'${text('会员卡号')}', name:'cmMemberCard', index:'a.cm_member_card', width:150, align:"center"},
+		{header:'${text('会员卡类别')}', name:'cmMemberType', index:'a.cm_member_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('mi_card_type')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('客户姓名')}', name:'cmCustomerName', index:'a.cm_customer_name', width:150, align:"left"},
+		{header:'${text('客户性别')}', name:'cmCustomerSex', index:'a.cm_customer_sex', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('mi_sex')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('客户种类')}', name:'cmCustomerType', index:'a.cm_customer_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('cm_customer_type')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('客户进店渠道')}', name:'cmAccessChannel', index:'a.cm_access_channel', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('mi_outlets')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('手机号')}', name:'cmCustomerPhone', index:'a.cm_customer_phone', width:150, align:"center"},
+		{header:'${text('客数')}', name:'cmCustomerNum', index:'a.cm_customer_num', width:150, align:"center"},
+		{header:'${text('是否是会员')}', name:'cmIsMember', index:'a.cm_is_member', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('cm_is_member')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('会员积分')}', name:'cmMemberIntegrate', index:'a.cm_member_integrate', width:150, align:"left"},
+		{header:'${text('账户类别')}', name:'cmAccountType', index:'a.cm_account_type', width:150, align:"left"},
+		{header:'${text('余额')}', name:'cmAccountBalance', index:'a.cm_account_balance', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('欠款')}', name:'cmAccountDebt', index:'a.cm_account_debt', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('支付方式')}', name:'cmPaymentType', index:'a.cm_payment_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xmr_payment_mode')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('金额')}', name:'cmPaymentMoney', index:'a.cm_payment_money', width:150, align:"center"},
+		{header:'${text('备注说明')}', name:'cmRemarks', index:'a.cm_remarks', width:150, align:"left"},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('备注')}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('会员编号ID')}', name:'miCode', index:'a.mi_code', width:150, align:"left"},
+		{header:'${text('用户ID')}', name:'userCode', index:'a.user_code', width:150, align:"left"},
+		{header:'${text('组织ID')}', name:'officeCode', index:'a.office_code', width:150, align:"left"},
+		{header:'${text('项目编号')}', name:'projectCode', index:'a.project_code', width:150, align:"left"},
+		{header:'${text('项目名称')}', name:'projectName', index:'a.project_name', width:150, align:"left"},
+		{header:'${text('标准价格')}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('产品编号')}', name:'productCode', index:'a.product_code', width:150, align:"left"},
+		{header:'${text('备注')}', name:'xpRemarks', index:'a.xp_remarks', width:150, align:"left"},
+		{header:'${text('产品名称')}', name:'productName', index:'a.product_name', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('collect:collectMoney:edit')){ %>
+				actions.push('<a href="${ctx}/collect/collectMoney/form?cmCode='+row.cmCode+'" class="btnList" title="${text('编辑collectMoney')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/collect/collectMoney/delete?cmCode='+row.cmCode+'" class="btnList" title="${text('删除collectMoney')}" data-confirm="${text('确认要删除该collectMoney吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

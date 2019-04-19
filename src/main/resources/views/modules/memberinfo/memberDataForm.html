@@ -40,7 +40,7 @@
 								<span class="required hide">*</span> ${text('会员编号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
                                 <#form:hidden path="isNewRecord"/>
-                                <#form:input path="miCode" maxlength="64" readonly="${!memberInfoData.isNewRecord}" value="memberInfoData.getMiCode" class="form-control required"/>
+                                <#form:input path="miCode" maxlength="64" readonly="${!memberInfoData.isNewRecord}" value="memberInfoData.getMiCode" class="form-control required" id="miCode"/>
 
 							</div>
 						</div>
@@ -82,7 +82,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('手机号码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="miPhone" id="phone" class="form-control required" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11"/>
+								<#form:input path="miPhone" id="phone" class="form-control required" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11" onblur="MiCodeIsPhone()"/>
                                 <div style="color: red" id="phoneJs"></div>
                             </div>
 						</div>
@@ -303,6 +303,23 @@
 <script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
 <script>
 
+    //判断手机号是否存在
+    function MiCodeIsPhone(){
+        var miCode = $("#miCode").val();
+        jquery.ajax({
+            type:"POST",
+            url:"${ctx}/memberInfo/MiCodeIsPhone",
+            data:{"miCode":miCode},
+            async:false,
+            success:function (ds) {
+                if(ds==1){
+                    alert("手机号已存在");
+                    $("#miCode").val("");
+                }
+            }
+        });
+    }
+
     //手机号验证
     function checkTel(str){
         var phoneReg = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
@@ -318,6 +335,7 @@
     $("#phone").blur(function() {
         var str = $(this).val();
         checkTel(str);
+        MiCodeIsPhone();
     });
 
     //邮箱验证

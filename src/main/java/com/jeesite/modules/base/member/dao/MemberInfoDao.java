@@ -7,6 +7,8 @@ import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 
+import java.util.HashMap;
+
 /**
  * member_infoDAO接口
  * @author Cyrsta-hu
@@ -14,5 +16,12 @@ import com.jeesite.modules.base.member.entity.MemberInfo;
  */
 @MyBatisDao
 public interface MemberInfoDao extends CrudDao<MemberInfo> {
+
+    /**
+     * 根据id查询手机号
+     * @param hmap
+     * @return
+     */
+    public MemberInfo getByMiCode(HashMap<String,Object> hmap);
 	
 }

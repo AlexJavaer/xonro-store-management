@@ -48,7 +48,7 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("项目名称")}', name:'projectName', index:'a.project_name', width:150, align:"center"},
         {header:'${text("标准价格")}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"center"},
-        {header:'${text("折扣类别")}', name:'miCardNumber', index:'a.mi_card_number', width:150, align:"center",formatter: function(val, obj, row, act){
+        {header:'${text("折扣类别")}', name:'xpDiscountCategory', index:'a.xp_discount_category', width:150, align:"center",formatter: function(val, obj, row, act){
     		return js.getDictLabel(${@DictUtils.getDictListJson('xp_discount_cate')}, val, '${text("未知")}', true);
 		}},
         {header:'${text("统计分类")}', name:'xpStatisticalClass', index:'a.xp_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){

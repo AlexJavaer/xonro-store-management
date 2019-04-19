@@ -97,10 +97,7 @@ public class XrMemberRechargeController extends BaseController {
 	 */
 	@RequestMapping(value = "form")
 	public String form(XrMemberRecharge xrMemberRecharge, Model model,MemberInfo memberInfo) {
-		if (xrMemberRecharge.getIsNewRecord()) {
-			String  ids = xrMemberRecharge.getId();
-			xrMemberRecharge.setId(ids+1);
-		}
+
 
 		model.addAttribute("xrMemberRecharge", xrMemberRecharge);
 		return "modules/memberrecharge/xrMemberRechargeForm";

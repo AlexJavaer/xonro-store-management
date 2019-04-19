@@ -1,0 +1,643 @@
+<% layout('/layouts/default.html', {title: 'collectMoney管理', libs: ['validate','fileupload','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(collectMoney.isNewRecord ? '新增collectMoney' : '编辑collectMoney')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${collectMoney}" action="${ctx}/collect/collectMoney/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="cmCode"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('消费日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmDate" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('消费门店编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmStoreCode" maxlength="128" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('消费门店名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmStoreName" maxlength="2" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmMemberCard" maxlength="20" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('会员卡类别')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('客户姓名')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmCustomerName" maxlength="128" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('客户性别')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('客户种类')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmCustomerType" dictType="cm_customer_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('客户进店渠道')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('手机号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmCustomerPhone" maxlength="20" class="form-control digits phone"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('客数')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmCustomerNum" maxlength="20" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('是否是会员')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('会员积分')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmMemberIntegrate" maxlength="20" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('账户类别')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountType" maxlength="20" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('余额')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountBalance" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('欠款')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmAccountDebt" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('支付方式')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="cmPaymentType" dictType="xmr_payment_mode" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('金额')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmPaymentMoney" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('备注说明')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="cmRemarks" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('会员编号ID')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="miCode" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('用户ID')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userCode" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('组织ID')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="officeCode" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('项目编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="projectCode" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('项目名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="projectName" maxlength="128" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('标准价格')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="xpNormPrice" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('产品编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="productCode" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="xpRemarks" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="productName" maxlength="128" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('图片上传')}：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadImage" bizKey="${collectMoney.id}" bizType="collectMoney_image"
+									uploadType="image" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('附件上传')}：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadFile" bizKey="${collectMoney.id}" bizType="collectMoney_file"
+									uploadType="all" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h4 class="form-unit">${text('xr_projectinfo')}</h4>
+				<div class="ml10 mr10">
+					<table id="xrProjectinfoDataGrid"></table>
+					<% if (hasPermi('collect:collectMoney:edit')){ %>
+						<a href="#" id="xrProjectinfoDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+					<% } %>
+				</div>
+				<h4 class="form-unit">${text('xr_productinfo')}</h4>
+				<div class="ml10 mr10">
+					<table id="xrProductinfoDataGrid"></table>
+					<% if (hasPermi('collect:collectMoney:edit')){ %>
+						<a href="#" id="xrProductinfoDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+					<% } %>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('collect:collectMoney:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+//初始化xr_projectinfoDataGrid对象
+$("#xrProjectinfoDataGrid").dataGrid({
+
+	data: ${toJson(collectMoney.xrProjectinfoList)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'projectCode', editable:true, hidden:true},
+		{header:'${text('项目名称')}', name:'projectName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+		{header:'${text('计价单位')}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'32', 'class':'form-control required'}},
+		{header:'${text('助记码')}', name:'xpMnemonicCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('标准价格')}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('折扣类别011')}', name:'xpDiscountCategory', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_discount_cate')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('统计分类011')}', name:'xpStatisticalClass', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('归属部门003')}', name:'xpStatisticalDept', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_dept')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('计价方式01')}', name:'xpPricingMethod', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_pricing_method')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('项目时长')}', name:'xpProjectTime', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control'}},
+		{header:'${text('是否展示计时')}', name:'xpIsdisplayTime', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control'}},
+		{header:'${text('安全次数')}', name:'xpSafetyTimes', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'20', 'class':'form-control digits'}},
+		{header:'${text('体验价格')}', name:'xpExperiencePrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('统一会员价格')}', name:'xpUniformMomberPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('项目预订价')}', name:'xpProjectPrePricing', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control digits'}},
+		{header:'${text('项目预定图')}', name:'xpProjectPreplan', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
+		{header:'${text('服务岗位')}', name:'xpServicePosition', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control'}},
+		{header:'${text('服务项目时长01')}', name:'xpServiceTime', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_service_time')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('项目预定描述')}', name:'xpProjectPredescription', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'500', 'class':'form-control'}},
+		{header:'${text('消费间隔，单位')}', name:'xpConsumptionInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('回访间隔，单位')}', name:'xpReturnInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('是否必须现金01')}', name:'xpIscash', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_isCash')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('是否停用01')}', name:'xpIsblockup', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_isBlockUp')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+		{header:'${text('店铺编号')}', name:'storeCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('用户编号')}', name:'userCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('机构编号')}', name:'officeCode.cmCode', editable:true, hidden:true},
+		{header:'${text('备注')}', name:'xpRemarks', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'500', 'class':'form-control'}},
+		{header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProjectinfoDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProjectinfoDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#xrProjectinfoDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowInitData: {projectCode: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'xrProjectinfoList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,projectCode,projectName,xpChargeUnit,xpMnemonicCode,xpNormPrice,xpDiscountCategory,xpStatisticalClass,xpStatisticalDept,xpPricingMethod,xpProjectTime,xpIsdisplayTime,xpSafetyTimes,xpExperiencePrice,xpUniformMomberPrice,xpProjectPrePricing,xpProjectPreplan,xpServicePosition,xpServiceTime,xpProjectPredescription,xpConsumptionInterval,xpReturnInterval,xpIscash,xpIsblockup,createBy,updateBy,remarks,storeCode,userCode,officeCode.cmCode,xpRemarks,createDate,updateDate,', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+//初始化xr_productinfoDataGrid对象
+$("#xrProductinfoDataGrid").dataGrid({
+
+	data: ${toJson(collectMoney.xrProductinfoList)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'productCode', editable:true, hidden:true},
+		{header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+		{header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control required',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_statistical_class')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('存放仓库')}', name:'xpdDepository', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control required',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_depository')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('条形码')}', name:'xpdBarCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('助记码')}', name:'xpdMnemonicCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('折扣类别')}', name:'xpdDiscountCategory', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control required',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_discount_category')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('建档时间')}', name:'xpdFilingTime', width:150, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate required', 'readonly':'true',
+				dataInit: function(element){ $(element).on('focus', function(){
+					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
+				});
+			}}
+		},
+		{header:'${text('标准单位')}', name:'xpdStandardUnit', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control required',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_standard_unit')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('标准价格')}', name:'xpdNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control required number'}},
+		{header:'${text('每件含')}', name:'xpdEachContaining', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('可用时间')}', name:'xpdTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('进货单位')}', name:'xpdPurchaseUnit', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_purchase_unit')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('进货成本')}', name:'xpdPurchased', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('每含单位')}', name:'xpdEach', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('供应商')}', name:'xpdSupplier', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_supplier')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('消耗单位')}', name:'xpdMarketintUnit', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_marketint_unit')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('消耗成本')}', name:'xpdConsumptionCost', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('销售成本')}', name:'xpdMarketintCost', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('保质期')}', name:'xpdQualityTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('规格描述')}', name:'xpdRuleDesccription', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'500', 'class':'form-control'}},
+		{header:'${text('会员价格')}', name:'xpdMembershipPrices', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('门店价格')}', name:'xpdStorePrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+		{header:'${text('回访间隔')}', name:'xpdReturnInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('最高存量')}', name:'xpdMaxStock', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('安全存量')}', name:'xpdSafetyStock', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('是否赠送')}', name:'xpdIsgift', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_isGift')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('是否停用')}', name:'xpdIsdiscountinued', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_isDiscountinue')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('停止销售')}', name:'xpdEndSale', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_end_sale')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('可拷贝成本价格')}', name:'xpdCopyCostPrice', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_copy_cost_price')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text('产品备注')}', name:'xpdRemarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+		{header:'${text('用户ID')}', name:'userCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'${text('组织ID')}', name:'officeCode.cmCode', editable:true, hidden:true},
+		{header:'${text('备注信息')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+		{header:'${text('状态')}', name:'state', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'2', 'class':'form-control'}},
+		{header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProductinfoDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProductinfoDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#xrProductinfoDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowInitData: {productCode: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'xrProductinfoList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,productCode,productName,xpdStatisticalClass,xpdDepository,xpdBarCode,xpdMnemonicCode,xpdDiscountCategory,xpdFilingTime,xpdStandardUnit,xpdNormPrice,xpdEachContaining,xpdTime,xpdPurchaseUnit,xpdPurchased,xpdEach,xpdSupplier,xpdMarketintUnit,xpdConsumptionCost,xpdMarketintCost,xpdQualityTime,xpdRuleDesccription,xpdMembershipPrices,xpdStorePrice,xpdReturnInterval,xpdMaxStock,xpdSafetyStock,xpdIsgift,xpdIsdiscountinued,xpdEndSale,xpdCopyCostPrice,xpdRemarks,userCode,officeCode.cmCode,createBy,createDate,updateBy,updateDate,remarks,state,', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

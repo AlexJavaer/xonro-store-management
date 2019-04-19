@@ -167,7 +167,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 		this.xpdDiscountCategory = xpdDiscountCategory;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="建档时间不能为空")
 	public Date getXpdFilingTime() {
 		return xpdFilingTime;

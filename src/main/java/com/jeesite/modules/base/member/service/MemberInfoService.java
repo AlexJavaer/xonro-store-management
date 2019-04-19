@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -101,7 +102,11 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		return this.memberInfoDao.findList(memberInfo);
 	}
 
-
+	public MemberInfo getByMiCode(String miCode){
+		HashMap<String,Object>  hmap= new HashMap<String,Object>();
+		hmap.put("miCode",miCode);
+		return memberInfoDao.getByMiCode(hmap);
+	}
 
 
 

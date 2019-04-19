@@ -164,7 +164,7 @@ public class XrStore extends DataEntity<XrStore> {
 		this.xsManageScope = xsManageScope;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getXsOpentime() {
 		return xsOpentime;
 	}

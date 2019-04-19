@@ -16,16 +16,10 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${xrStore}" action="${ctx}/xr/xrStore/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<div class="form-group">
+			<div class="form-group">
 					<label class="control-label">${text('店铺全称')}：</label>
 					<div class="control-inline">
 						<#form:input path="xsFullName" maxlength="128" class="form-control width-120"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('店铺简称')}：</label>
-					<div class="control-inline">
-						<#form:input path="xsShortName" maxlength="128" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">

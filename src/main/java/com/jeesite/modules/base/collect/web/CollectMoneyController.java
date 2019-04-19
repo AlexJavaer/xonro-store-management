@@ -5,6 +5,7 @@ package com.jeesite.modules.base.collect.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.collect.entity.CollectMoney;
 import com.jeesite.modules.base.collect.service.CollectMoneyService;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * collectMoneyController
@@ -69,6 +73,7 @@ public class CollectMoneyController extends BaseController {
 	/*@RequiresPermissions("collect:collectMoney:view")*/
 	@RequestMapping(value = "form")
 	public String form(CollectMoney collectMoney, Model model) {
+		collectMoney.setCmDate(new Date());
 		model.addAttribute("collectMoney", collectMoney);
 		return "modules/collect/collectMoneyForm";
 	}

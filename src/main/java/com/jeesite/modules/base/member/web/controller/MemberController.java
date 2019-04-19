@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -151,6 +153,37 @@ public class MemberController extends BaseController{
 
         }
        System.err.println(111);
+
+        //当天异动时间
+        xrMemberRecharge.setXmrDate(new Date());
+        //储值应收初始值
+       xrMemberRecharge.setXmrReserveValue(0L);
+       //储值金额初始值
+       xrMemberRecharge.setXmrSaveMoney(0L);
+       //当前余额:最新金额
+       xrMemberRecharge.setXmrCurrentBalance(0L);
+       //最新金额:储值金额+当前金额-储值应收
+        if(xrMemberRecharge.getMiCardNumber().equals(memberInfo.getMiCardNumber())){
+            Long xmrLatestBalance = xrMemberRecharge.getXmrReserveValue()+xrMemberRecharge.getXmrSaveMoney()-xrMemberRecharge.getXmrCurrentBalance();
+            xrMemberRecharge.setXmrLatestBalance(xmrLatestBalance);
+            xrMemberRecharge.setXmrCurrentBalance(xmrLatestBalance);
+        }
+
+
+       //充值有效日期
+       xrMemberRecharge.setXmrRechargeValidTime(new Date());
         return "modules/memberInfo/xrMemberRechargeForm";
+    }
+
+    @RequestMapping(value="MiCodeIsPhone")
+    @ResponseBody
+    public String MiCodeIsPhone(HttpServletRequest request, HttpServletResponse response,Model model,String miCode){
+        MemberInfo memberInfo = memberInfoService.getByMiCode(miCode);
+        if(memberInfo!=null){
+            return "1";
+        }else{
+            return "0";
+        }
+
     }
 }

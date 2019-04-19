@@ -11,5 +11,10 @@
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
-	
+	<select id="getByMiCode" resultType="MemberInfo">
+		SELECT * FROM  member_info
+		<where>
+			mi_code=#{mi_code}
+		</where>
+	</select>
 </mapper>

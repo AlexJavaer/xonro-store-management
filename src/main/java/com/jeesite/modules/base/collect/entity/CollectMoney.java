@@ -7,9 +7,9 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
+import java.util.List;
+import com.jeesite.common.collect.ListUtils;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -19,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * collectMoneyEntity
  * @author Crysta-hu
- * @version 2019-04-18
+ * @version 2019-04-19
  */
 @Table(name="collect_money", alias="a", columns={
 		@Column(name="cm_code", attrName="cmCode", label="消费单号", isPK=true),
@@ -48,10 +48,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
 		@Column(name="project_code", attrName="projectCode", label="项目编号"),
 		@Column(name="project_name", attrName="projectName", label="项目名称", queryType=QueryType.LIKE),
-		@Column(name="product_code", attrName="productCode", label="产品编号"),
-		@Column(name="product_name", attrName="productName", label="产品名称", queryType=QueryType.LIKE),
 		@Column(name="xp_norm_price", attrName="xpNormPrice", label="标准价格"),
+		@Column(name="product_code", attrName="productCode", label="产品编号"),
 		@Column(name="xp_remarks", attrName="xpRemarks", label="备注"),
+		@Column(name="product_name", attrName="productName", label="产品名称", queryType=QueryType.LIKE),
 	}, orderBy="a.update_date DESC"
 )
 public class CollectMoney extends DataEntity<CollectMoney> {
@@ -82,10 +82,12 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	private String officeCode;		// 组织ID
 	private String projectCode;		// 项目编号
 	private String projectName;		// 项目名称
-	private String productCode;		// 产品编号
-	private String productName;		// 产品名称
 	private Double xpNormPrice;		// 标准价格
+	private String productCode;		// 产品编号
 	private String xpRemarks;		// 备注
+	private String productName;		// 产品名称
+	private List<Projectinfo> xrProjectinfoList = ListUtils.newArrayList();		// 子表列表
+	private List<Productinfo> xrProductinfoList = ListUtils.newArrayList();		// 子表列表
 	
 	public CollectMoney() {
 		this(null);
@@ -111,8 +113,7 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	public void setCmDate(Date cmDate) {
 		this.cmDate = cmDate;
 	}
-
-
+	
 	@Length(min=0, max=128, message="消费门店编号长度不能超过 128 个字符")
 	public String getCmStoreCode() {
 		return cmStoreCode;
@@ -122,7 +123,6 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.cmStoreCode = cmStoreCode;
 	}
 
-	@Length(min=0, max=2, message="消费门店名称长度不能超过 2 个字符")
 	public String getCmStoreName() {
 		return cmStoreName;
 	}
@@ -174,8 +174,7 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	public void setCmCustomerType(String cmCustomerType) {
 		this.cmCustomerType = cmCustomerType;
 	}
-	
-	@Length(min=0, max=2, message="客户进店渠道长度不能超过 2 个字符")
+
 	public String getCmAccessChannel() {
 		return cmAccessChannel;
 	}
@@ -314,6 +313,14 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.projectName = projectName;
 	}
 	
+	public Double getXpNormPrice() {
+		return xpNormPrice;
+	}
+
+	public void setXpNormPrice(Double xpNormPrice) {
+		this.xpNormPrice = xpNormPrice;
+	}
+	
 	@Length(min=0, max=64, message="产品编号长度不能超过 64 个字符")
 	public String getProductCode() {
 		return productCode;
@@ -321,6 +328,15 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
+	}
+	
+	@Length(min=0, max=500, message="备注长度不能超过 500 个字符")
+	public String getXpRemarks() {
+		return xpRemarks;
+	}
+
+	public void setXpRemarks(String xpRemarks) {
+		this.xpRemarks = xpRemarks;
 	}
 	
 	@Length(min=0, max=128, message="产品名称长度不能超过 128 个字符")
@@ -332,21 +348,20 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.productName = productName;
 	}
 	
-	public Double getXpNormPrice() {
-		return xpNormPrice;
+	public List<Projectinfo> getXrProjectinfoList() {
+		return xrProjectinfoList;
 	}
 
-	public void setXpNormPrice(Double xpNormPrice) {
-		this.xpNormPrice = xpNormPrice;
+	public void setXrProjectinfoList(List<Projectinfo> xrProjectinfoList) {
+		this.xrProjectinfoList = xrProjectinfoList;
 	}
 	
-	@Length(min=0, max=500, message="备注长度不能超过 500 个字符")
-	public String getXpRemarks() {
-		return xpRemarks;
+	public List<Productinfo> getXrProductinfoList() {
+		return xrProductinfoList;
 	}
 
-	public void setXpRemarks(String xpRemarks) {
-		this.xpRemarks = xpRemarks;
+	public void setXrProductinfoList(List<Productinfo> xrProductinfoList) {
+		this.xrProductinfoList = xrProductinfoList;
 	}
 	
 }

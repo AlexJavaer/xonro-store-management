@@ -49,7 +49,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
         /*{header:'${text('消费门店')}', name:'cmStoreName', index:'a.cm_store_name', width:150, align:"left"},*/
-		{header:'${text('消费日期')}', name:'cmDate', index:'a.cm_date', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text('消费日期')}', name:'cmDate', index:'a.cm_date', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/collectMoney/form?cmCode='+row.cmCode+'" class="btnList" data-title="${text('编辑订单信息')}">'+(val||row.id)+'</a>';
 		}},
         {header:'${text('消费单号')}', name:'cmCode', index:'a.cm_code', width:150, align:"center"},

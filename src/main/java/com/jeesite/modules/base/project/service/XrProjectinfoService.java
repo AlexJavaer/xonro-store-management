@@ -60,7 +60,8 @@ public class XrProjectinfoService extends CrudService<XrProjectinfoDao, XrProjec
 	public void save(XrProjectinfo xrProjectinfo) {
 
 		if(xrProjectinfo.getIsNewRecord()){
-			String officeCode = EmpUtils.getOffice().getOfficeCode();
+			/*String officeCode = EmpUtils.getOffice().getOfficeCode();*/
+			String officeCode="011";
 			String s = StringUtils.getRandomNum(3);
 			xrProjectinfo.setProjectCode(officeCode+s);
 		}

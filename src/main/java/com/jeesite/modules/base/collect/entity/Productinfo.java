@@ -22,6 +22,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  */
 @Table(name="xr_productinfo", alias="a", columns={
 		@Column(name="product_code", attrName="productCode", label="产品编号", isPK=true),
+		@Column(name="cm_code_id", attrName="collectMoney.cmCode", label="父表主键"),
 		@Column(name="product_name", attrName="productName", label="产品名称", queryType=QueryType.LIKE),
 		@Column(name="xpd_statistical_class", attrName="xpdStatisticalClass", label="统计分类"),
 		@Column(name="xpd_depository", attrName="xpdDepository", label="存放仓库"),
@@ -62,6 +63,7 @@ public class Productinfo extends DataEntity<Productinfo> {
 	
 	private static final long serialVersionUID = 1L;
 	private String productCode;		// 产品编号
+	private String collectMoney;  //父表主键
 	private String productName;		// 产品名称
 	private String xpdStatisticalClass;		// 统计分类
 	private String xpdDepository;		// 存放仓库

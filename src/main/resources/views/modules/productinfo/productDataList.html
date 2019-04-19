@@ -47,17 +47,20 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/productInfo/form?id='+row.productCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("产品名称")}', name:'productName', index:'a.product_name', width:150, align:"center"},
-        {header:'${text("标准价格")}', name:'xpdNormPrice', index:'a.xpd_norm_price', width:150, align:"center"},
         {header:'${text("折扣类别")}', name:'xpdDiscountCategory', index:'a.xpd_discount_category', width:150, align:"center",formatter: function(val, obj, row, act){
     		return js.getDictLabel(${@DictUtils.getDictListJson('xpd_discount_category')}, val, '${text("未知")}', true);
 		}},
         {header:'${text("统计分类")}', name:'xpdStatisticalClass', index:'a.xpd_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){
     		return js.getDictLabel(${@DictUtils.getDictListJson('xpd_statistical_class')}, val, '${text("未知")}', true);
 		}},
+        {header:'${text("标准价格")}', name:'xpdNormPrice', index:'a.xpd_norm_price', width:150, align:"center"},
+        {header:'${text("标准单位")}', name:'xpdStandardUnit', index:'a.xpd_standard_unit', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('xpd_standard_unit')}, val, '${text("未知")}', true);
+            }},
 		{header:'${text("建档日期")}', name:'xpdFilingTime', index:'a.xpd_filing_time', width:150, align:"center"},
         {header:'${text("助记码")}', name:'xpdMnemonicCode', index:'a.xpd_mnemonic_code', width:150, align:"center"},
         {header:'${text("停用")}', name:'xpdIsdiscountinued', index:'a.xpd_isdiscountinued', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('pd_isDiscountinue')}, val, '${text("未知")}', true);
+                return js.getDictLabel(${@DictUtils.getDictListJson('xpd_isDiscountinue')}, val, '${text("未知")}', true);
             }},
         {header:'${text("备注")}', name:'xpdRemarks', index:'a.xpd_remarks', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){

@@ -10,7 +10,7 @@ import com.jeesite.modules.base.collect.entity.CollectMoney;
 /**
  * collectMoneyDAO接口
  * @author Crysta-hu
- * @version 2019-04-18
+ * @version 2019-04-19
  */
 @MyBatisDao
 public interface CollectMoneyDao extends CrudDao<CollectMoney> {
