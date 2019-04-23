@@ -41,6 +41,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_work_unit", attrName="miWorkUnit", label="工作单位"),
 		@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
 		@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
+		@Column(name="mi_balance", attrName="miBalance", label="会员卡余额"),
 		@Column(name="mi_id_number", attrName="miIdNumber", label="身份证号"),
 		@Column(name="mi_message_notice", attrName="miMessageNotice", label="消息类通知"),
 		@Column(name="mi_marketing_notice", attrName="miMarketingNotice", label="营销类通知"),
@@ -62,22 +63,23 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miName;		// 会员姓名
 	private Date miGregorianBirthday;		// 公历生日
 	private String miSex;		// 会员性别
-	private Long miPhone;		// 手机号码
+	private String miPhone;		// 手机号码
 	private String miOutlets;		// 进店渠道
 	private String miMarkStatus;		// 标记状态
 	private String miMemberStatus;		// 会员状态
 	private String miWechatNumber;		// 微信号
-	private Long miQqNumber;		// QQ号码
+	private String miQqNumber;		// QQ号码
 	private String miEmail;		// 邮箱
-	private Long miFamilyPhone;		// 家庭电话
+	private String miFamilyPhone;		// 家庭电话
 	private String miConstellation;		// 星座
 	private String miBloodType;		// 血型
 	private Integer miZipCode;		// 邮编
 	private String miFamilyAddress;		// 家庭住址
 	private String miVocation;		// 职业
 	private String miWorkUnit;		// 工作单位
-	private Long miCardNumber;		// 会员卡号
+	private String miCardNumber;		// 会员卡号
 	private String miCardType;		// 卡类别
+	private Long miBalance;		// 当前余额
 	private String miIdNumber;		// 身份证号
 	private String miMessageNotice;		// 消息类通知
 	private String miMarketingNotice;		// 营销类通知
@@ -134,11 +136,11 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miSex = miSex;
 	}
 	
-	public Long getMiPhone() {
+	public String getMiPhone() {
 		return miPhone;
 	}
 
-	public void setMiPhone(Long miPhone) {
+	public void setMiPhone(String miPhone) {
 		this.miPhone = miPhone;
 	}
 	
@@ -178,11 +180,11 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miWechatNumber = miWechatNumber;
 	}
 	
-	public Long getMiQqNumber() {
+	public String getMiQqNumber() {
 		return miQqNumber;
 	}
 
-	public void setMiQqNumber(Long miQqNumber) {
+	public void setMiQqNumber(String miQqNumber) {
 		this.miQqNumber = miQqNumber;
 	}
 	
@@ -195,11 +197,11 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miEmail = miEmail;
 	}
 	
-	public Long getMiFamilyPhone() {
+	public String getMiFamilyPhone() {
 		return miFamilyPhone;
 	}
 
-	public void setMiFamilyPhone(Long miFamilyPhone) {
+	public void setMiFamilyPhone(String miFamilyPhone) {
 		this.miFamilyPhone = miFamilyPhone;
 	}
 	
@@ -256,11 +258,11 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miWorkUnit = miWorkUnit;
 	}
 	
-	public Long getMiCardNumber() {
+	public String getMiCardNumber() {
 		return miCardNumber;
 	}
 
-	public void setMiCardNumber(Long miCardNumber) {
+	public void setMiCardNumber(String miCardNumber) {
 		this.miCardNumber = miCardNumber;
 	}
 	
@@ -272,7 +274,15 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public void setMiCardType(String miCardType) {
 		this.miCardType = miCardType;
 	}
-	
+
+	public Long getMiBalance() {
+		return miBalance;
+	}
+
+	public void setMiBalance(Long miBalance) {
+		this.miBalance = miBalance;
+	}
+
 	@Length(min=0, max=50, message="身份证号长度不能超过 50 个字符")
 	public String getMiIdNumber() {
 		return miIdNumber;

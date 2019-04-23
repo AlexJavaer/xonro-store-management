@@ -62,7 +62,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private Date xmrDate;		// 异动日期
-	private Long miCardNumber;		// 会员卡号
+	private String  miCardNumber;		// 会员卡号
 	private String miCardType;		// 卡类别
 	private String miCode;		// 会员编号
 	private String miName;		// 会员姓名
@@ -111,11 +111,11 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 		this.xmrDate = xmrDate;
 	}
 	
-	public Long getMiCardNumber() {
+	public String  getMiCardNumber() {
 		return miCardNumber;
 	}
 
-	public void setMiCardNumber(Long miCardNumber) {
+	public void setMiCardNumber(String  miCardNumber) {
 		this.miCardNumber = miCardNumber;
 	}
 	
@@ -154,8 +154,7 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	public void setXmrAccountType(String xmrAccountType) {
 		this.xmrAccountType = xmrAccountType;
 	}
-	
-	@Length(min=0, max=2, message="进店渠道长度不能超过 2 个字符")
+
 	public String getMiOutlets() {
 		return miOutlets;
 	}

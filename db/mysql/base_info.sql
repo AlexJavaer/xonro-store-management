@@ -78,22 +78,23 @@ CREATE TABLE `member_info`  (
   `mi_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员姓名',
   `mi_gregorian_birthday` date NULL DEFAULT NULL COMMENT '公历生日',
   `mi_sex` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员性别',
-  `mi_phone` bigint(64) NULL DEFAULT NULL COMMENT '手机号码',
+  `mi_phone` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手机号码',
   `mi_outlets` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '进店渠道,例如01：别人推荐，02：网上了解',
   `mi_mark_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '标记状态:01：已标记，02：未标记',
   `mi_member_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员状态:01:有效，02:无效',
   `mi_wechat_number` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信号',
-  `mi_qq_number` int(20) NULL DEFAULT NULL COMMENT 'QQ号码',
+  `mi_qq_number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'QQ号码',
   `mi_email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `mi_family_phone` int(11) NULL DEFAULT NULL COMMENT '家庭电话',
+  `mi_family_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '家庭电话',
   `mi_constellation` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '星座',
   `mi_blood_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '血型01:A,02:B,03:AB,04:O,05:其他',
-  `mi_zip_code` int(10) NULL DEFAULT NULL COMMENT '邮编',
+  `mi_zip_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮编',
   `mi_family_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '家庭住址',
   `mi_vocation` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '职业',
   `mi_work_unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '工作单位',
-  `mi_card_number` int(30) NULL DEFAULT NULL COMMENT '会员卡号',
+  `mi_card_number` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员卡号',
   `mi_card_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '卡类别',
+  `mi_balance` decimal(30, 0) NULL DEFAULT NULL COMMENT '会员卡余额',
   `mi_id_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '身份证号',
   `mi_message_notice` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '消息类通知01:发送,02:不发送',
   `mi_marketing_notice` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '营销类通知01:发送,02:不发送',
@@ -111,13 +112,13 @@ CREATE TABLE `member_info`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '更新用户',
   `update_date` datetime(0) NULL DEFAULT NULL COMMENT '更新日期',
   `remarks` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
-  PRIMARY KEY (`mi_code`) USING BTREE
+  PRIMARY KEY (`mi_code`) USING BTREE,
+  UNIQUE INDEX `mi_phone`(`mi_phone`) USING BTREE COMMENT '手机号唯一'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of member_info
 -- ----------------------------
-
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;

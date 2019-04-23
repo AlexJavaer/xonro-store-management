@@ -2,6 +2,8 @@ package com.jeesite.modules.base.member.web.controller;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.provider.InsertSqlProvider;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.collect.entity.CollectMoney;
@@ -9,6 +11,7 @@ import com.jeesite.modules.base.collect.service.CollectMoneyService;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
+import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
 import com.jeesite.modules.config.MyBatisConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class MemberController extends BaseController{
     @Autowired
     private MemberInfoService memberInfoService;
     private CollectMoneyService collectMoneyService;
+    private XrMemberRechargeService xrMemberRechargeService;
 
     /**
      * 获取数据
@@ -66,7 +71,29 @@ public class MemberController extends BaseController{
      */
 
     @RequestMapping(value = "form")
-    public String form(MemberInfo memberInfo, Model model) {
+    public String form(MemberInfo memberInfo, Model model,XrMemberRecharge xrMemberRecharge) {
+       /*SimpleDateFormat dateFormat= new SimpleDateFormat("yyyyMMdd");
+        String nowDate = dateFormat.format(new Date());*/
+       if(memberInfo.getIsNewRecord()){
+           memberInfo.setMiCardNumber(IdGen.nextId());
+       }
+
+       if(memberInfo.getMiCode()!=null&& "".equals(memberInfo.getMiCode()) && memberInfo.getMiCardNumber()!=null &&"".equals(memberInfo.getMiCardNumber()) &&memberInfo.getMiCardNumber().equals(xrMemberRecharge.getMiCardNumber().toString())){
+           Long miBalance = 0L;
+
+           //给账户存钱
+           miBalance += xrMemberRecharge.getXmrSaveMoney();
+
+           //向账户支出
+           if(xrMemberRecharge.getXmrReserveValue()<memberInfo.getMiBalance()){
+               miBalance = memberInfo.getMiBalance()-xrMemberRecharge.getXmrReserveValue();
+           }
+
+           memberInfo.setMiBalance(miBalance);
+        }
+
+
+
         model.addAttribute("memberInfoData", memberInfo);
         return "modules/memberInfo/memberDataForm";
     }
@@ -77,8 +104,8 @@ public class MemberController extends BaseController{
 
     @PostMapping(value="save")
     @ResponseBody
-    public String save(@Validated MemberInfo MemberInfo) {
-        memberInfoService.save(MemberInfo);
+    public String save(@Validated MemberInfo memberInfo) {
+        memberInfoService.save(memberInfo);
         return renderResult(Global.TRUE, text("保存数据成功！"));
     }
 
@@ -90,47 +117,6 @@ public class MemberController extends BaseController{
     public String delete(MemberInfo MemberInfo) {
         memberInfoService.delete(MemberInfo);
         return renderResult(Global.TRUE, text("删除数据成功！"));
-    }
-
-    @RequestMapping({"treeData"})
-    public String  treeData(MemberInfo memberInfo, Model model ) {
-        /*List<Map<String, Object>> mapList = ListUtils.newArrayList();
-         *//*MemberInfo where =  new MemberInfo();*//*
-         *//*where.setStatus("0");
-		where.setMiCode(miCode);*//*
-		List<MemberInfo> list = this.memberInfoService.findList(new MemberInfo());
-
-		for(int i = 0; i < list.size(); ++i) {
-			MemberInfo mi = (MemberInfo)list.get(i);
-			// 过滤非正常的数据
-			if (!TestTree.STATUS_NORMAL.equals(mi.getStatus())){
-				continue;
-			}
-			// 过滤被排除的编码（包括所有子级）
-			if (StringUtils.isNotBlank(excludeCode)){
-				if (mi.getId().equals(excludeCode)){
-					continue;
-				}
-				if (mi.getMiCode().contains("," + excludeCode + ",")){
-					continue;
-				}
-			}
-			if ("0".equals(mi.getStatus()) && (!StringUtils.isNotBlank(excludeCode) || !mi.getId().equals(excludeCode) && !mi.getMiCode().contains("," + excludeCode + ",")) && (!StringUtils.isNotBlank(miCode))) {
-				Map<String, Object> map = MapUtils.newHashMap();
-				map.put("id", mi.getId());
-				map.put("pId", mi.getMiCode());
-				String name = mi.getMiName();
-				if ("true".equals(isShowFullName) || "1".equals(isShowFullName)) {
-					name = mi.getMiName();
-				}
-
-				mapList.add(map);
-			}
-		}
-
-		return mapList;*/
-        model.addAttribute("memberInfoData", memberInfo);
-        return "modules/memberInfo/memberDataListSelect";
     }
 
    @RequestMapping(value = "formAuthRecharge")
@@ -154,22 +140,17 @@ public class MemberController extends BaseController{
         }
        System.err.println(111);
 
-        //当天异动时间
-        xrMemberRecharge.setXmrDate(new Date());
-        //储值应收初始值
-       xrMemberRecharge.setXmrReserveValue(0L);
-       //储值金额初始值
-       xrMemberRecharge.setXmrSaveMoney(0L);
-       //当前余额:最新金额
-       xrMemberRecharge.setXmrCurrentBalance(0L);
-       //最新金额:储值金额+当前金额-储值应收
-        if(xrMemberRecharge.getMiCardNumber().equals(memberInfo.getMiCardNumber())){
-            Long xmrLatestBalance = xrMemberRecharge.getXmrReserveValue()+xrMemberRecharge.getXmrSaveMoney()-xrMemberRecharge.getXmrCurrentBalance();
-            xrMemberRecharge.setXmrLatestBalance(xmrLatestBalance);
-            xrMemberRecharge.setXmrCurrentBalance(xmrLatestBalance);
+        if(xrMemberRecharge.getIsNewRecord()){
+            //当天异动时间
+            xrMemberRecharge.setXmrDate(new Date());
+            //储值应收初始值
+            xrMemberRecharge.setXmrReserveValue(0L);
+            //储值金额初始值
+            xrMemberRecharge.setXmrSaveMoney(0L);
+            //当前余额:最新金额
+            /*xrMemberRecharge.setXmrCurrentBalance(0L);
+            xrMemberRecharge.setXmrLatestBalance(0L);*/
         }
-
-
        //充值有效日期
        xrMemberRecharge.setXmrRechargeValidTime(new Date());
         return "modules/memberInfo/xrMemberRechargeForm";
@@ -177,9 +158,9 @@ public class MemberController extends BaseController{
 
     @RequestMapping(value="MiCodeIsPhone")
     @ResponseBody
-    public String MiCodeIsPhone(HttpServletRequest request, HttpServletResponse response,Model model,String miCode){
-        MemberInfo memberInfo = memberInfoService.getByMiCode(miCode);
-        if(memberInfo!=null){
+    public String MiCodeIsPhone(HttpServletRequest request, HttpServletResponse response,Model model,String miCode,String miPhone){
+        MemberInfo memberInfo = memberInfoService.getByForm(miCode,miPhone);
+        if (!memberInfo.getIsNewRecord() && memberInfo !=null && memberInfo.getMiPhone().toString().equals(miPhone)){
             return "1";
         }else{
             return "0";

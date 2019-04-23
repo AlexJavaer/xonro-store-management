@@ -84,17 +84,21 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 			String s = StringUtils.getRandomNum(3);
 			xrMemberRecharge.setId(s);
 
-
-
-
-
-
-			//最新余额变动
-		/*Long newBalance;
-		if(xrMemberRecharge.getXmrGiftAccount()!= null && "".equals(xrMemberRecharge.getXmrGiftAccount())){
-			newBalance = xrMemberRecharge.getXmrCurrentBalance()-xrMemberRecharge.getXmrProduceProjectAmount()-xrMemberRecharge.getXmrPackageAmount()+xrMemberRecharge.getXmrSaveMoney()+xrMemberRecharge.getXmrGiftAccount();
-			xrMemberRecharge.setXmrLatestBalance(newBalance);
-		}*/
+		}
+		if(xrMemberRecharge.getXmrCurrentBalance()!=null && !"".equals(xrMemberRecharge.getXmrCurrentBalance())&&xrMemberRecharge.getXmrLatestBalance()!=null&&!"".equals(xrMemberRecharge.getXmrLatestBalance())){
+			//当前余额
+			Long xmrCurrentBalance = xrMemberRecharge.getXmrCurrentBalance();
+			//最新余额
+			Long xmrLatestBalance = xrMemberRecharge.getXmrLatestBalance();
+			//储值金额
+			Long xmrSaveMoney = xrMemberRecharge.getXmrSaveMoney();
+			//储值应收
+			Long xmrReserveValue = xrMemberRecharge.getXmrReserveValue();
+			//变动后的最新余额
+			Long xmrLatestBalanceSum=xmrLatestBalance;
+			xmrLatestBalanceSum += (xmrCurrentBalance+xmrSaveMoney-xmrReserveValue);
+			xrMemberRecharge.setXmrCurrentBalance(xmrLatestBalance);
+			xrMemberRecharge.setXmrLatestBalance(xmrLatestBalanceSum);
 		}
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();

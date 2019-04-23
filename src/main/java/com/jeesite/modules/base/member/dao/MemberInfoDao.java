@@ -22,6 +22,6 @@ public interface MemberInfoDao extends CrudDao<MemberInfo> {
      * @param hmap
      * @return
      */
-    public MemberInfo getByMiCode(HashMap<String,Object> hmap);
+    public MemberInfo getByForm(HashMap<String,Object> hmap);
 	
 }

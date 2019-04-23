@@ -14,6 +14,9 @@
         }
 
     }
+    .layui-tab-content{
+        padding: 20px 15px;
+    }
 </style>
 <div class="box-body" style="padding: 20px; background-color: #F2F2F2">
 <div class="main-content">
@@ -50,7 +53,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('会员姓名')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="miName" id="miName" maxlength="100" class="form-control required"/>
+								<#form:input path="miName" id="miName" maxlength="100" class="form-control required" readonly="${!memberInfoData.isNewRecord}"/>
 							</div>
 						</div>
 					</div>
@@ -71,7 +74,7 @@
 						<label class="control-label col-sm-3" title="">
 							<span class="required hide">*</span> ${text('会员性别')}：<i class="fa icon-question hide"></i></label>
 						<div class="col-sm-8">
-							<#form:radio path="miSex" dictType="mi_sex" class="form-control required" />
+							<#form:radio path="miSex" dictType="mi_sex" class="form-control required" readonly="${!memberInfoData.isNewRecord}"/>
 						</div>
 					</div>
 				</div>
@@ -82,7 +85,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('手机号码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="miPhone" id="phone" class="form-control required" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11" onblur="MiCodeIsPhone()"/>
+								<#form:input path="miPhone" id="phone" class="form-control required" value="" oninput="checkPhone()" htmlEscape="false" maxlength="11" onblur="MiCodeIsPhone()" readonly="${!memberInfoData.isNewRecord}"/>
                                 <div style="color: red" id="phoneJs"></div>
                             </div>
 						</div>
@@ -92,7 +95,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required  hide">*</span> ${text('进店渠道')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="miOutlets" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control required" />
+								<#form:select path="miOutlets" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control required" readonly="${!memberInfoData.isNewRecord}" />
 							</div>
 						</div>
 					</div>
@@ -144,20 +147,31 @@
                         </div>-->
                         <div class="row">
                             <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-3" title="">
-                                        <span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="miCardNumber" maxlength="200" class="form-control required"/>
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" title="">
+                                    <span class="required hide">*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
+                                <div class="col-sm-8">
+                                    <#form:input path="miCardNumber" maxlength="200" class="form-control required" readonly="true"/>
                                 </div>
                             </div>
+                        </div>
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label col-sm-3" title="">
                                         <span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
                                         <#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3" title="">
+                                        <span class="required hide">*</span> ${text('会员卡余额')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miBalance" maxlength="200" class="form-control" maxlength="50"/>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +289,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
                     </div>
 					<div class="layui-tab-item">
                         <table id="dataGridMoneyHistory"></table>内容2
@@ -304,21 +318,27 @@
 <script>
 
     //判断手机号是否存在
-    function MiCodeIsPhone(){
-        var miCode = $("#miCode").val();
-        jquery.ajax({
-            type:"POST",
-            url:"${ctx}/memberInfo/MiCodeIsPhone",
-            data:{"miCode":miCode},
-            async:false,
-            success:function (ds) {
-                if(ds==1){
-                    alert("手机号已存在");
-                    $("#miCode").val("");
+   $("#phone").blur(function () {
+       var phone = $("#phone").val();
+       var miCode = $("#miCode").val();
+       if(phone !=null){
+            $.ajax({
+                type:"POST",
+                url:"${ctx}/memberInfo/MiCodeIsPhone",
+                data:{"miCode":"mi_phone","miPhone":phone},
+                async:false,
+                dataType:"text",
+                success:function (ds) {
+                    if(ds==1){
+                        alert("手机号已存在");
+                        $("#phone").val("");
+                    }
+
                 }
-            }
-        });
-    }
+            });
+       }
+   })
+
 
     //手机号验证
     function checkTel(str){
@@ -366,25 +386,6 @@
                     js.ajaxSubmitForm($(form), function(data){
                         js.showMessage(data.message);
                         if(data.result == Global.TRUE){
-
-                            var phone = $("#phone").val();
-                            var miName = $("#miName").val();
-                            var miEamil = $("#email").val();
-                            $.ajax({
-                                url:"",
-                                data:{miName:miName,miPhone:phone,miEmail:miEamil},
-                                type:"post",
-                                dataType:"text",
-                                success:function(data){
-                                 if(data.trim() == "ok"){
-                                     window.location.href="#";
-                                 }else{
-                                     alert("会员姓名或手机号或邮箱不匹配！");
-                                 }
-
-                                }
-
-                            });
                             js.closeCurrentTabPage(function(contentWindow){
                                 contentWindow.page();
                             });

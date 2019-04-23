@@ -5,6 +5,7 @@ package com.jeesite.modules.base.member.service;
 
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
@@ -65,6 +66,10 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Transactional(readOnly=false)
     @SuppressWarnings("all")
 	public void save(MemberInfo memberInfo) {
+		/*if(!memberInfo.getIsNewRecord() &&memberInfo.getMiCardNumber()==null && "".equals(memberInfo.getMiCardNumber())){
+			memberInfo.setMiCardNumber(IdGen.nextId());
+		}*/
+
 		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String  office = EmpUtils.getOffice().getOfficeCode();
 		memberInfo.setUserCode(user);
@@ -102,10 +107,11 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		return this.memberInfoDao.findList(memberInfo);
 	}
 
-	public MemberInfo getByMiCode(String miCode){
+	public MemberInfo getByForm(String miCode,String miPhone){
 		HashMap<String,Object>  hmap= new HashMap<String,Object>();
-		hmap.put("miCode",miCode);
-		return memberInfoDao.getByMiCode(hmap);
+		hmap.put("field_name",miCode);
+		hmap.put("mi_code",miPhone);
+		return memberInfoDao.getByForm(hmap);
 	}
 
 
