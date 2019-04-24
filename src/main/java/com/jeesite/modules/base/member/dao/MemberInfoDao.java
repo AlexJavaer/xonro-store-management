@@ -23,5 +23,12 @@ public interface MemberInfoDao extends CrudDao<MemberInfo> {
      * @return
      */
     public MemberInfo getByForm(HashMap<String,Object> hmap);
+
+    /**
+     * 查询根据id查询会员余额
+     * @param mi_card_number
+     * @return
+     */
+    public MemberInfo findMemberBalance(String mi_card_number);
 	
 }

@@ -76,7 +76,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户姓名')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmCustomerName" maxlength="128" class="form-control required"/>
+								<#form:input path="cmCustomerName" maxlength="128" class="form-control required" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户进店渠道')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" maxlength="128" />
+								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" maxlength="128" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户种类')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="cmCustomerType" dictType="cm_customer_type" class="form-control" />
+								<#form:radio path="cmCustomerType" dictType="cm_customer_type" class="form-control" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -106,7 +106,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户性别')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" />
+								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -117,7 +117,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('手机号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmCustomerPhone" maxlength="20" class="form-control digits phone required" id="phone"/>
+								<#form:input path="cmCustomerPhone" maxlength="20" class="form-control digits phone required" id="phone" readonly="true"/>
 								<div style="color: red" id="phoneJs"></div>
 							</div>
 						</div>
@@ -127,7 +127,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('是否是会员')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" id="form-cmIsMember"/>
+								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" id="form-cmIsMember" readonly="true"/>
 							</div>
 						</div>
 					</div>
@@ -138,7 +138,7 @@
 										<label class="control-label col-sm-3" title="">
 											<span class="required hide" >*</span> ${text('会员卡号')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
-											<#form:input path="cmMemberCard" maxlength="20" class="form-control digits" />
+											<#form:input path="cmMemberCard" maxlength="20" class="form-control digits" readonly="true"/>
 										</div>
 
 									</div>
@@ -148,7 +148,7 @@
 										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('会员卡类别')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
-											<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" id="cmMemberType"/>
+											<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" id="cmMemberType" readonly="true"/>
 										</div>
 									</div>
 								</div>
@@ -213,7 +213,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('金额')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmPaymentMoney" class="form-control digits required" />
+								<#form:input path="cmPaymentMoney" class="form-control digits required" id="paymentMoney"/>
 							</div>
 						</div>
 					</div>
@@ -264,7 +264,7 @@
 					<div class="box-footer" style="padding:8px">
 						<div class="row" style="float:right;padding-right: 35px">
 							<div class="col-sm-offset-2 col-sm-12">
-								<!--<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;-->
+								<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
 								<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 							</div>
 						</div>
@@ -322,6 +322,28 @@
 
 <script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
 <script>
+
+	//判断消费余额如果比会员卡余额多，那么就需要给会员卡充值
+	$("#paymentMoney").blur(function () {
+		var paymentMoney = $("#paymentMoney").val();
+		if(paymentMoney!=null){
+		    $.ajax({
+                type:"POST",
+                url:"${ctx}/collectMoney/CmPaymentMoneyVil",
+                data:{"cm_payment_money":paymentMoney},
+                async:false,
+                dataType:"text",
+                success:function (ds) {
+                    if(ds==1){
+                        alert("会员卡余额不足！请重新输入！");
+                        /*js.confirm('');*/
+                        $("#paymentMoney").val("");
+                    }
+
+                }
+			});
+		}
+    });
 
 	//点击是是会员会显示会员卡号和卡类别
 	$("input[name='cmIsMember']").click(function(){

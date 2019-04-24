@@ -79,7 +79,7 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miWorkUnit;		// 工作单位
 	private String miCardNumber;		// 会员卡号
 	private String miCardType;		// 卡类别
-	private Long miBalance;		// 当前余额
+	private Long miBalance;		// 会员卡余额
 	private String miIdNumber;		// 身份证号
 	private String miMessageNotice;		// 消息类通知
 	private String miMarketingNotice;		// 营销类通知

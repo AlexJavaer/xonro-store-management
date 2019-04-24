@@ -17,4 +17,14 @@
 			${field_name} = #{mi_code}
 		</where>
 	</select>
+	
+	<select id="findMemberBalance" resultType="MemberInfo">
+		SELECT
+		*
+		FROM
+		member_info
+		<where>
+			mi_card_number=#{mi_card_number}
+		</where>
+	</select>
 </mapper>

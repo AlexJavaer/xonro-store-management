@@ -61,13 +61,13 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	private Date cmDate;		// 消费日期
 	private String cmStoreCode;		// 消费门店编号
 	private String cmStoreName;		// 消费门店名称
-	private Long cmMemberCard;		// 会员卡号
+	private String cmMemberCard;		// 会员卡号
 	private String cmMemberType;		// 会员卡类别
 	private String cmCustomerName;		// 客户姓名
 	private String cmCustomerSex;		// 客户性别
 	private String cmCustomerType;		// 客户种类
 	private String cmAccessChannel;		// 客户进店渠道
-	private Long cmCustomerPhone;		// 手机号
+	private String cmCustomerPhone;		// 手机号
 	private Long cmCustomerNum;		// 客数
 	private String cmIsMember;		// 是否是会员
 	private String cmMemberIntegrate;		// 会员积分
@@ -75,7 +75,7 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	private Double cmAccountBalance;		// 余额
 	private Double cmAccountDebt;		// 欠款
 	private String cmPaymentType;		// 支付方式
-	private Long cmPaymentMoney;		// 金额
+	private Long cmPaymentMoney;		// 消费金额
 	private String cmRemarks;		// 备注说明
 	private String miCode;		// 会员编号ID
 	private String userCode;		// 用户ID
@@ -131,11 +131,11 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.cmStoreName = cmStoreName;
 	}
 	
-	public Long getCmMemberCard() {
+	public String getCmMemberCard() {
 		return cmMemberCard;
 	}
 
-	public void setCmMemberCard(Long cmMemberCard) {
+	public void setCmMemberCard(String cmMemberCard) {
 		this.cmMemberCard = cmMemberCard;
 	}
 	
@@ -183,11 +183,11 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.cmAccessChannel = cmAccessChannel;
 	}
 	
-	public Long getCmCustomerPhone() {
+	public String getCmCustomerPhone() {
 		return cmCustomerPhone;
 	}
 
-	public void setCmCustomerPhone(Long cmCustomerPhone) {
+	public void setCmCustomerPhone(String cmCustomerPhone) {
 		this.cmCustomerPhone = cmCustomerPhone;
 	}
 	
