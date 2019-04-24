@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.stockcontrol.web;
+package com.jeesite.modules.base.xrstockcontrol.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,17 +19,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.base.stockcontrol.entity.XrStockControl;
-import com.jeesite.modules.base.stockcontrol.service.XrStockControlService;
+import com.jeesite.modules.base.xrstockcontrol.entity.XrStockControl;
+import com.jeesite.modules.base.xrstockcontrol.service.XrStockControlService;
 
 /**
- * stockControlController
- * @author Crysta-hu
- * @version 2019-04-10
+ * xr_stock_controlController
+ * @author Alex
+ * @version 2019-04-23
  */
 @Controller
-@RequestMapping(value = "${adminPath}/stockcontrol/xrStockControl")
-@SuppressWarnings("all")
+@RequestMapping(value = "${adminPath}/xrstockcontrol/xrStockControl")
 public class XrStockControlController extends BaseController {
 
 	@Autowired
@@ -39,24 +38,24 @@ public class XrStockControlController extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public XrStockControl get(String matterCode, boolean isNewRecord) {
-		return xrStockControlService.get(matterCode, isNewRecord);
+	public XrStockControl get(String productCode, boolean isNewRecord) {
+		return xrStockControlService.get(productCode, isNewRecord);
 	}
 	
 	/**
 	 * 查询列表
 	 */
-	/*@RequiresPermissions("stockcontrol:xrStockControl:view")*/
+	@RequiresPermissions("xrstockcontrol:xrStockControl:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(XrStockControl xrStockControl, Model model) {
 		model.addAttribute("xrStockControl", xrStockControl);
-		return "modules/stockcontrol/xrStockControlList";
+		return "base/xrstockcontrol/xrStockControlList";
 	}
 	
 	/**
 	 * 查询列表数据
 	 */
-	/*@RequiresPermissions("stockcontrol:xrStockControl:view")*/
+	@RequiresPermissions("xrstockcontrol:xrStockControl:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<XrStockControl> listData(XrStockControl xrStockControl, HttpServletRequest request, HttpServletResponse response) {
@@ -67,33 +66,33 @@ public class XrStockControlController extends BaseController {
 	/**
 	 * 查看编辑表单
 	 */
-	/*@RequiresPermissions("stockcontrol:xrStockControl:view")*/
+	@RequiresPermissions("xrstockcontrol:xrStockControl:view")
 	@RequestMapping(value = "form")
 	public String form(XrStockControl xrStockControl, Model model) {
 		model.addAttribute("xrStockControl", xrStockControl);
-		return "modules/stockcontrol/xrStockControlForm";
+		return "base/xrstockcontrol/xrStockControlForm";
 	}
 
 	/**
-	 * 保存stockControl
+	 * 保存xr_stock_control
 	 */
-	/*@RequiresPermissions("stockcontrol:xrStockControl:edit")*/
+	@RequiresPermissions("xrstockcontrol:xrStockControl:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated XrStockControl xrStockControl) {
 		xrStockControlService.save(xrStockControl);
-		return renderResult(Global.TRUE, text("保存stockControl成功！"));
+		return renderResult(Global.TRUE, text("保存xr_stock_control成功！"));
 	}
 	
 	/**
-	 * 删除stockControl
+	 * 删除xr_stock_control
 	 */
-	/*@RequiresPermissions("stockcontrol:xrStockControl:edit")*/
+	@RequiresPermissions("xrstockcontrol:xrStockControl:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(XrStockControl xrStockControl) {
 		xrStockControlService.delete(xrStockControl);
-		return renderResult(Global.TRUE, text("删除stockControl成功！"));
+		return renderResult(Global.TRUE, text("删除xr_stock_control成功！"));
 	}
 	
 }

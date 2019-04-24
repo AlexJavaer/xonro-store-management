@@ -28,28 +28,19 @@ import java.util.Date;
 		@Column(name="xpd_mnemonic_code", attrName="xpdMnemonicCode", label="助记码"),
 		@Column(name="xpd_discount_category", attrName="xpdDiscountCategory", label="折扣类别"),
 		@Column(name="xpd_filing_time", attrName="xpdFilingTime", label="建档时间"),
-		@Column(name="xpd_standard_unit", attrName="xpdStandardUnit", label="标准单位"),
-		@Column(name="xpd_norm_price", attrName="xpdNormPrice", label="标准价格"),
-		@Column(name="xpd_each_containing", attrName="xpdEachContaining", label="每件含"),
-		@Column(name="xpd_time", attrName="xpdTime", label="可用时间"),
-		@Column(name="xpd_purchase_unit", attrName="xpdPurchaseUnit", label="进货单位"),
+		@Column(name="xpd_purchase_unit", attrName="xpdPurchaseUnit", label="单位"),
 		@Column(name="xpd_purchased", attrName="xpdPurchased", label="进货成本"),
 		@Column(name="xpd_each", attrName="xpdEach", label="每含单位", comment="每含单位:件"),
 		@Column(name="xpd_supplier", attrName="xpdSupplier", label="供应商"),
-		@Column(name="xpd_marketint_unit", attrName="xpdMarketintUnit", label="消耗单位"),
-		@Column(name="xpd_consumption_cost", attrName="xpdConsumptionCost", label="消耗成本"),
-		@Column(name="xpd_marketint_cost", attrName="xpdMarketintCost", label="销售成本"),
 		@Column(name="xpd_quality_time", attrName="xpdQualityTime", label="保质期"),
 		@Column(name="xpd_rule_desccription", attrName="xpdRuleDesccription", label="规格描述"),
 		@Column(name="xpd_membership_prices", attrName="xpdMembershipPrices", label="会员价格"),
 		@Column(name="xpd_store_price", attrName="xpdStorePrice", label="门店价格"),
-		@Column(name="xpd_return_interval", attrName="xpdReturnInterval", label="回访间隔"),
 		@Column(name="xpd_max_stock", attrName="xpdMaxStock", label="最高存量"),
 		@Column(name="xpd_safety_stock", attrName="xpdSafetyStock", label="安全存量"),
 		@Column(name="xpd_isgift", attrName="xpdIsgift", label="是否赠送"),
 		@Column(name="xpd_isdiscountinued", attrName="xpdIsdiscountinued", label="是否停用"),
 		@Column(name="xpd_end_sale", attrName="xpdEndSale", label="停止销售"),
-		@Column(name="xpd_copy_cost_price", attrName="xpdCopyCostPrice", label="可拷贝成本价格"),
 		@Column(name="xpd_remarks", attrName="xpdRemarks", label="产品备注"),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
@@ -67,28 +58,19 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	private String xpdMnemonicCode;		// 助记码
 	private String xpdDiscountCategory;		// 折扣类别
 	private Date xpdFilingTime;		// 建档时间
-	private String xpdStandardUnit;		// 标准单位
-	private Double xpdNormPrice;		// 标准价格
-	private Long xpdEachContaining;		// 每件含
-	private Long xpdTime;		// 可用时间
 	private String xpdPurchaseUnit;		// 进货单位
 	private Long xpdPurchased;		// 进货成本
 	private Long xpdEach;		// 每含单位:件
 	private String xpdSupplier;		// 供应商
-	private String xpdMarketintUnit;		// 消耗单位
-	private Double xpdConsumptionCost;		// 消耗成本
-	private Double xpdMarketintCost;		// 销售成本
 	private Long xpdQualityTime;		// 保质期
 	private String xpdRuleDesccription;		// 规格描述
 	private Double xpdMembershipPrices;		// 会员价格
 	private Double xpdStorePrice;		// 门店价格
-	private Long xpdReturnInterval;		// 回访间隔
 	private Long xpdMaxStock;		// 最高存量
 	private Long xpdSafetyStock;		// 安全存量
 	private String xpdIsgift;		// 是否赠送
 	private String xpdIsdiscountinued;		// 是否停用
 	private String xpdEndSale;		// 停止销售
-	private String xpdCopyCostPrice;		// 可拷贝成本价格
 	private String xpdRemarks;		// 产品备注
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
@@ -177,41 +159,6 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 		this.xpdFilingTime = xpdFilingTime;
 	}
 	
-	@NotBlank(message="标准单位不能为空")
-	@Length(min=0, max=2, message="标准单位长度不能超过 2 个字符")
-	public String getXpdStandardUnit() {
-		return xpdStandardUnit;
-	}
-
-	public void setXpdStandardUnit(String xpdStandardUnit) {
-		this.xpdStandardUnit = xpdStandardUnit;
-	}
-	
-	@NotNull(message="标准价格不能为空")
-	public Double getXpdNormPrice() {
-		return xpdNormPrice;
-	}
-
-	public void setXpdNormPrice(Double xpdNormPrice) {
-		this.xpdNormPrice = xpdNormPrice;
-	}
-	
-	public Long getXpdEachContaining() {
-		return xpdEachContaining;
-	}
-
-	public void setXpdEachContaining(Long xpdEachContaining) {
-		this.xpdEachContaining = xpdEachContaining;
-	}
-	
-	public Long getXpdTime() {
-		return xpdTime;
-	}
-
-	public void setXpdTime(Long xpdTime) {
-		this.xpdTime = xpdTime;
-	}
-	
 	@Length(min=0, max=2, message="进货单位长度不能超过 2 个字符")
 	public String getXpdPurchaseUnit() {
 		return xpdPurchaseUnit;
@@ -245,31 +192,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	public void setXpdSupplier(String xpdSupplier) {
 		this.xpdSupplier = xpdSupplier;
 	}
-	
-	@Length(min=0, max=2, message="消耗单位长度不能超过 2 个字符")
-	public String getXpdMarketintUnit() {
-		return xpdMarketintUnit;
-	}
 
-	public void setXpdMarketintUnit(String xpdMarketintUnit) {
-		this.xpdMarketintUnit = xpdMarketintUnit;
-	}
-	
-	public Double getXpdConsumptionCost() {
-		return xpdConsumptionCost;
-	}
-
-	public void setXpdConsumptionCost(Double xpdConsumptionCost) {
-		this.xpdConsumptionCost = xpdConsumptionCost;
-	}
-	
-	public Double getXpdMarketintCost() {
-		return xpdMarketintCost;
-	}
-
-	public void setXpdMarketintCost(Double xpdMarketintCost) {
-		this.xpdMarketintCost = xpdMarketintCost;
-	}
 	
 	public Long getXpdQualityTime() {
 		return xpdQualityTime;
@@ -302,14 +225,6 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 
 	public void setXpdStorePrice(Double xpdStorePrice) {
 		this.xpdStorePrice = xpdStorePrice;
-	}
-	
-	public Long getXpdReturnInterval() {
-		return xpdReturnInterval;
-	}
-
-	public void setXpdReturnInterval(Long xpdReturnInterval) {
-		this.xpdReturnInterval = xpdReturnInterval;
 	}
 	
 	public Long getXpdMaxStock() {
@@ -354,15 +269,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	public void setXpdEndSale(String xpdEndSale) {
 		this.xpdEndSale = xpdEndSale;
 	}
-	
-	@Length(min=0, max=2, message="可拷贝成本价格长度不能超过 2 个字符")
-	public String getXpdCopyCostPrice() {
-		return xpdCopyCostPrice;
-	}
 
-	public void setXpdCopyCostPrice(String xpdCopyCostPrice) {
-		this.xpdCopyCostPrice = xpdCopyCostPrice;
-	}
 	
 	@Length(min=0, max=500, message="产品备注长度不能超过 500 个字符")
 	public String getXpdRemarks() {

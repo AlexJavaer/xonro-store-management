@@ -1,28 +1,22 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.base.stockcontrol.service;
+package com.jeesite.modules.base.xrstockcontrol.service;
 
 import java.util.List;
 
-import com.jeesite.common.entity.DataScope;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
-import com.jeesite.modules.sys.utils.EmpUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.base.stockcontrol.entity.XrStockControl;
-import com.jeesite.modules.base.stockcontrol.dao.XrStockControlDao;
-import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.base.xrstockcontrol.entity.XrStockControl;
+import com.jeesite.modules.base.xrstockcontrol.dao.XrStockControlDao;
 
 /**
- * stockControlService
- * @author Crysta-hu
- * @version 2019-04-10
+ * xr_stock_controlService
+ * @author Alex
+ * @version 2019-04-23
  */
 @Service
 @Transactional(readOnly=true)
@@ -46,8 +40,6 @@ public class XrStockControlService extends CrudService<XrStockControlDao, XrStoc
 	 */
 	@Override
 	public Page<XrStockControl> findPage(Page<XrStockControl> page, XrStockControl xrStockControl) {
-		QueryDataScope sss = xrStockControl.getSqlMap().getDataScope().addFilter("dsf", "Office",
-				"a.office_code", "a.user_code", DataScope.CTRL_PERMI_MANAGE);
 		return super.findPage(page, xrStockControl);
 	}
 	
@@ -58,22 +50,7 @@ public class XrStockControlService extends CrudService<XrStockControlDao, XrStoc
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrStockControl xrStockControl) {
-		if(xrStockControl.getIsNewRecord()){
-			String officeCode = EmpUtils.getOffice().getOfficeCode();
-			String s = StringUtils.getRandomNum(3);
-			xrStockControl.setMatterCode(officeCode+s);
-		}
-
-		String user = UserUtils.getUser().getCurrentUser().getUserCode();
-		String office = EmpUtils.getOffice().getOfficeCode();
-		xrStockControl.setUserCode(user);
-		xrStockControl.setOfficeCode(office);
-
 		super.save(xrStockControl);
-		// 保存上传图片
-		//FileUploadUtils.saveFileUpload(xrStockControl.getId(), "xrStockControl_image");
-		// 保存上传附件
-		//FileUploadUtils.saveFileUpload(xrStockControl.getId(), "xrStockControl_file");
 	}
 	
 	/**

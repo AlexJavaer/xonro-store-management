@@ -53,8 +53,8 @@ $('#dataGrid').dataGrid({
         {header:'${text("统计分类")}', name:'xpdStatisticalClass', index:'a.xpd_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){
     		return js.getDictLabel(${@DictUtils.getDictListJson('xpd_statistical_class')}, val, '${text("未知")}', true);
 		}},
-        {header:'${text("标准价格")}', name:'xpdNormPrice', index:'a.xpd_norm_price', width:150, align:"center"},
-        {header:'${text("标准单位")}', name:'xpdStandardUnit', index:'a.xpd_standard_unit', width:150, align:"center", formatter: function(val, obj, row, act){
+        {header:'${text("门店价格")}', name:'xpdStorePrice', index:'a.xpd_store_price', width:150, align:"center"},
+        {header:'${text("会员价格")}', name:'xpdMembershipPrices', index:'a.xpd_membership_prices', width:150, align:"center", formatter: function(val, obj, row, act){
                 return js.getDictLabel(${@DictUtils.getDictListJson('xpd_standard_unit')}, val, '${text("未知")}', true);
             }},
 		{header:'${text("建档日期")}', name:'xpdFilingTime', index:'a.xpd_filing_time', width:150, align:"center"},
