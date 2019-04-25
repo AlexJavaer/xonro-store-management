@@ -1,9 +1,9 @@
-<% layout('/layouts/default.html', {title: 'xr_stock_control管理', libs: ['validate']}){ %>
+<% layout('/layouts/default.html', {title: '库存资料', libs: ['validate']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text(xrStockControl.isNewRecord ? '新增xr_stock_control' : '编辑xr_stock_control')}
+				<i class="fa fa-list-alt"></i> ${text(xrStockControl.isNewRecord ? '新增库存资料' : '查看库存资料')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -17,29 +17,18 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('用户ID')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('操作者')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="userCode" maxlength="64" class="form-control"/>
+								<#form:input path="user.userName" maxlength="64" readonly="${!xrStockControl.isNewRecord}" class="form-control"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('组织ID')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('操作者组织')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="officeCode" maxlength="64" class="form-control"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form-group">
-							<label class="control-label col-sm-2" title="">
-								<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-10">
-								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+								<#form:input path="office.officeName" maxlength="64" readonly="${!xrStockControl.isNewRecord}" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -56,36 +45,58 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> ${text('库存数量')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="quan" class="form-control required digits"/>
-							</div>
-						</div>
-					</div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required ">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="xrProductinfo.productName" maxlength="64" readonly="${!xrStockControl.isNewRecord}" class="form-control required"/>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> ${text('入库数量')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="numberIn" class="form-control required digits"/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> ${text('出库数量')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="numberOut" class="form-control required digits"/>
-							</div>
-						</div>
-					</div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required ">*</span> ${text('库存数量')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="quan" readonly="${!xrStockControl.isNewRecord}" class="form-control required digits"/>
+                            </div>
+                        </div>
+                    </div>
 				</div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required ">*</span> ${text('入库数量')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="numberIn" readonly="${!xrStockControl.isNewRecord}" class="form-control required digits"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" title="">
+                                <span class="required ">*</span> ${text('出库数量')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-8">
+                                <#form:input path="numberOut" readonly="${!xrStockControl.isNewRecord}" class="form-control required digits"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" title="">
+                                <span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+                            <div class="col-sm-10">
+                                <#form:textarea path="remarks" rows="4" maxlength="500" readonly="${!xrStockControl.isNewRecord}" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 			<div class="box-footer">
 				<div class="row">

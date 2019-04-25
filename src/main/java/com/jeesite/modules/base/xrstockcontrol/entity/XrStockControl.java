@@ -5,6 +5,8 @@ package com.jeesite.modules.base.xrstockcontrol.entity;
 
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.modules.base.productinfo.entity.XrProductinfo;
+import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +24,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
-		@Column(name="product_code", attrName="productCode", label="产品编号", isPK=true),
+		@Column(name="product_code", attrName="productCode", label="产品编号", isPK=true,queryType = QueryType.LIKE),
 		@Column(name="quan", attrName="quan", label="库存数量"),
 		@Column(name="number_in", attrName="numberIn", label="入库数量"),
 		@Column(name="number_out", attrName="numberOut", label="出库数量"),
@@ -31,7 +33,15 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		joinTable={
 				@JoinTable(type= JoinTable.Type.JOIN, entity=XrProductinfo.class, alias="o",
 						on="o.product_code = a.product_code",
-						columns={@Column(includeEntity=XrProductinfo.class)})
+						columns={@Column(includeEntity=XrProductinfo.class)}),
+				@JoinTable(type= JoinTable.Type.LEFT_JOIN, entity=User.class, attrName="user", alias="u12",
+						on="u12.user_code = a.user_code", columns={
+						@Column(name="user_name", label="用户名称",queryType = QueryType.LIKE),
+				}),
+				@JoinTable(type= JoinTable.Type.LEFT_JOIN, entity=Office.class, attrName="office", alias="u13",
+						on="u13.office_code = a.office_code", columns={
+						@Column(name="office_name", label="机构名称",queryType = QueryType.LIKE),
+				}),
 		}, orderBy="a.update_date DESC"
 )
 public class XrStockControl extends DataEntity<XrStockControl> {
@@ -44,6 +54,8 @@ public class XrStockControl extends DataEntity<XrStockControl> {
 	private Long numberIn;		// 入库数量
 	private Long numberOut;		// 出库数量
 	private XrProductinfo xrProductinfo;
+	private Office office;
+	private User user;
 	
 	public XrStockControl() {
 		this(null);
@@ -116,4 +128,20 @@ public class XrStockControl extends DataEntity<XrStockControl> {
 	public void setXrProductinfo(XrProductinfo xrProductinfo) {
 		this.xrProductinfo = xrProductinfo;
 	}
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

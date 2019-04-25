@@ -81,7 +81,7 @@ public class XrStockControlController extends BaseController {
 	@ResponseBody
 	public String save(@Validated XrStockControl xrStockControl) {
 		xrStockControlService.save(xrStockControl);
-		return renderResult(Global.TRUE, text("保存xr_stock_control成功！"));
+		return renderResult(Global.TRUE, text("保存成功！"));
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class XrStockControlController extends BaseController {
 	@ResponseBody
 	public String delete(XrStockControl xrStockControl) {
 		xrStockControlService.delete(xrStockControl);
-		return renderResult(Global.TRUE, text("删除xr_stock_control成功！"));
+		return renderResult(Global.TRUE, text("删除库存资料成功！"));
 	}
 	
 }

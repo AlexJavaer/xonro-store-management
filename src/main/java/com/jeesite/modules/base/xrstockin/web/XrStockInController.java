@@ -100,7 +100,7 @@ public class XrStockInController extends BaseController {
 	@ResponseBody
 	public String delete(XrStockIn xrStockIn) {
 		xrStockInService.delete(xrStockIn);
-		return renderResult(Global.TRUE, text("删除xr_stock_in成功！"));
+		return renderResult(Global.TRUE, text("删除入库信息成功！"));
 	}
 	
 }
