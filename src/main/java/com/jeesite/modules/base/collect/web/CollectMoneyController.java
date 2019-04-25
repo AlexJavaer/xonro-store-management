@@ -108,12 +108,14 @@ public class CollectMoneyController extends BaseController {
 
 		MemberInfo memberInfoData = memberInfoService.findMemberBalance(collectMoney.getCmMemberCard());
 		//从会员信息中获取会员卡余额
-		Long miBalance = memberInfoData.getMiBalance();
-			if(miBalance<cm_payment_money){
+		/*Long miBalance = memberInfoData.getMiBalance();*/
+			/*if(miBalance<cm_payment_money){
 				return "1";
 			}else{
 				return "0";
-			}
+			}*/
+			return null;
+
 
 
 
