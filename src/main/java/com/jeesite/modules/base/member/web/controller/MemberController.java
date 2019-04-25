@@ -34,7 +34,9 @@ public class MemberController extends BaseController{
 
     @Autowired
     private MemberInfoService memberInfoService;
+    @Autowired
     private CollectMoneyService collectMoneyService;
+    @Autowired
     private XrMemberRechargeService xrMemberRechargeService;
 
     /**
@@ -76,21 +78,31 @@ public class MemberController extends BaseController{
         String nowDate = dateFormat.format(new Date());*/
        if(memberInfo.getIsNewRecord()){
            memberInfo.setMiCardNumber(IdGen.nextId());
+           Long miBalance = 0L;
+           memberInfo.setMiBalance(miBalance);
        }
 
-       if(memberInfo.getMiCode()!=null&& "".equals(memberInfo.getMiCode()) && memberInfo.getMiCardNumber()!=null &&"".equals(memberInfo.getMiCardNumber()) &&memberInfo.getMiCardNumber().equals(xrMemberRecharge.getMiCardNumber().toString())){
-           Long miBalance = 0L;
+
+       if(!memberInfo.getIsNewRecord()){
+
+           memberInfo.setMiBalance(memberInfo.getMiBalance());
+
+       }
+
+
+
+
+       /* XrMemberRecharge miData = xrMemberRechargeService.findMemberCardNum( memberInfo.getMiCardNumber());*/
 
            //给账户存钱
-           miBalance += xrMemberRecharge.getXmrSaveMoney();
+          /* miBalance += xrMemberRecharge.getXmrSaveMoney();*/
 
            //向账户支出
-           if(xrMemberRecharge.getXmrReserveValue()<memberInfo.getMiBalance()){
-               miBalance = memberInfo.getMiBalance()-xrMemberRecharge.getXmrReserveValue();
-           }
+          /* if(miData.getXmrReserveValue()<memberInfo.getMiBalance()){
+               miBalance = memberInfo.getMiBalance()-miData.getXmrReserveValue();
 
-           memberInfo.setMiBalance(miBalance);
-        }
+
+       /* }*/
 
 
 
@@ -119,6 +131,13 @@ public class MemberController extends BaseController{
         return renderResult(Global.TRUE, text("删除数据成功！"));
     }
 
+    /**
+     * 会员充值信息
+     * @param xrMemberRecharge
+     * @param model
+     * @param memberInfo
+     * @return
+     */
    @RequestMapping(value = "formAuthRecharge")
     public String formAuthRecharge(XrMemberRecharge xrMemberRecharge, Model model, MemberInfo memberInfo) {
         if (!memberInfo.getIsNewRecord()) {
@@ -133,6 +152,8 @@ public class MemberController extends BaseController{
             xrMemberRecharge.setMiCardNumber(miList.getMiCardNumber());
             //在会员充值页面回显会员的卡类别
             xrMemberRecharge.setMiCardType(miList.getMiCardType());
+            //在会员充值页面回显会员的进店渠道
+            xrMemberRecharge.setMiOutlets(miList.getMiOutlets());
 
             model.addAttribute("xrMemberRecharge",xrMemberRecharge);
 
@@ -156,6 +177,15 @@ public class MemberController extends BaseController{
         return "modules/memberInfo/xrMemberRechargeForm";
     }
 
+    /**
+     * 验证手机号是否存在
+     * @param request
+     * @param response
+     * @param model
+     * @param miCode
+     * @param miPhone
+     * @return
+     */
     @RequestMapping(value="MiCodeIsPhone")
     @ResponseBody
     public String MiCodeIsPhone(HttpServletRequest request, HttpServletResponse response,Model model,String miCode,String miPhone){
@@ -167,4 +197,36 @@ public class MemberController extends BaseController{
         }
 
     }
+
+
+    @RequestMapping(value="formAuthCollectMoney")
+    public String formAuthCollectMoney(CollectMoney collectMoney,MemberInfo memberInfo,Model model){
+
+       if(!memberInfo.getIsNewRecord()){
+           MemberInfo mi = new MemberInfo();
+           mi.setMiCode(memberInfo.getMiCode());
+           MemberInfo miList = this.memberInfoService.get(mi);
+           //在会员消费页面回显会员的会员姓名
+           collectMoney.setCmCustomerName(miList.getMiName());
+           //在会员消费页面回显会员的进店渠道
+           collectMoney.setCmAccessChannel(miList.getMiOutlets());
+           //在会员消费页面回显会员的会员性别
+           collectMoney.setCmCustomerSex(miList.getMiSex());
+           //在会员消费页面回显会员的手机号码
+           collectMoney.setCmCustomerPhone(miList.getMiPhone());
+           //在会员消费页面回显会员的会员卡号
+           collectMoney.setCmMemberCard(miList.getMiCardNumber());
+           //在会员消费页面回显会员的会员卡类型
+           collectMoney.setCmCustomerType(miList.getMiCardType());
+           collectMoney.setCmIsMember("01");
+           collectMoney.setMiCode(miList.getMiCode());
+       }
+
+        collectMoney.setCmDate(new Date());
+        model.addAttribute("collectMoney",collectMoney);
+
+       return "modules/memberInfo/collectMoneyForm";
+    }
+
+
 }

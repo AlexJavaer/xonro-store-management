@@ -5,9 +5,9 @@ package com.jeesite.modules.base.collect.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.member.service.MemberInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +22,6 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.base.collect.entity.CollectMoney;
 import com.jeesite.modules.base.collect.service.CollectMoneyService;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -37,6 +35,9 @@ public class CollectMoneyController extends BaseController {
 
 	@Autowired
 	private CollectMoneyService collectMoneyService;
+
+	@Autowired
+	private MemberInfoService memberInfoService;
 
 	/**
 	 * 获取数据
@@ -100,4 +101,24 @@ public class CollectMoneyController extends BaseController {
 		return renderResult(Global.TRUE, text("删除订单资料成功！"));
 	}
 
+
+	@RequestMapping(value="CmPaymentMoneyVil")
+	@ResponseBody
+	public String CmPaymentMoneyVil(HttpServletRequest request, HttpServletResponse response,Model model,MemberInfo memberInfo,CollectMoney collectMoney,Long cm_payment_money) {
+
+		MemberInfo memberInfoData = memberInfoService.findMemberBalance(collectMoney.getCmMemberCard());
+		//从会员信息中获取会员卡余额
+		/*Long miBalance = memberInfoData.getMiBalance();*/
+			/*if(miBalance<cm_payment_money){
+				return "1";
+			}else{
+				return "0";
+			}*/
+			return null;
+
+
+
+
+
+	}
 }

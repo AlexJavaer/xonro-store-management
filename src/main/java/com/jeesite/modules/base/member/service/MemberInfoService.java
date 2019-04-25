@@ -10,6 +10,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
+import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.entity.RoleDataScope;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -32,6 +34,9 @@ import java.util.List;
 public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Autowired
 	private MemberInfoDao memberInfoDao;
+
+	@Autowired
+	private XrMemberRechargeService xrMemberRechargeService;
 
 	/**
 	 * 获取单条数据
@@ -66,9 +71,26 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 	@Transactional(readOnly=false)
     @SuppressWarnings("all")
 	public void save(MemberInfo memberInfo) {
-		/*if(!memberInfo.getIsNewRecord() &&memberInfo.getMiCardNumber()==null && "".equals(memberInfo.getMiCardNumber())){
-			memberInfo.setMiCardNumber(IdGen.nextId());
-		}*/
+		XrMemberRecharge xrMemberRecharge = new XrMemberRecharge();
+		if(memberInfo.getIsNewRecord()){
+			Long miBalance = 0L;
+			memberInfo.setMiBalance(miBalance);
+		}
+
+
+		if(!memberInfo.getIsNewRecord()&&memberInfo.getStatus().equals("1")){
+            //会员充值完成后，会员卡余额就是你充值后的余额
+			Long newMiBalance = memberInfo.getMiBalance();
+			Long miBalance = 0L;
+			miBalance = miBalance+newMiBalance;
+			memberInfo.setMiBalance(miBalance);
+
+		}else if(!memberInfo.getIsNewRecord()&&memberInfo.getStatus().equals("2")){
+            //会员消费之后，会员卡余额就是消费之后的余额
+            //获取消费之后的余额
+            Long newMiBalance = memberInfo.getMiBalance();
+            memberInfo.setMiBalance(newMiBalance);
+        }
 
 		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String  office = EmpUtils.getOffice().getOfficeCode();
@@ -113,6 +135,16 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		hmap.put("mi_code",miPhone);
 		return memberInfoDao.getByForm(hmap);
 	}
+
+	public MemberInfo getByCollectForm(String miCode,Long miBalance){
+		HashMap<String,Object>  hmap= new HashMap<String,Object>();
+		hmap.put("field_name",miCode);
+		hmap.put("mi_code",miBalance);
+		return memberInfoDao.getByForm(hmap);
+	}
+	public MemberInfo findMemberBalance(String miCardNumber){
+        return memberInfoDao.findMemberBalance(miCardNumber);
+    }
 
 
 

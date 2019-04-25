@@ -7,6 +7,8 @@ import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.base.collect.entity.CollectMoney;
 
+import java.util.HashMap;
+
 /**
  * collectMoneyDAO接口
  * @author Crysta-hu
@@ -14,5 +16,5 @@ import com.jeesite.modules.base.collect.entity.CollectMoney;
  */
 @MyBatisDao
 public interface CollectMoneyDao extends CrudDao<CollectMoney> {
-	
+
 }

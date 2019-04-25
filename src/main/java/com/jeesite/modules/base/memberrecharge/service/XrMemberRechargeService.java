@@ -3,12 +3,15 @@
  */
 package com.jeesite.modules.base.memberrecharge.service;
 
+import java.util.HashMap;
 import java.util.List;
 import com.jeesite.common.entity.DataScope;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.modules.base.member.dao.MemberInfoDao;
 import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.xr.dao.XrStoreDao;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -34,7 +37,11 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 
 	@Autowired
 	private XrMemberRechargeDao xrMemberRechargeDao;
+	@Autowired
+	private MemberInfoService memberInfoService;
+	@Autowired
 	private MemberInfoDao memberInfoDao;
+	@Autowired
 	private XrStoreDao xrStoreDao;
 
 	/**
@@ -79,26 +86,19 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrMemberRecharge xrMemberRecharge) {
-		if(!xrMemberRecharge.getIsNewRecord()){
-			//String officeCode = EmpUtils.getOffice().getOfficeCode();
-			String s = StringUtils.getRandomNum(3);
-			xrMemberRecharge.setId(s);
+		if(xrMemberRecharge.getIsNewRecord()){
 
-		}
-		if(xrMemberRecharge.getXmrCurrentBalance()!=null && !"".equals(xrMemberRecharge.getXmrCurrentBalance())&&xrMemberRecharge.getXmrLatestBalance()!=null&&!"".equals(xrMemberRecharge.getXmrLatestBalance())){
-			//当前余额
-			Long xmrCurrentBalance = xrMemberRecharge.getXmrCurrentBalance();
-			//最新余额
-			Long xmrLatestBalance = xrMemberRecharge.getXmrLatestBalance();
-			//储值金额
-			Long xmrSaveMoney = xrMemberRecharge.getXmrSaveMoney();
-			//储值应收
-			Long xmrReserveValue = xrMemberRecharge.getXmrReserveValue();
-			//变动后的最新余额
-			Long xmrLatestBalanceSum=xmrLatestBalance;
-			xmrLatestBalanceSum += (xmrCurrentBalance+xmrSaveMoney-xmrReserveValue);
-			xrMemberRecharge.setXmrCurrentBalance(xmrLatestBalance);
-			xrMemberRecharge.setXmrLatestBalance(xmrLatestBalanceSum);
+			/*String s = StringUtils.getRandomNum(3);*/
+			xrMemberRecharge.setId(IdGen.nextId());
+			//会员充值之后更新会员档案中的数据
+			MemberInfo memberData = memberInfoService.getByForm("mi_code",xrMemberRecharge.getMiCode());
+			Long miBalance = memberData.getMiBalance();
+			miBalance += xrMemberRecharge.getXmrSaveMoney();
+			memberData.setMiBalance(miBalance);
+			memberData.setStatus("1");
+			memberInfoService.save(memberData);
+
+
 		}
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
@@ -134,6 +134,12 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 
 	public List<MemberInfo> findDataMemberList(MemberInfo memberInfo) {
 		return this.memberInfoDao.findList(memberInfo);
+	}
+
+	public XrMemberRecharge findMemberCardNum(String miCode){
+		HashMap<String,Object> hmap= new HashMap<String,Object>();
+		hmap.put("mi_code",miCode);
+		return this.xrMemberRechargeDao.findMemberCardNum(hmap);
 	}
 
 }

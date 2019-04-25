@@ -23,16 +23,18 @@
 		<if test="tRequest.page !=null  and tRequest.page.pageNo!=null  and  tRequest.page.pageSize!=null">
 			limit ${tRequest.page.pageNo==null?0:(tRequest.page.pageNo-1)*tRequest.page.pageSize},${tRequest.page.pageSize}
 		</if>
+	</select>-->
+
+	<select id="findMemberCardNum" resultType="XrMemberRecharge">
+		SELECT
+		*
+		FROM
+		xr_member_recharge
+		<where>
+			  mi_code=#{mi_code}
+		</where>
 	</select>
 
-	<select id="byParamCount" resultType="java.lang.Integer"  parameterType="java.util.HashMap">
-		SELECT
-		count(*)
-		FROM
-		xr_member_recharge re
-		LEFT JOIN
-		member_info mi
-		ON
-		re.office_code=mi.office_code
-	</select>-->
+
+
 </mapper>

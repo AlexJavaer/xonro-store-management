@@ -5,6 +5,7 @@ package com.jeesite.modules.base.collect.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.jeesite.common.entity.DataEntity;
@@ -15,6 +16,8 @@ import com.jeesite.modules.base.collect.dao.ProductinfoDao;
 import com.jeesite.modules.base.collect.dao.ProjectinfoDao;
 import com.jeesite.modules.base.collect.entity.Productinfo;
 import com.jeesite.modules.base.collect.entity.Projectinfo;
+import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.productinfo.dao.XrProductinfoDao;
 import com.jeesite.modules.base.project.dao.XrProjectinfoDao;
 import com.jeesite.modules.base.xr.entity.XrStore;
@@ -45,7 +48,14 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 	@Autowired
 	private ProjectinfoDao projectInfoDao;
 
+	@Autowired
 	private ProductinfoDao productinfoDao;
+
+	@Autowired
+	private MemberInfoService memberInfoService;
+
+	@Autowired
+	private CollectMoneyDao collectMoneyDao;
 
 	/**
 	 * 获取单条数据
@@ -90,7 +100,21 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 			String nowDate = dateFormat.format(new Date());
 			String s = StringUtils.getRandomNum(3);
 			collectMoney.setCmCode(nowDate+s);
+
 		}
+
+		//会员消费之后更新会员档案中的数据
+
+		MemberInfo memberData = memberInfoService.getByForm("mi_card_number", collectMoney.getCmMemberCard());
+		Long miBalance = memberData.getMiBalance();
+		Long cmPaymentMoney = collectMoney.getCmPaymentMoney();
+		if(miBalance>=cmPaymentMoney){
+			miBalance = miBalance-cmPaymentMoney;
+			memberData.setMiBalance(miBalance);
+			memberData.setStatus("2");
+			memberInfoService.save(memberData);
+		}
+
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();
 		collectMoney.setUserCode(user);
@@ -142,5 +166,4 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 		projectInfoDao.delete(projectInfo);
 
 	}
-
 }

@@ -61,7 +61,7 @@ $('#dataGrid').dataGrid({
 	columnModel: [
         /*{header:'${text('门店编号')}', name:'id', index:'a.id', width:150, align:"center"},*/
         {header:'${text('异动单号')}', name:'xmrCode', index:'a.xmr_date', width:150, align:"center",frozen:true, formatter: function(val, obj, row, act){
-    return '<a href="${ctx}/xrMemberRecharge/form?xmrCode='+row.id+'" class="btnList" data-title="${text('编辑member_recharge')}">'+(val||row.id)+'</a>';
+    return '<a href="${ctx}/xrMemberRecharge/form?xmrCode='+row.id+'" class="btnList" data-title="${text('编辑会员充值信息')}">'+(val||row.id)+'</a>';
 }},
 		{header:'${text('异动日期')}', name:'xmrDate', index:'a.xmr_date', width:150, align:"center"},
         {header:'${text("会员姓名")}', name:'miName', index:'a.mi_name', width:150, align:"center"},

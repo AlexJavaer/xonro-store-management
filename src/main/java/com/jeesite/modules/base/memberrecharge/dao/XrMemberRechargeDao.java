@@ -5,8 +5,10 @@ package com.jeesite.modules.base.memberrecharge.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
+import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,4 +33,12 @@ public interface XrMemberRechargeDao extends CrudDao<XrMemberRecharge> {
      * int 返回类型
      */
     /*public int byParamCount(Map map);*/
+
+    /**
+     * 查询会员充值信息
+     * @param map
+     * @return
+     */
+    public XrMemberRecharge findMemberCardNum(HashMap<String,Object> hmap);
+
 }

@@ -171,7 +171,7 @@
                                     <label class="control-label col-sm-3" title="">
                                         <span class="required hide">*</span> ${text('会员卡余额')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
-                                        <#form:input path="miBalance" maxlength="200" class="form-control" maxlength="50"/>
+                                        <#form:input path="miBalance" class="form-control" maxlength="50" readonly="true"/>
                                     </div>
                                 </div>
                             </div>
@@ -355,7 +355,6 @@
     $("#phone").blur(function() {
         var str = $(this).val();
         checkTel(str);
-        MiCodeIsPhone();
     });
 
     //邮箱验证
