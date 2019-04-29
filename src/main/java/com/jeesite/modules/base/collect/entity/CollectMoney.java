@@ -7,6 +7,7 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jeesite.modules.base.xrstockin.entity.XrStockInS;
 import org.hibernate.validator.constraints.Length;
 import java.util.List;
 import com.jeesite.common.collect.ListUtils;
@@ -72,7 +73,7 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	private String cmIsMember;		// 是否是会员
 	private String cmMemberIntegrate;		// 会员积分
 	private String cmAccountType;		// 账户类别
-	private Double cmAccountBalance;		// 余额
+	private Long cmAccountBalance;		// 余额
 	private Double cmAccountDebt;		// 欠款
 	private String cmPaymentType;		// 支付方式
 	private Long cmPaymentMoney;		// 消费金额
@@ -86,9 +87,11 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	private String productCode;		// 产品编号
 	private String xpRemarks;		// 备注
 	private String productName;		// 产品名称
-	private List<Projectinfo> xrProjectinfoList = ListUtils.newArrayList();		// 子表列表
-	private List<Productinfo> xrProductinfoList = ListUtils.newArrayList();		// 子表列表
-	
+
+	private List<XrCollectProjectinfo> xrCollectProjectinfoList = ListUtils.newArrayList();		// 项目子表列表
+
+	private List<XrCollectProductinfo> xrCollectProductinfoList = ListUtils.newArrayList();		// 产品子表列表
+
 	public CollectMoney() {
 		this(null);
 	}
@@ -226,11 +229,11 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 		this.cmAccountType = cmAccountType;
 	}
 	
-	public Double getCmAccountBalance() {
+	public Long getCmAccountBalance() {
 		return cmAccountBalance;
 	}
 
-	public void setCmAccountBalance(Double cmAccountBalance) {
+	public void setCmAccountBalance(Long cmAccountBalance) {
 		this.cmAccountBalance = cmAccountBalance;
 	}
 	
@@ -347,21 +350,20 @@ public class CollectMoney extends DataEntity<CollectMoney> {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	
-	public List<Projectinfo> getXrProjectinfoList() {
-		return xrProjectinfoList;
+
+	public List<XrCollectProjectinfo> getXrCollectProjectinfoList() {
+		return xrCollectProjectinfoList;
 	}
 
-	public void setXrProjectinfoList(List<Projectinfo> xrProjectinfoList) {
-		this.xrProjectinfoList = xrProjectinfoList;
-	}
-	
-	public List<Productinfo> getXrProductinfoList() {
-		return xrProductinfoList;
+	public void setXrCollectProjectinfoList(List<XrCollectProjectinfo> xrCollectProjectinfoList) {
+		this.xrCollectProjectinfoList = xrCollectProjectinfoList;
 	}
 
-	public void setXrProductinfoList(List<Productinfo> xrProductinfoList) {
-		this.xrProductinfoList = xrProductinfoList;
+	public List<XrCollectProductinfo> getXrCollectProductinfoList() {
+		return xrCollectProductinfoList;
 	}
-	
+
+	public void setXrCollectProductinfoList(List<XrCollectProductinfo> xrCollectProductinfoList) {
+		this.xrCollectProductinfoList = xrCollectProductinfoList;
+	}
 }

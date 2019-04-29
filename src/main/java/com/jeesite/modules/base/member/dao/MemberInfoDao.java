@@ -26,9 +26,9 @@ public interface MemberInfoDao extends CrudDao<MemberInfo> {
 
     /**
      * 查询根据id查询会员余额
-     * @param mi_card_number
+     * @param miCode
      * @return
      */
-    public MemberInfo findMemberBalance(String mi_card_number);
+    public MemberInfo findMemberBalance(String miCode);
 	
 }

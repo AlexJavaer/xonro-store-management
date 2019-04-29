@@ -1,0 +1,225 @@
+<% layout('/layouts/default.html', {title: 'xr_collect_projectinfo管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('xr_collect_projectinfo管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('xr:xrCollectProjectinfo:edit')){ %>
+					<a href="${ctx}/xr/xrCollectProjectinfo/form" class="btn btn-default btnTool" title="${text('新增xr_collect_projectinfo')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${xrCollectProjectinfo}" action="${ctx}/xr/xrCollectProjectinfo/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('父主键ID')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmCodeId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="projectName" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('计价单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpChargeUnit" maxlength="32" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('助记码')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpMnemonicCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('标准价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpNormPrice" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('折扣类别')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpDiscountCategory" dictType="xp_discount_cate" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('统计分类')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpStatisticalClass" dictType="xp_statistical_class" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('归属部门')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpStatisticalDept" dictType="xp_statistical_dept" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('计价方式')}：</label>
+					<div class="control-inline">
+						<#form:radio path="xpPricingMethod" dictType="xp_pricing_method" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目时长')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpProjectTime" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('安全次数')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpSafetyTimes" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('体验价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpExperiencePrice" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('统一会员价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpUniformMomberPrice" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目预订价')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpProjectPrePricing" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('服务岗位')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpServicePosition" maxlength="30" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('服务项目时长')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpServiceTime" dictType="xp_service_time" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('项目预定描述')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpProjectPredescription" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('用户编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="userCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('组织编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="officeCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('父主键ID')}', name:'cmCodeId', index:'a.cm_code_id', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/xr/xrCollectProjectinfo/form?id='+row.id+'" class="btnList" data-title="${text('编辑xr_collect_projectinfo')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('备注')}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('项目编号')}', name:'projectCode', index:'a.project_code', width:150, align:"left"},
+		{header:'${text('项目名称')}', name:'projectName', index:'a.project_name', width:150, align:"left"},
+		{header:'${text('计价单位')}', name:'xpChargeUnit', index:'a.xp_charge_unit', width:150, align:"left"},
+		{header:'${text('助记码')}', name:'xpMnemonicCode', index:'a.xp_mnemonic_code', width:150, align:"left"},
+		{header:'${text('标准价格')}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('折扣类别')}', name:'xpDiscountCategory', index:'a.xp_discount_category', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_discount_cate')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('统计分类')}', name:'xpStatisticalClass', index:'a.xp_statistical_class', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_class')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('归属部门')}', name:'xpStatisticalDept', index:'a.xp_statistical_dept', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_dept')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('计价方式')}', name:'xpPricingMethod', index:'a.xp_pricing_method', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_pricing_method')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('项目时长')}', name:'xpProjectTime', index:'a.xp_project_time', width:150, align:"center"},
+		{header:'${text('安全次数')}', name:'xpSafetyTimes', index:'a.xp_safety_times', width:150, align:"center"},
+		{header:'${text('体验价格')}', name:'xpExperiencePrice', index:'a.xp_experience_price', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('统一会员价格')}', name:'xpUniformMomberPrice', index:'a.xp_uniform_momber_price', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('项目预订价')}', name:'xpProjectPrePricing', index:'a.xp_project_pre_pricing', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+		{header:'${text('服务岗位')}', name:'xpServicePosition', index:'a.xp_service_position', width:150, align:"left"},
+		{header:'${text('服务项目时长')}', name:'xpServiceTime', index:'a.xp_service_time', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xp_service_time')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('项目预定描述')}', name:'xpProjectPredescription', index:'a.xp_project_predescription', width:150, align:"left"},
+		{header:'${text('用户编号')}', name:'userCode', index:'a.user_code', width:150, align:"left"},
+		{header:'${text('组织编号')}', name:'officeCode', index:'a.office_code', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('xr:xrCollectProjectinfo:edit')){ %>
+				actions.push('<a href="${ctx}/xr/xrCollectProjectinfo/form?id='+row.id+'" class="btnList" title="${text('编辑xr_collect_projectinfo')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/xr/xrCollectProjectinfo/delete?id='+row.id+'" class="btnList" title="${text('删除xr_collect_projectinfo')}" data-confirm="${text('确认要删除该xr_collect_projectinfo吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

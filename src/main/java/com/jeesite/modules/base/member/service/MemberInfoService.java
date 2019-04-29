@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -96,6 +97,10 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		String  office = EmpUtils.getOffice().getOfficeCode();
 		memberInfo.setUserCode(user);
 		memberInfo.setOfficeCode(office);
+
+		//会员卡有效日期
+		memberInfo.setMiEffectiveDate(new Date());
+		//是否是会员
 		super.save(memberInfo);
 
 		// 保存上传图片
@@ -142,8 +147,14 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 		hmap.put("mi_code",miBalance);
 		return memberInfoDao.getByForm(hmap);
 	}
-	public MemberInfo findMemberBalance(String miCardNumber){
-        return memberInfoDao.findMemberBalance(miCardNumber);
+
+	/**
+	 * 根据id查询会员卡余额
+	 * @param miCode
+	 * @return
+	 */
+	public MemberInfo findMemberBalance(String miCode){
+        return memberInfoDao.findMemberBalance(miCode);
     }
 
 

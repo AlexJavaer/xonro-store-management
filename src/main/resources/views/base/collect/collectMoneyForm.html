@@ -364,16 +364,17 @@ $("#xrProjectinfoDataGrid").dataGrid({
 	data: ${toJson(collectMoney.xrProjectinfoList)},
 	datatype: "local", // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
-	
+
 	// 设置数据表格列
 	columnModel: [
 		{header:'状态', name:'status', editable:true, hidden:true},
-		{header:'主键', name:'projectCode', editable:true, hidden:true},
+		{header:'主键', name:'id', editable:true, hidden:true},
 		{header:'${text('项目名称')}', name:'projectName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+        {header:'${text('项目编号')}', name:'projectCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
 		{header:'${text('计价单位')}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'32', 'class':'form-control required'}},
 		{header:'${text('助记码')}', name:'xpMnemonicCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
 		{header:'${text('标准价格')}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
-		{header:'${text('折扣类别011')}', name:'xpDiscountCategory', width:100, 
+		{header:'${text('折扣类别011')}', name:'xpDiscountCategory', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_discount_cate')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -381,7 +382,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('统计分类011')}', name:'xpStatisticalClass', width:100, 
+		{header:'${text('统计分类011')}', name:'xpStatisticalClass', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -389,7 +390,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('归属部门003')}', name:'xpStatisticalDept', width:100, 
+		{header:'${text('归属部门003')}', name:'xpStatisticalDept', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_dept')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -397,7 +398,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('计价方式01')}', name:'xpPricingMethod', width:100, 
+		{header:'${text('计价方式01')}', name:'xpPricingMethod', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_pricing_method')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -413,7 +414,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 		{header:'${text('项目预订价')}', name:'xpProjectPrePricing', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control digits'}},
 		{header:'${text('项目预定图')}', name:'xpProjectPreplan', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'255', 'class':'form-control'}},
 		{header:'${text('服务岗位')}', name:'xpServicePosition', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control'}},
-		{header:'${text('服务项目时长01')}', name:'xpServiceTime', width:100, 
+		{header:'${text('服务项目时长01')}', name:'xpServiceTime', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_service_time')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -422,9 +423,9 @@ $("#xrProjectinfoDataGrid").dataGrid({
 			}
 		},
 		{header:'${text('项目预定描述')}', name:'xpProjectPredescription', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'500', 'class':'form-control'}},
-		{header:'${text('消费间隔，单位')}', name:'xpConsumptionInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
-		{header:'${text('回访间隔，单位')}', name:'xpReturnInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
-		{header:'${text('是否必须现金01')}', name:'xpIscash', width:100, 
+		{header:'${text('消费间隔')}', name:'xpConsumptionInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('回访间隔')}', name:'xpReturnInterval', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control digits'}},
+		{header:'${text('是否必须现金01')}', name:'xpIscash', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_isCash')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -432,7 +433,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('是否停用01')}', name:'xpIsblockup', width:100, 
+		{header:'${text('是否停用01')}', name:'xpIsblockup', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_isBlockUp')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -453,22 +454,23 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProjectinfoDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}
 			return actions.join('');
-		}, editoptions: {defaultValue: 'new'}}
+		}, editoptions: {defaultValue: 'new'}
+		}
 	],
-	
+
 	// 编辑表格参数
 	editGrid: true,				// 是否是编辑表格
 	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
 	editGridAddRowBtn: $('#xrProjectinfoDataGridAddRowBtn'),	// 子表增行按钮
 	editGridAddRowInitData: {projectCode: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
-	
+
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'xrProjectinfoList', // 提交的数据列表名
-	editGridInputFormListAttrs: 'status,projectCode,projectName,xpChargeUnit,xpMnemonicCode,xpNormPrice,xpDiscountCategory,xpStatisticalClass,xpStatisticalDept,xpPricingMethod,xpProjectTime,xpIsdisplayTime,xpSafetyTimes,xpExperiencePrice,xpUniformMomberPrice,xpProjectPrePricing,xpProjectPreplan,xpServicePosition,xpServiceTime,xpProjectPredescription,xpConsumptionInterval,xpReturnInterval,xpIscash,xpIsblockup,createBy,updateBy,remarks,storeCode,userCode,officeCode.cmCode,xpRemarks,createDate,updateDate,', // 提交数据列表的属性字段
-	
+	editGridInputFormListAttrs: 'status,id,projectName,projectCode,xpChargeUnit,xpMnemonicCode,xpNormPrice,xpDiscountCategory,xpStatisticalClass,xpStatisticalDept,xpPricingMethod,xpProjectTime,xpIsdisplayTime,xpSafetyTimes,xpExperiencePrice,xpUniformMomberPrice,xpProjectPrePricing,xpProjectPreplan,xpServicePosition,xpServiceTime,xpProjectPredescription,xpConsumptionInterval,xpReturnInterval,xpIscash,xpIsblockup,createBy,updateBy,remarks,storeCode,userCode,officeCode.cmCode,xpRemarks,createDate,updateDate,', // 提交数据列表的属性字段
+
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+
 	}
 });
 //初始化xr_productinfoDataGrid对象
@@ -481,9 +483,10 @@ $("#xrProductinfoDataGrid").dataGrid({
 	// 设置数据表格列
 	columnModel: [
 		{header:'状态', name:'status', editable:true, hidden:true},
-		{header:'主键', name:'productCode', editable:true, hidden:true},
+		{header:'主键', name:'id', editable:true, hidden:true},
 		{header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
-		{header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100, 
+        {header:'${text('产品编号')}', name:'productCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+		{header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control required',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_statistical_class')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -619,7 +622,7 @@ $("#xrProductinfoDataGrid").dataGrid({
 	
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'xrProductinfoList', // 提交的数据列表名
-	editGridInputFormListAttrs: 'status,productCode,productName,xpdStatisticalClass,xpdDepository,xpdBarCode,xpdMnemonicCode,xpdDiscountCategory,xpdFilingTime,xpdStandardUnit,xpdNormPrice,xpdEachContaining,xpdTime,xpdPurchaseUnit,xpdPurchased,xpdEach,xpdSupplier,xpdMarketintUnit,xpdConsumptionCost,xpdMarketintCost,xpdQualityTime,xpdRuleDesccription,xpdMembershipPrices,xpdStorePrice,xpdReturnInterval,xpdMaxStock,xpdSafetyStock,xpdIsgift,xpdIsdiscountinued,xpdEndSale,xpdCopyCostPrice,xpdRemarks,userCode,officeCode.cmCode,createBy,createDate,updateBy,updateDate,remarks,state,', // 提交数据列表的属性字段
+	editGridInputFormListAttrs: 'status,id,productName,productCode,xpdStatisticalClass,xpdDepository,xpdBarCode,xpdMnemonicCode,xpdDiscountCategory,xpdFilingTime,xpdStandardUnit,xpdNormPrice,xpdEachContaining,xpdTime,xpdPurchaseUnit,xpdPurchased,xpdEach,xpdSupplier,xpdMarketintUnit,xpdConsumptionCost,xpdMarketintCost,xpdQualityTime,xpdRuleDesccription,xpdMembershipPrices,xpdStorePrice,xpdReturnInterval,xpdMaxStock,xpdSafetyStock,xpdIsgift,xpdIsdiscountinued,xpdEndSale,xpdCopyCostPrice,xpdRemarks,userCode,officeCode.cmCode,createBy,createDate,updateBy,updateDate,remarks,state,', // 提交数据列表的属性字段
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){

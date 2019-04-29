@@ -44,7 +44,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('消费日期')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmDate" readonly="true" maxlength="20" class="form-control required Wdate"
+								<#form:input path="cmDate"  maxlength="20" class="form-control required Wdate"
 								dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
 							</div>
 						</div>
@@ -85,7 +85,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户进店渠道')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" maxlength="128" readonly="true"/>
+								<#form:select path="cmAccessChannel" dictType="mi_outlets" multiple="true" blankOption="true" class="form-control" maxlength="128"/>
 							</div>
 						</div>
 					</div>
@@ -106,7 +106,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('客户性别')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" readonly="true"/>
+								<#form:radio path="cmCustomerSex" dictType="mi_sex" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -127,7 +127,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('是否是会员')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" id="form-cmIsMember" readonly="true"/>
+								<#form:radio path="cmIsMember" dictType="cm_is_member" class="form-control" id="form-cmIsMember"/>
 							</div>
 						</div>
 					</div>
@@ -148,7 +148,7 @@
 										<label class="control-label col-sm-3" title="">
 											<span class="required hide">*</span> ${text('会员卡类别')}：<i class="fa icon-question hide"></i></label>
 										<div class="col-sm-8">
-											<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" id="cmMemberType" readonly="true"/>
+											<#form:select path="cmMemberType" dictType="mi_card_type" blankOption="true" class="form-control" id="cmMemberType" />
 										</div>
 									</div>
 								</div>
@@ -156,7 +156,7 @@
 						</div>
 					</div>
 				</div>
-				<!--<div class="form-unit">${text('账户余额')}</div>
+				<div class="form-unit">${text('账户余额')}</div>
 				<div class="layui-col-md12">
 					<div class="layui-card" style="border-width:1px 1px 1px 1px">
 						<div class="layui-card-body">
@@ -166,7 +166,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('账户类别')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmAccountType" maxlength="20" class="form-control"/>
+								<#form:select path="cmAccountType" maxlength="20" dictType="xmr_account_type" blankOption="true" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -175,12 +175,12 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('余额')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmAccountBalance" class="form-control number"/>
+								<#form:input path="cmAccountBalance" class="form-control number" readonly="true"/>
 							</div>
 						</div>
 					</div>
-				</div>-->
-				<!--<div class="row">
+				</div>
+				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3" title="">
@@ -193,7 +193,7 @@
 					</div>
 					</div>
 					</div>
-				</div>-->
+				</div>
 				<div class="form-unit">${text('支付明细')}</div>
 				<div class="layui-col-md12">
 					<div class="layui-card" style="border-width:1px 1px 1px 1px">
@@ -253,7 +253,7 @@
 										<h4 class="form-unit" style="font-size:16px">${text('购买产品表')}</h4>
 										<div class="ml10 mr10">
 											<table id="productInfoDataChildDataGrid"></table>
-											<a href="#" id="productInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('请选择产品')}</a>
+											<a href="#" id="productInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择产品')}</a>
 										</div>
 									</div>
                                     </div>
@@ -279,19 +279,52 @@
 	//初始化子表projectInfoDataChildDataGrid对象
 	$("#projectInfoDataChildDataGrid").dataGrid({
 
-        data: ${toJson(collectMoney.xrProjectinfoList)},
+        data: ${toJson(collectMoney.xrCollectProjectinfoList)},
         datatype: "local", // 设置本地数据
         autoGridHeight: function(){return 'auto'}, // 设置自动高度
 
         // 设置数据表格列
         columnModel: [
             {header:'状态', name:'status', editable:true, hidden:true},
-            {header:'主键', name:'projectCode', editable:true, hidden:true},
-            {header:'${text('父表主键')}', name:'collectMoney.cmCode', editable:true, hidden:true},
-            {header:'${text('项目名称')}', name:'projectName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
-            {header:'${text('标准价格')}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
-            {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
-            {header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+            {header:'主键', name:'id', editable:true, hidden:true},
+            {header:'${text("父表主键")}', name:'collectMoney.cmCode', editable:true, hidden:true},
+            {header:'${text("项目名称")}', name:'projectName', width:150, editable:true,editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text("项目编号")}', name:'projectCode', width:150, editable:true,
+                /*formatter: function(val, obj, row, act){
+                    return js.val(row, 'projectCode')+'|'+js.val(row, 'projectName');
+                }, editable: true, edittype: "custom", editoptions: {
+                    custom_element: function(val, editOptions) {
+                        return js.template('listselectTpl', {
+                            id: 'project_'+editOptions.id, title: '项目选择',
+                            name: 'projectCode', value: val.split('|')[0],
+                            labelName: 'projectName', labelValue: val.split('|')[1],
+                            url: '${ctx}/projectInfo/collectProductDataRow', cssClass: ''
+                        });
+                    }
+                }*/edittype: "text",editoptions:{'maxlength':'128', 'class':'form-control'}
+			},
+			{header:'${text("计价单位")}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text("标准价格")}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+            {header:'${text("计价方式")}', name:'xpPricingMethod', width:100, editable:true, edittype:'select',
+				editoptions: {
+                    'class': 'form-control',
+                    items: $.merge([{
+                        dictLabel: '&nbsp;',
+                        dictValue: ''
+                    }], ${@DictUtils.getDictListJson('xp_pricing_method')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function (element) {
+                        $(element).select2().on("change", function () {
+                            $(this).valid()
+                        });
+                    }
+                }
+
+            },
+            {header:'${text("项目时长")}', name:'xpProjectTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text("安全次数")}', name:'xpSafetyTimes', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text("统一会员价格")}', name:'xpUniformMomberPrice', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text("备注")}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+            {header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
                     var actions = [];
                     if (val == 'new'){
                         actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#projectInfoDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
@@ -310,8 +343,8 @@
 
 
         // 编辑表格的提交数据参数
-        editGridInputFormListName: 'xrProjectinfoList', // 提交的数据列表名
-        editGridInputFormListAttrs:'status,projectCode,cmCode,projectName,xpNormPrice,remarks',//提交数据列表的属性字段
+        editGridInputFormListName: 'xrCollectProjectinfoList', // 提交的数据列表名
+        editGridInputFormListAttrs:'status,id,collectMoney.cmCode,projectName,projectCode,xpChargeUnit,xpNormPrice,xpPricingMethod,xpProjectTime,xpSafetyTimes,xpUniformMomberPrice',//提交数据列表的属性字段
 
         // 加载成功后执行事件
         ajaxSuccess: function(data){
@@ -320,29 +353,107 @@
 	});
 </script>
 
+<!--<script id="listselectTpl" type="text/template">//&lt;!&ndash;<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//&ndash;&gt;</script>-->
+
+
+<script>
+  /*function listselectCallback(id, action, index, layero){
+        if (id == 'listselectTpl' && action == 'ok'){
+            js.addTabPage(null,null,
+                '${ctx}/memberInfo/formAuthCollectMoney'
+           js.alert("111");
+        }
+    }*/
+
+
+</script>
+<script>
+    //初始化子表projectInfoDataChildDataGrid对象
+    $("#productInfoDataChildDataGrid").dataGrid({
+        data:${toJson(collectMoney.xrCollectProductinfoList)},
+        datatype: "local", // 设置本地数据
+        autoGridHeight: function(){return 'auto'}, // 设置自动高度
+        // 设置数据表格列
+        columnModel: [
+            {header:'状态', name:'status', editable:true, hidden:true},
+            {header:'主键', name:'id', editable:true, hidden:true},
+            {header:'${text('父表主键')}', name:'collectMoney.cmCode', editable:true, hidden:true},
+            {header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text('产品编号')}', name:'productCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text('会员价格')}', name:'xpdMembershipPrices', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text('单位')}', name:'xpdPurchaseUnit', width:100,
+                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                    items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_standard_unit')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                        $(element).select2().on("change",function(){$(this).valid()});
+                    }
+                }
+            },
+            {header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100,
+                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                    items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                        $(element).select2().on("change",function(){$(this).valid()});
+                    }
+                }
+            },
+            {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+            {header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+                    var actions = [];
+                    if (val == 'new'){
+                        actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#productInfoDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    }else{
+                        actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#productInfoDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    }
+                    return actions.join('');
+                }, editoptions: {defaultValue: 'new'}}
+        ],
+
+        // 编辑表格参数
+        editGrid: true,				// 是否是编辑表格
+        editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+        editGridAddRowBtn: $('#productInfoDataChildDataGridAddRowBtn'),	// 子表增行按钮
+        editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+
+
+        // 编辑表格的提交数据参数
+        editGridInputFormListName: 'xrCollectProductinfoList', // 提交的数据列表名
+        editGridInputFormListAttrs:'status,id,productCode,collectMoney.cmCode,productName,xpdMembershipPrices,xpdPurchaseUnit,xpdStatisticalClass',//提交数据列表的属性字段
+        // 加载成功后执行事件
+        ajaxSuccess: function(data){
+
+        }
+    });
+
+</script>
+
 <script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
 <script>
 
 	//判断消费余额如果比会员卡余额多，那么就需要给会员卡充值
 	$("#paymentMoney").blur(function () {
+	    /*消费金额*/
 		var paymentMoney = $("#paymentMoney").val();
-		if(paymentMoney!=null){
-		    $.ajax({
-                type:"POST",
-                url:"${ctx}/collectMoney/CmPaymentMoneyVil",
-                data:{"cm_payment_money":paymentMoney},
-                async:false,
-                dataType:"text",
-                success:function (ds) {
-                    if(ds==1){
-                        alert("会员卡余额不足！请重新输入！");
-                        /*js.confirm('');*/
-                        $("#paymentMoney").val("");
-                    }
+		/*会员卡余额*/
+		var cmAccountBalance = $("#cmAccountBalance").val();
+		$.ajax({
+            type:"POST",
+            url:"${ctx}/memberInfo/mibalanceOrpaymentMoney",
+            data:{"paymentMoney":paymentMoney,"cmAccountBalance":cmAccountBalance},
+            async:false,
+            dataType:"text",
+			success:function (ds) {
+                if(ds==1){
+                    alert("会员卡余额不足！您的会员卡余额为："+cmAccountBalance);
+                    $("#paymentMoney").val("");
+				}
 
-                }
-			});
-		}
+            }
+		});
     });
 
 	//点击是是会员会显示会员卡号和卡类别

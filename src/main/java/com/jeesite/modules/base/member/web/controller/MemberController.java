@@ -3,6 +3,7 @@ package com.jeesite.modules.base.member.web.controller;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.provider.InsertSqlProvider;
 import com.jeesite.common.web.BaseController;
@@ -13,6 +14,9 @@ import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
 import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
 import com.jeesite.modules.config.MyBatisConfig;
+import com.sun.org.apache.bcel.internal.generic.CALOAD;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.beetl.ext.format.DateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,9 +78,7 @@ public class MemberController extends BaseController{
      */
 
     @RequestMapping(value = "form")
-    public String form(MemberInfo memberInfo, Model model,XrMemberRecharge xrMemberRecharge) {
-       /*SimpleDateFormat dateFormat= new SimpleDateFormat("yyyyMMdd");
-        String nowDate = dateFormat.format(new Date());*/
+    public String form(MemberInfo memberInfo, Model model,XrMemberRecharge xrMemberRecharge,String miCardType,Date miEndDate) {
        if(memberInfo.getIsNewRecord()){
            memberInfo.setMiCardNumber(IdGen.nextId());
            Long miBalance = 0L;
@@ -89,23 +92,10 @@ public class MemberController extends BaseController{
 
        }
 
-
-
-
-       /* XrMemberRecharge miData = xrMemberRechargeService.findMemberCardNum( memberInfo.getMiCardNumber());*/
-
-           //给账户存钱
-          /* miBalance += xrMemberRecharge.getXmrSaveMoney();*/
-
-           //向账户支出
-          /* if(miData.getXmrReserveValue()<memberInfo.getMiBalance()){
-               miBalance = memberInfo.getMiBalance()-miData.getXmrReserveValue();
-
-
-       /* }*/
-
-
-
+       //会员卡有效日期
+       memberInfo.setMiEffectiveDate(new Date());
+        memberInfo.setMiEndDate(new Date());
+        memberInfo.setCourseOfTreatmentNum(0);
         model.addAttribute("memberInfoData", memberInfo);
         return "modules/memberInfo/memberDataForm";
     }
@@ -217,16 +207,27 @@ public class MemberController extends BaseController{
            //在会员消费页面回显会员的会员卡号
            collectMoney.setCmMemberCard(miList.getMiCardNumber());
            //在会员消费页面回显会员的会员卡类型
-           collectMoney.setCmCustomerType(miList.getMiCardType());
+           collectMoney.setCmMemberType(miList.getMiCardType());
            collectMoney.setCmIsMember("01");
            collectMoney.setMiCode(miList.getMiCode());
+           //在会员消费页面回显会员卡余额
+           collectMoney.setCmAccountBalance(miList.getMiBalance());
        }
-
         collectMoney.setCmDate(new Date());
         model.addAttribute("collectMoney",collectMoney);
 
        return "modules/memberInfo/collectMoneyForm";
     }
 
+
+    @RequestMapping(value = "mibalanceOrpaymentMoney")
+    @ResponseBody
+    public String MibalanceOrpaymentMoney(HttpServletRequest request, HttpServletResponse response,Model model,Long  paymentMoney,Long cmAccountBalance){
+        if(cmAccountBalance!=null && cmAccountBalance<paymentMoney ){
+            return "1";
+        }else{
+            return "0";
+        }
+    }
 
 }

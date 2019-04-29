@@ -166,7 +166,7 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('账户类别')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmAccountType" maxlength="20" class="form-control"/>
+								<#form:select  path="cmAccountType" maxlength="20" dictType="xmr_account_type" blankOption="true" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -175,12 +175,12 @@
 							<label class="control-label col-sm-3" title="">
 								<span class="required hide">*</span> ${text('余额')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="cmAccountBalance" class="form-control number"/>
+								<#form:input path="cmAccountBalance" class="form-control number" readonly="true"/>
 							</div>
 						</div>
 					</div>
-				</div>-->
-				<!--<div class="row">
+				</div>
+				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-3" title="">
@@ -279,7 +279,7 @@
 	//初始化子表projectInfoDataChildDataGrid对象
 	$("#projectInfoDataChildDataGrid").dataGrid({
 
-        data: ${toJson(collectMoney.xrProjectinfoList)},
+        data: ${toJson(collectMoney.xrCollectProjectinfoList)},
         datatype: "local", // 设置本地数据
         autoGridHeight: function(){return 'auto'}, // 设置自动高度
 
@@ -289,7 +289,19 @@
             {header:'主键', name:'projectCode', editable:true, hidden:true},
             {header:'${text('父表主键')}', name:'collectMoney.cmCode', editable:true, hidden:true},
             {header:'${text('项目名称')}', name:'projectName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+            {header:'${text('计价单位')}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
             {header:'${text('标准价格')}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+            {header:'${text('计价方式')}', name:'xpPricingMethod', width:100,
+                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                    items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_pricing_method')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                        $(element).select2().on("change",function(){$(this).valid()});
+                    }
+                }
+            },
+            {header:'${text('项目时长')}', name:'xpProjectTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+            {header:'${text('安全次数')}', name:'xpSafetyTimes', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+            {header:'${text('统一会员价格')}', name:'xpUniformMomberPrice', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
             {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
             {header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
                     var actions = [];
@@ -310,8 +322,8 @@
 
 
         // 编辑表格的提交数据参数
-        editGridInputFormListName: 'xrProjectinfoList', // 提交的数据列表名
-        editGridInputFormListAttrs:'status,projectCode,cmCode,projectName,xpNormPrice,remarks',//提交数据列表的属性字段
+        editGridInputFormListName: 'xrCollectProjectinfoList', // 提交的数据列表名
+        editGridInputFormListAttrs:'status,projectCode,collectMoney.cmCode,projectName,xpChargeUnit,xpNormPrice,xpPricingMethod,xpProjectTime,xpSafetyTimes,xpUniformMomberPrice',//提交数据列表的属性字段
 
         // 加载成功后执行事件
         ajaxSuccess: function(data){
@@ -319,6 +331,68 @@
         }
 	});
 </script>
+
+<script>
+    //初始化子表projectInfoDataChildDataGrid对象
+    $("#productInfoDataChildDataGrid").dataGrid({
+        data:${toJson(collectMoney.xrCollectProductinfoList)},
+        datatype: "local", // 设置本地数据
+        autoGridHeight: function(){return 'auto'}, // 设置自动高度
+        // 设置数据表格列
+        columnModel: [
+            {header:'状态', name:'status', editable:true, hidden:true},
+            {header:'主键', name:'productCode', editable:true, hidden:true},
+            {header:'${text('父表主键')}', name:'collectMoney.cmCode', editable:true, hidden:true},
+            {header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+            {header:'${text('会员价格')}', name:'xpdMembershipPrices', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control required'}},
+            {header:'${text('单位')}', name:'xpdPurchaseUnit', width:100,
+                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                    items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_standard_unit')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                        $(element).select2().on("change",function(){$(this).valid()});
+                    }
+                }
+            },
+            {header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100,
+                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                    items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
+                    itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                        $(element).select2().on("change",function(){$(this).valid()});
+                    }
+                }
+            },
+            {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+            {header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+                    var actions = [];
+                    if (val == 'new'){
+                        actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#productInfoDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    }else{
+                        actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#productInfoDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    }
+                    return actions.join('');
+                }, editoptions: {defaultValue: 'new'}}
+        ],
+
+        // 编辑表格参数
+        editGrid: true,				// 是否是编辑表格
+        editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+        editGridAddRowBtn: $('#productInfoDataChildDataGridAddRowBtn'),	// 子表增行按钮
+        editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+
+
+        // 编辑表格的提交数据参数
+        editGridInputFormListName: 'xrCollectProductinfoList', // 提交的数据列表名
+        editGridInputFormListAttrs:'status,productCode,collectMoney.cmCode,productName,xpdMembershipPrices,xpdPurchaseUnit,xpdStatisticalClass',//提交数据列表的属性字段
+
+        // 加载成功后执行事件
+        ajaxSuccess: function(data){
+
+        }
+    });
+
+</script>
+
+
 
 <script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
 <script>

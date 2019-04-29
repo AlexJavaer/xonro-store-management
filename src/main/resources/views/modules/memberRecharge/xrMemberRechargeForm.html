@@ -67,7 +67,7 @@
 						<label class="control-label col-sm-3" title="">
 							<span class="required hide">*</span> ${text('异动日期')}：<i class="fa icon-question hide"></i></label>
 						<div class="col-sm-8">
-							<#form:input path="xmrDate" readonly="true" maxlength="20" class="form-control required Wdate"
+							<#form:input path="xmrDate" maxlength="20" class="form-control required Wdate"
 							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 								<label class="control-label col-sm-3" title="">
 									<span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
 								<div class="col-sm-8">
-									<#form:select path="miCardType" dictType="mi_card_type" class="form-control required" readonly="true"/>
+									<#form:select path="miCardType" dictType="mi_card_type" class="form-control required" disabled="disabled"/>
 								</div>
 							</div>
 						</div>
@@ -267,7 +267,7 @@
 													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('充值有效日期')}：<i class="fa icon-question hide"></i></label>
 													<div class="col-sm-8">
-														<#form:input path="xmrRechargeValidTime" readonly="true" maxlength="20" class="form-control required Wdate"
+														<#form:input path="xmrRechargeValidTime" maxlength="20" class="form-control required Wdate"
 														dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
 													</div>
 												</div>
@@ -288,7 +288,7 @@
 														<label class="control-label col-sm-3" title="">
 															<span class="required hide">*</span> ${text('更新时间')}：<i class="fa icon-question hide"></i></label>
 														<div class="col-sm-8">
-															<#form:input path="updateDate" readonly="true" maxlength="20" class="form-control Wdate"
+															<#form:input path="updateDate" disabled="disabled" maxlength="20" class="form-control Wdate"
 															dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
 														</div>
 													</div>

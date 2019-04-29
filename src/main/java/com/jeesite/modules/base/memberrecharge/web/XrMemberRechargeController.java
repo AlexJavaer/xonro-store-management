@@ -97,8 +97,6 @@ public class XrMemberRechargeController extends BaseController {
 	 */
 	@RequestMapping(value = "form")
 	public String form(XrMemberRecharge xrMemberRecharge, Model model,MemberInfo memberInfo) {
-
-
 		model.addAttribute("xrMemberRecharge", xrMemberRecharge);
 		return "modules/memberrecharge/xrMemberRechargeForm";
 	}

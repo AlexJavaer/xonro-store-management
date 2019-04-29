@@ -23,6 +23,7 @@ import com.jeesite.modules.base.xrstockin.dao.XrStockInSDao;
  */
 @Service
 @Transactional(readOnly=true)
+@SuppressWarnings("all")
 public class XrStockInService extends CrudService<XrStockInDao, XrStockIn> {
 	
 	@Autowired
@@ -67,9 +68,9 @@ public class XrStockInService extends CrudService<XrStockInDao, XrStockIn> {
 		for (XrStockInS xrStockInS : xrStockIn.getXrStockInSList()){
 			if (!XrStockInS.STATUS_DELETE.equals(xrStockInS.getStatus())){
 				xrStockInS.setXrStockIn(xrStockIn);
-				if (xrStockInS.getIsNewRecord()){
-					xrStockInS.preInsert();
-					xrStockInSDao.insert(xrStockInS);
+					if (xrStockInS.getIsNewRecord()){
+						xrStockInS.preInsert();
+						xrStockInSDao.insert(xrStockInS);
 				}else{
 					xrStockInS.preUpdate();
 					xrStockInSDao.update(xrStockInS);
@@ -78,6 +79,7 @@ public class XrStockInService extends CrudService<XrStockInDao, XrStockIn> {
 				xrStockInSDao.delete(xrStockInS);
 			}
 		}
+
 	}
 	
 	/**

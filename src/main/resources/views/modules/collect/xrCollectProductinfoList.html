@@ -1,0 +1,194 @@
+<% layout('/layouts/default.html', {title: 'xr_collect_productinfo管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('xr_collect_productinfo管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('xr:xrCollectProductinfo:edit')){ %>
+					<a href="${ctx}/xr/xrCollectProductinfo/form" class="btn btn-default btnTool" title="${text('新增xr_collect_productinfo')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${xrCollectProductinfo}" action="${ctx}/xr/xrCollectProductinfo/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('父主键ID')}：</label>
+					<div class="control-inline">
+						<#form:input path="cmCodeId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('备注')}：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="productCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('产品名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="productName" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('统计分类')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpdStatisticalClass" dictType="xpd_statistical_class" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('存放仓库')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpdDepository" dictType="xpd_depository" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('折扣类别')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpdDiscountCategory" dictType="xpd_discount_category" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('建档时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdFilingTime" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('单位')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdPurchaseUnit" maxlength="2" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('进货成本')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdPurchased" maxlength="30" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('每含')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdEach" maxlength="30" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('供应商')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="xpdSupplier" dictType="xpd_supplier" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('保质期')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdQualityTime" maxlength="30" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('规格描述')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdRuleDesccription" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('会员价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdMembershipPrices" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('门店价格')}：</label>
+					<div class="control-inline">
+						<#form:input path="xpdStorePrice" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('用户编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="userCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('组织编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="officeCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('父主键ID')}', name:'cmCodeId', index:'a.cm_code_id', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/xr/xrCollectProductinfo/form?id='+row.id+'" class="btnList" data-title="${text('编辑xr_collect_productinfo')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('备注')}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('产品编号')}', name:'productCode', index:'a.product_code', width:150, align:"left"},
+		{header:'${text('产品名称')}', name:'productName', index:'a.product_name', width:150, align:"left"},
+		{header:'${text('统计分类')}', name:'xpdStatisticalClass', index:'a.xpd_statistical_class', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xpd_statistical_class')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('存放仓库')}', name:'xpdDepository', index:'a.xpd_depository', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xpd_depository')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('折扣类别')}', name:'xpdDiscountCategory', index:'a.xpd_discount_category', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xpd_discount_category')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('建档时间')}', name:'xpdFilingTime', index:'a.xpd_filing_time', width:150, align:"center"},
+		{header:'${text('单位')}', name:'xpdPurchaseUnit', index:'a.xpd_purchase_unit', width:150, align:"left"},
+		{header:'${text('进货成本')}', name:'xpdPurchased', index:'a.xpd_purchased', width:150, align:"center"},
+		{header:'${text('每含')}', name:'xpdEach', index:'a.xpd_each', width:150, align:"center"},
+		{header:'${text('供应商')}', name:'xpdSupplier', index:'a.xpd_supplier', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('xpd_supplier')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('保质期')}', name:'xpdQualityTime', index:'a.xpd_quality_time', width:150, align:"center"},
+		{header:'${text('规格描述')}', name:'xpdRuleDesccription', index:'a.xpd_rule_desccription', width:150, align:"left"},
+		{header:'${text('会员价格')}', name:'xpdMembershipPrices', index:'a.xpd_membership_prices', width:150, align:"center"},
+		{header:'${text('门店价格')}', name:'xpdStorePrice', index:'a.xpd_store_price', width:150, align:"center"},
+		{header:'${text('用户编号')}', name:'userCode', index:'a.user_code', width:150, align:"left"},
+		{header:'${text('组织编号')}', name:'officeCode', index:'a.office_code', width:150, align:"left"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('xr:xrCollectProductinfo:edit')){ %>
+				actions.push('<a href="${ctx}/xr/xrCollectProductinfo/form?id='+row.id+'" class="btnList" title="${text('编辑xr_collect_productinfo')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/xr/xrCollectProductinfo/delete?id='+row.id+'" class="btnList" title="${text('删除xr_collect_productinfo')}" data-confirm="${text('确认要删除该xr_collect_productinfo吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

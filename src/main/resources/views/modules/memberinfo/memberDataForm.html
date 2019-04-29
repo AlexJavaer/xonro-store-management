@@ -175,6 +175,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-xs-6">
+                                <div class="form-group" style="display: none;" id="courseOfTreatmentNum">
+                                    <label class="control-label col-sm-3" title="">
+                                        <span class="required hide">*</span> ${text('疗程次数')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="courseOfTreatmentNum" class="form-control" maxlength="50" readonly="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3" title="">
+                                        <span class="required hide">*</span> ${text('有效日期')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miEffectiveDate" disabled="disabled"  maxlength="20" class="form-control required Wdate"
+                                        dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3" title="">
+                                        <span class="required hide">*</span> ${text('截止日期')}：<i class="fa icon-question hide"></i></label>
+                                    <div class="col-sm-8">
+                                        <#form:input path="miEndDate"  maxlength="20" class="form-control required Wdate"
+                                        dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                    <div class="row">
                             <div class="col-xs-6">
@@ -316,6 +348,29 @@
 <% } %>
 <script src="${ctxStatic}/plugins/layui/layui.all.js"></script>
 <script>
+
+
+    $("#miCardType").off("change");
+    $("#miCardType").on("change",function () {
+        var miCardType = $("#miCardType").val();
+        var miEndDate = $("#miEndDate").val();
+        if(miCardType =="01"){
+           /* $.getJSON({
+                data:{"miCardType":miCardType,"miEndDate":miEndDate},
+                url:"${ctx}/memberInfo/form",
+            });
+            alert("01");*/
+            $("#courseOfTreatmentNum").css("display","none");
+        }else if(miCardType =="02"){
+            $("#courseOfTreatmentNum").css("display","block");
+        } else if(miCardType =="03"){
+            $("#courseOfTreatmentNum").css("display","none");
+        }else if(miCardType =="04"){
+            $("#courseOfTreatmentNum").css("display","none");
+        }
+
+    })
+
 
     //判断手机号是否存在
    $("#phone").blur(function () {

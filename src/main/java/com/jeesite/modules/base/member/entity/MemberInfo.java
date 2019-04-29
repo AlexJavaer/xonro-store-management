@@ -41,6 +41,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_work_unit", attrName="miWorkUnit", label="工作单位"),
 		@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
 		@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
+		@Column(name="mi_effective_date", attrName="miEffectiveDate", label="有效日期"),
+		@Column(name="mi_end_date", attrName="miEndDate", label="截止日期"),
+		@Column(name="course_of_treatment_num", attrName="courseOfTreatmentNum", label="疗程次数"),
 		@Column(name="mi_balance", attrName="miBalance", label="会员卡余额"),
 		@Column(name="mi_id_number", attrName="miIdNumber", label="身份证号"),
 		@Column(name="mi_message_notice", attrName="miMessageNotice", label="消息类通知"),
@@ -80,6 +83,9 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String miCardNumber;		// 会员卡号
 	private String miCardType;		// 卡类别
 	private Long miBalance;		// 会员卡余额
+	private Date miEffectiveDate;//有效日期
+    private Date miEndDate;//截止日期
+    private Integer courseOfTreatmentNum;//疗程次数
 	private String miIdNumber;		// 身份证号
 	private String miMessageNotice;		// 消息类通知
 	private String miMarketingNotice;		// 营销类通知
@@ -283,7 +289,33 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 		this.miBalance = miBalance;
 	}
 
-	@Length(min=0, max=50, message="身份证号长度不能超过 50 个字符")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public Date getMiEffectiveDate() {
+        return miEffectiveDate;
+    }
+
+    public void setMiEffectiveDate(Date miEffectiveDate) {
+        this.miEffectiveDate = miEffectiveDate;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public Date getMiEndDate() {
+        return miEndDate;
+    }
+
+    public void setMiEndDate(Date miEndDate) {
+        this.miEndDate = miEndDate;
+    }
+
+    public Integer getCourseOfTreatmentNum() {
+        return courseOfTreatmentNum;
+    }
+
+    public void setCourseOfTreatmentNum(Integer courseOfTreatmentNum) {
+        this.courseOfTreatmentNum = courseOfTreatmentNum;
+    }
+
+    @Length(min=0, max=50, message="身份证号长度不能超过 50 个字符")
 	public String getMiIdNumber() {
 		return miIdNumber;
 	}

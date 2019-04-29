@@ -1,4 +1,16 @@
 <% layout('/layouts/default.html', {title: '产品入库', libs: ['validate','dataGrid']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/plugins/layui/css/layui.css">
+
+<style>
+	.layui-card-body {
+		padding: 20px 15px;
+	}
+
+	.layui-card:last-child {
+		margin-bottom: 30px;
+	}
+</style>
+<div class="box-body" style="padding: 20px; background-color: #F2F2F2">
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -10,8 +22,11 @@
 			</div>
 		</div>
 		<#form:form id="inputForm" model="${xrStockIn}" action="${ctx}/xrstockin/xrStockIn/save" method="post" class="form-horizontal">
-			<div class="box-body">
+			<div class="box-body" style="padding:20px">
 				<div class="form-unit">${text('基本信息')}</div>
+				<div class="layui-col-md12">
+					<div class="layui-card" style="border-width:1px 1px 1px 1px">
+						<div class="layui-card-body">
 				<#form:hidden path="id"/>
 				<#form:hidden path="userCode"/>
 				<#form:hidden path="officeCode"/>
@@ -47,26 +62,34 @@
 						</div>
 					</div>
 				</div>
+				</div>
+				</div>
+				</div>
 				<h4 class="form-unit">${text('入库明细')}</h4>
+					<div class="layui-col-md12">
+						<div class="layui-card" style="border-width:1px 1px 1px 1px">
+							<div class="layui-card-body">
 				<div class="ml10 mr10">
 					<table id="xrStockInSDataGrid"></table>
 					<% if (hasPermi('xrstockin:xrStockIn:edit')){ %>
 						<a href="#" id="xrStockInSDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
 					<% } %>
 				</div>
-			</div>
-			<div class="box-footer">
-				<div class="row">
-					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('xrstockin:xrStockIn:edit')){ %>
-							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
-						<% } %>
-						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
-					</div>
+				</div>
+				</div>
 				</div>
 			</div>
+				<div class="box-footer" style="padding:8px">
+					<div class="row" style="float:right;padding-right: 35px">
+						<div class="col-sm-offset-2 col-sm-12">
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check" ></i> ${text('保 存')}</button>&nbsp;
+							<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()" ><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+						</div>
+					</div>
+				</div>
 		</#form:form>
 	</div>
+</div>
 </div>
 <% } %>
 <script>

@@ -5,27 +5,22 @@ package com.jeesite.modules.base.collect.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
-import com.jeesite.modules.base.collect.dao.ProductinfoDao;
-import com.jeesite.modules.base.collect.dao.ProjectinfoDao;
-import com.jeesite.modules.base.collect.entity.Productinfo;
-import com.jeesite.modules.base.collect.entity.Projectinfo;
+import com.jeesite.modules.base.collect.dao.XrCollectProductinfoDao;
+import com.jeesite.modules.base.collect.dao.XrCollectProjectinfoDao;
+import com.jeesite.modules.base.collect.entity.XrCollectProductinfo;
+import com.jeesite.modules.base.collect.entity.XrCollectProjectinfo;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
-import com.jeesite.modules.base.productinfo.dao.XrProductinfoDao;
 import com.jeesite.modules.base.project.dao.XrProjectinfoDao;
-import com.jeesite.modules.base.xr.entity.XrStore;
+import com.jeesite.modules.base.project.entity.XrProjectinfo;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.jsoup.helper.DataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,10 +41,10 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMoney> {
 
 	@Autowired
-	private ProjectinfoDao projectInfoDao;
+	XrCollectProjectinfoDao xrCollectProjectinfoDao;
 
 	@Autowired
-	private ProductinfoDao productinfoDao;
+	XrCollectProductinfoDao xrCollectProductinfoDao;
 
 	@Autowired
 	private MemberInfoService memberInfoService;
@@ -66,9 +61,15 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 	public CollectMoney get(CollectMoney collectMoney) {
 		CollectMoney entity = super.get(collectMoney);
 		if(entity !=null){
-			Projectinfo projectInfo = new Projectinfo();
-			projectInfo.setStatus("0");
-			entity.setXrProjectinfoList(projectInfoDao.findList(projectInfo));
+			//项目子表
+			XrCollectProjectinfo xrCollectProjectinfoList = new XrCollectProjectinfo(entity);
+			xrCollectProjectinfoList.setStatus(XrCollectProjectinfo.STATUS_NORMAL);
+			entity.setXrCollectProjectinfoList(xrCollectProjectinfoDao.findList(xrCollectProjectinfoList));
+
+			//产品子表
+			XrCollectProductinfo xrCollectProductinfoList = new XrCollectProductinfo(entity);
+			xrCollectProductinfoList.setStatus(XrCollectProductinfo.STATUS_NORMAL);
+			entity.setXrCollectProductinfoList(xrCollectProductinfoDao.findList(xrCollectProductinfoList));
 
 		}
 		return entity;
@@ -101,6 +102,8 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 			String s = StringUtils.getRandomNum(3);
 			collectMoney.setCmCode(nowDate+s);
 
+			/*collectMoney.setCmDate(new Date());*/
+
 		}
 
 		//会员消费之后更新会员档案中的数据
@@ -115,6 +118,7 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 			memberInfoService.save(memberData);
 		}
 
+		collectMoney.setCmAccountBalance(memberData.getMiBalance());
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();
 		collectMoney.setUserCode(user);
@@ -125,22 +129,45 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(collectMoney.getId(), "collectMoney_file");
 
-		//保存collectMoney子表
-		for(Projectinfo projectinfo : collectMoney.getXrProjectinfoList()){
-			if (Projectinfo.STATUS_DELETE.equals(projectinfo.getStatus())){
-				projectinfo.setCollectMoney(collectMoney);
-				if(projectinfo.getIsNewRecord()){
-					projectinfo.preInsert();
-					projectInfoDao.insert(projectinfo);
+		//保存项目子表
+		for(XrCollectProjectinfo xrCollectProjectinfo : collectMoney.getXrCollectProjectinfoList()){
+			if(!xrCollectProjectinfo.STATUS_DELETE.equals(xrCollectProjectinfo.getStatus())){
+
+			    xrCollectProjectinfo.setCollectMoney(collectMoney);
+
+			    if(xrCollectProjectinfo.getIsNewRecord()){
+			        xrCollectProjectinfo.preInsert();
+			        xrCollectProjectinfoDao.insert(xrCollectProjectinfo);
+                }else{
+                    xrCollectProjectinfo.preUpdate();
+                    xrCollectProjectinfoDao.update(xrCollectProjectinfo);
+                }
+
+			}else{
+			    xrCollectProjectinfoDao.delete(xrCollectProjectinfo);
+            }
+
+		}
+
+		//保存产品子表
+		for(XrCollectProductinfo xrCollectProductinfo : collectMoney.getXrCollectProductinfoList()){
+			if(!xrCollectProductinfo.STATUS_DELETE.equals(xrCollectProductinfo.getStatus())){
+				xrCollectProductinfo.setCollectMoney(collectMoney);
+
+				if(xrCollectProductinfo.getIsNewRecord()){
+					xrCollectProductinfo.preInsert();
+					xrCollectProductinfoDao.insert(xrCollectProductinfo);
 				}else{
-					projectinfo.preUpdate();
-					projectInfoDao.update(projectinfo);
+					xrCollectProductinfo.preUpdate();
+					xrCollectProductinfoDao.update(xrCollectProductinfo);
+
 				}
 			}else{
-				projectInfoDao.delete(projectinfo);
+				xrCollectProductinfoDao.delete(xrCollectProductinfo);
 			}
 
 		}
+
 	}
 
 	/**
@@ -161,9 +188,16 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 	@Transactional(readOnly=false)
 	public void delete(CollectMoney collectMoney) {
 		super.delete(collectMoney);
-		Projectinfo projectInfo = new Projectinfo();
-		projectInfo.setCollectMoney(collectMoney);
-		projectInfoDao.delete(projectInfo);
+		//删除项目子表
+		XrCollectProjectinfo xrCollectProjectinfo = new XrCollectProjectinfo();
+		xrCollectProjectinfo.setCollectMoney(collectMoney);
+		xrCollectProjectinfoDao.delete(xrCollectProjectinfo);
+
+		//删除产品子表
+
+		XrCollectProductinfo xrCollectProductinfo = new XrCollectProductinfo();
+		xrCollectProductinfo.setCollectMoney(collectMoney);
+		xrCollectProductinfoDao.delete(xrCollectProductinfo);
 
 	}
 }

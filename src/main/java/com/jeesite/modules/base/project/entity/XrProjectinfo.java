@@ -39,6 +39,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="xp_project_preplan", attrName="xpProjectPreplan", label="项目预定图"),
 		@Column(name="xp_service_position", attrName="xpServicePosition", label="服务岗位"),
 		@Column(name="xp_service_time", attrName="xpServiceTime", label="服务项目时长01", comment="服务项目时长01:30分钟，02:1小时,03:2小时"),
+		@Column(name="xp_service_name", attrName="xpServiceName", label="服务人员"),
 		@Column(name="xp_project_predescription", attrName="xpProjectPredescription", label="项目预定描述"),
 		@Column(name="xp_consumption_interval", attrName="xpConsumptionInterval", label="消费间隔，单位", comment="消费间隔，单位:天"),
 		@Column(name="xp_return_interval", attrName="xpReturnInterval", label="回访间隔，单位", comment="回访间隔，单位:天"),
@@ -72,6 +73,7 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	private String xpProjectPreplan;		// 项目预定图
 	private String xpServicePosition;		// 服务岗位
 	private String xpServiceTime;		// 服务项目时长01:30分钟，02:1小时,03:2小时
+	private String xpServiceName;//服务人员
 	private String xpProjectPredescription;		// 项目预定描述
 	private Long xpConsumptionInterval;		// 消费间隔，单位:天
 	private Long xpReturnInterval;		// 回访间隔，单位:天
@@ -246,7 +248,15 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	public void setXpServiceTime(String xpServiceTime) {
 		this.xpServiceTime = xpServiceTime;
 	}
-	
+
+	public String getXpServiceName() {
+		return xpServiceName;
+	}
+
+	public void setXpServiceName(String xpServiceName) {
+		this.xpServiceName = xpServiceName;
+	}
+
 	@Length(min=0, max=500, message="项目预定描述长度不能超过 500 个字符")
 	public String getXpProjectPredescription() {
 		return xpProjectPredescription;

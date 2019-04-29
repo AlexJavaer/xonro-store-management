@@ -91,10 +91,10 @@ public class ProjectController extends BaseController{
      * @param model
      * @return
      */
-    @RequestMapping(value = {"collectProductDataList", ""})
-    public String collectProductDataList(XrProjectinfo xrProjectinfo, Model model) {
+    @RequestMapping(value = {"collectProductDataRow", ""})
+    public String collectProductDataRow(XrProjectinfo xrProjectinfo, Model model) {
         model.addAttribute("projectInfoData", xrProjectinfo);
-        return "modules/projectInfo/collectProjectDataList";
+        return "modules/projectInfo/collectProjectDataRow";
     }
 
 

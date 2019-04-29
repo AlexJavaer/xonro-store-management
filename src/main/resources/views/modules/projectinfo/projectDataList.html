@@ -57,9 +57,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("归属部门")}', name:'xpStatisticalDept', index:'a.xp_statistical_dept', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_dept')}, val, '${text("未知")}', true);
 		}},
-        {header:'${text("回访间隔天数")}', name:'xpReturnInterval', index:'a.xp_return_interval', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('mi_mark_status')}, val, '${text("未知")}', true);
-		}},
+        {header:'${text("回访间隔天数")}', name:'xpReturnInterval', index:'a.xp_return_interval', width:150, align:"center"},
         {header:'${text("助记码")}', name:'xpMnemonicCode', index:'a.xp_mnemonic_code', width:150, align:"center"},
         {header:'${text("停用")}', name:'xpIsblockup', index:'a.xp_isblockup', width:150, align:"center", formatter: function(val, obj, row, act){
                 return js.getDictLabel(${@DictUtils.getDictListJson('xp_isBlockUp')}, val, '${text("未知")}', true);

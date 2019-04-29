@@ -22,9 +22,12 @@
 		SELECT
 		*
 		FROM
-		member_info
+		member_info mi
 		<where>
-			mi_card_number=#{mi_card_number}
+			<if test="miCode!=null and miCode !=''">
+				mi.mi_code=#{miCode}
+			</if>
+
 		</where>
 	</select>
 </mapper>
