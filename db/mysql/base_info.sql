@@ -1,18 +1,3 @@
-//*
- Navicat Premium Data Transfer
-
- Source Server         : hyy
- Source Server Type    : MySQL
- Source Server Version : 50725
- Source Host           : localhost:3306
- Source Schema         : xonro_store_management
-
- Target Server Type    : MySQL
- Target Server Version : 50725
- File Encoding         : 65001
-
- Date: 30/04/2019 09:42:05
-*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
