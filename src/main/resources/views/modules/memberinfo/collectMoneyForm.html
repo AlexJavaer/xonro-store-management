@@ -290,7 +290,7 @@
             {header:'${text("父表主键")}', name:'collectMoney.cmCode', editable:true, hidden:true},
             {header:'${text("项目名称")}', name:'projectName', width:150, editable:true,editoptions:{'maxlength':'128', 'class':'form-control'}},
             {header:'${text("项目编号")}', name:'projectCode', width:150, editable:true,
-                /*formatter: function(val, obj, row, act){
+                formatter: function(val, obj, row, act){
                     return js.val(row, 'projectCode')+'|'+js.val(row, 'projectName');
                 }, editable: true, edittype: "custom", editoptions: {
                     custom_element: function(val, editOptions) {
@@ -301,7 +301,8 @@
                             url: '${ctx}/projectInfo/collectProductDataRow', cssClass: ''
                         });
                     }
-                }*/edittype: "text",editoptions:{'maxlength':'128', 'class':'form-control'}
+                }
+                // edittype: "text",editoptions:{'maxlength':'128', 'class':'form-control'}
 			},
 			{header:'${text("计价单位")}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
             {header:'${text("标准价格")}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
@@ -353,21 +354,22 @@
 	});
 </script>
 
-<!--<script id="listselectTpl" type="text/template">//&lt;!&ndash;<div>
+<script id="listselectTpl" type="text/template">//<!--<div>
 <#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
-</div>//&ndash;&gt;</script>-->
+</div>//--></script>
 
 
 <script>
-  /*function listselectCallback(id, action, index, layero){
+  function listselectCallback(id, action, index, layero){
+      console.log($("#projectInfoData").val());
         if (id == 'listselectTpl' && action == 'ok'){
             js.addTabPage(null,null,
-                '${ctx}/memberInfo/formAuthCollectMoney'
+                '${ctx}/memberInfo/formAuthCollectMoney')
            js.alert("111");
         }
-    }*/
+    }
 
 
 </script>
