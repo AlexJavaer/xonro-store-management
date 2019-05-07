@@ -160,14 +160,14 @@
                                     <label class="control-label col-sm-3" title="">
                                         <span class="required hide">*</span> ${text('卡类别')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
-                                        <#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control" />
+                                        <#form:select path="miCardType" dictType="mi_card_type" blankOption="true" class="form-control"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <div class="form-group">
+                                <div class="form-group" id="miBalanceId">
                                     <label class="control-label col-sm-3" title="">
                                         <span class="required hide">*</span> ${text('会员卡余额')}：<i class="fa icon-question hide"></i></label>
                                     <div class="col-sm-8">
@@ -175,18 +175,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="form-group" style="display: none;" id="courseOfTreatmentNum">
-                                    <label class="control-label col-sm-3" title="">
-                                        <span class="required hide">*</span> ${text('疗程次数')}：<i class="fa icon-question hide"></i></label>
-                                    <div class="col-sm-8">
-                                        <#form:input path="courseOfTreatmentNum" class="form-control" maxlength="50" readonly="true"/>
+                        </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group" style="display: none;" id="projectCodeId">
+                                        <label class="control-label col-sm-3" title="">
+                                            <span class="required hide">*</span> ${text('项目编号')}：<i class="fa icon-question hide"></i></label>
+                                        <div class="col-sm-8">
+                                            <#form:input path="projectCode" class="form-control" maxlength="50" readonly="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group" style="display: none;" id="projectNameId">
+                                        <label class="control-label col-sm-3" title="">
+                                            <span class="required hide">*</span> ${text('项目名称')}：<i class="fa icon-question hide"></i></label>
+                                        <div class="col-sm-8">
+                                            <#form:input path="projectName" class="form-control" maxlength="50" readonly="true"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group" style="display: none;" id="courseOfTreatmentNum">
+                                        <label class="control-label col-sm-3" title="">
+                                            <span class="required hide">*</span> ${text('疗程次数')}：<i class="fa icon-question hide"></i></label>
+                                        <div class="col-sm-8">
+                                            <#form:input path="courseOfTreatmentNum" class="form-control" maxlength="50" readonly="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label col-sm-3" title="">
@@ -361,12 +382,23 @@
             });
             alert("01");*/
             $("#courseOfTreatmentNum").css("display","none");
+            $("#projectCodeId").css("display","none");
+            $("#projectNameId").css("display","none");
         }else if(miCardType =="02"){
             $("#courseOfTreatmentNum").css("display","block");
+            $("#projectCodeId").css("display","block");
+            $("#projectNameId").css("display","block");
+            $("#miBalanceId").css("display","none");
         } else if(miCardType =="03"){
             $("#courseOfTreatmentNum").css("display","none");
+            $("#projectCodeId").css("display","none");
+            $("#projectNameId").css("display","none");
+            $("#miBalanceId").css("display","none");
         }else if(miCardType =="04"){
             $("#courseOfTreatmentNum").css("display","none");
+            $("#projectCodeId").css("display","none");
+            $("#projectNameId").css("display","none");
+            $("#miBalanceId").css("display","none");
         }
 
     })

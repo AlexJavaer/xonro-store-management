@@ -364,6 +364,12 @@
 <script>
   function listselectCallback(id, action, index, layero){
       console.log($("#projectInfoData").val());
+      if(id == 'project_projectCode' && action == 'ok'){
+
+          var projectCode = $("#projectCode").val();
+			console.log($("#projectCode").val(projectCode))
+	  }
+
     }
 
 

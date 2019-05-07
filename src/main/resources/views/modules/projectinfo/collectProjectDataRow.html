@@ -86,12 +86,12 @@
     multiboxonly: false, // 单击复选框时再多选
     ajaxSuccess: function(data){
         $.each(selectData, function(key, value){
-            dataGrid.dataGrid('setSelectRow', key);
+            dataGrid.dataGrid('setSelectRow', key,value);
         });
         initSelectTag();
     },
 
-        onSelectRow: function(id, isSelect, event){
+     onSelectRow: function(id, isSelect, event){
             if (${checkbox! == 'true'}){
                 if(isSelect){
                     selectData[id] = JSON.parse(dataGrid.dataGrid('getRowData', id).rowData);

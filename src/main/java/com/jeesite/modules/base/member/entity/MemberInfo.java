@@ -43,6 +43,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
 		@Column(name="mi_effective_date", attrName="miEffectiveDate", label="有效日期"),
 		@Column(name="mi_end_date", attrName="miEndDate", label="截止日期"),
+		@Column(name="project_code", attrName="projectCode", label="项目编号"),
+		@Column(name="project_name", attrName="projectName", label="项目名称"),
 		@Column(name="course_of_treatment_num", attrName="courseOfTreatmentNum", label="疗程次数"),
 		@Column(name="mi_balance", attrName="miBalance", label="会员卡余额"),
 		@Column(name="mi_id_number", attrName="miIdNumber", label="身份证号"),
@@ -85,6 +87,8 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private Long miBalance;		// 会员卡余额
 	private Date miEffectiveDate;//有效日期
     private Date miEndDate;//截止日期
+	private String projectCode;		// 项目编号
+	private String projectName;		// 项目名称
     private Integer courseOfTreatmentNum;//疗程次数
 	private String miIdNumber;		// 身份证号
 	private String miMessageNotice;		// 消息类通知
@@ -413,5 +417,23 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	public void setMiFile(String miFile) {
 		this.miFile = miFile;
 	}
-	
+
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 }

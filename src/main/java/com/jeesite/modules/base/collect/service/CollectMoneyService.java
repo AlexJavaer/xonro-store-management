@@ -16,6 +16,8 @@ import com.jeesite.modules.base.collect.entity.XrCollectProductinfo;
 import com.jeesite.modules.base.collect.entity.XrCollectProjectinfo;
 import com.jeesite.modules.base.member.entity.MemberInfo;
 import com.jeesite.modules.base.member.service.MemberInfoService;
+import com.jeesite.modules.base.productinfo.entity.XrProductinfo;
+import com.jeesite.modules.base.productinfo.service.XrProductinfoService;
 import com.jeesite.modules.base.project.dao.XrProjectinfoDao;
 import com.jeesite.modules.base.project.entity.XrProjectinfo;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -51,6 +53,9 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 
 	@Autowired
 	private CollectMoneyDao collectMoneyDao;
+
+	@Autowired
+	private XrProductinfoService xrProductinfoService;
 
 	/**
 	 * 获取单条数据
@@ -123,6 +128,15 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 		String office = EmpUtils.getOffice().getOfficeCode();
 		collectMoney.setUserCode(user);
 		collectMoney.setOfficeCode(office);
+
+		//会员购买产品后，产品库存减少
+
+		XrProductinfo productinfoData = xrProductinfoService.getByForm("product_code", collectMoney.getProductCode());
+
+		//产品的库存余额
+		Long xpdStockNum = productinfoData.getXpdStockNum();
+		
+
 		super.save(collectMoney);
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(collectMoney.getId(), "collectMoney_image");
