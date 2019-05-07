@@ -107,8 +107,22 @@ $("#xrStockInSDataGrid").dataGrid({
         {header:'${text('父表主键')}', name:'xrStockIn.id', editable:true, hidden:true},
 		{header:'${text('产品编号')}', name:'productCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control required'}},
 		{header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-		{header:'${text('供应商')}', name:'xpdSupplier', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'2', 'class':'form-control required'}},
-		{header:'${text('单位')}', name:'xpdPurchaseUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'2', 'class':'form-control required'}},
+        {header:'${text('供应商')}', name:'xpdSupplier', width:100,
+            editable:true, edittype:'select', editoptions:{'class':'form-control required',
+                items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_supplier')}),
+                itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                    $(element).select2().on("change",function(){$(this).valid()});
+                }
+            }
+        },
+        {header:'${text('单位')}', name:'xpdPurchaseUnit', width:150,
+            editable:true, edittype:'select', editoptions:{'class':'form-control required',
+                items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_standard_unit')}),
+                itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+                    $(element).select2().on("change",function(){$(this).valid()});
+                }
+            }
+        },
 		{header:'${text('进货成本')}', name:'xpdPurchased', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'30', 'class':'form-control required digits'}},
 		{header:'${text('数量')}', name:'numberIn', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control required digits'}},
         {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},

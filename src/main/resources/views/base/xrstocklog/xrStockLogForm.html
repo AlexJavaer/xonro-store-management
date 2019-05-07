@@ -1,0 +1,167 @@
+<% layout('/layouts/default.html', {title: 'xr_stock_log管理', libs: ['validate']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text(xrStockLog.isNewRecord ? '新增xr_stock_log' : '编辑xr_stock_log')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${xrStockLog}" action="${ctx}/xrstocklog/xrStockLog/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('产品名称')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="productName" maxlength="128" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required hide">*</span> ${text('产品编号')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="productCode" maxlength="64" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('库存类型')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="stockType" dictType="stock_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group" id="stockInDateId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('入库时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="stockInDate" readonly="true" maxlength="20" class="form-control Wdate"
+								dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group" id="stockInNoId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('入库单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="stockInNo" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group" id="numberInId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('入库数量')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="numberIn" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group" id="stockOutDateId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('出库时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="stockOutDate" readonly="true" maxlength="20" class="form-control Wdate"
+								dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group" id="stockOutNoId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('出库单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="stockOutNo" maxlength="64" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group" id="numberOutId">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('出库数量')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="numberOut" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" title="">
+									<span class="required hide">*</span> ${text('备注')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-10">
+									<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('xrstocklog:xrStockLog:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+
+	/*$("#stockType").off("change");
+	$("#stockType").on("change",function () {
+	   var stockType =  $("#stockType").val();
+	   if(stockType=="01"){
+           $("#stockInDateId").css("display","none");
+           $("#stockInNoId").css("display","none");
+           $("#numberInId").css("display","none");
+	   }else if(stockType=="02"){
+           $("#stockOutDateId").css("display","none");
+           $("#stockOutNoId").css("display","none");
+           $("#numberOutId").css("display","none");
+	   }
+
+    });*/
+
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

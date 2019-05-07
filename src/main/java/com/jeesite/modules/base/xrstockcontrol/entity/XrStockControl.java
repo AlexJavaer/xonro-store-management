@@ -5,6 +5,7 @@ package com.jeesite.modules.base.xrstockcontrol.entity;
 
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.modules.base.productinfo.entity.XrProductinfo;
+import com.jeesite.modules.base.xrstockin.entity.XrStockIn;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
@@ -42,6 +43,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 						on="u13.office_code = a.office_code", columns={
 						@Column(name="office_name", label="机构名称",queryType = QueryType.LIKE),
 				}),
+				@JoinTable(type = JoinTable.Type.JOIN, entity = XrStockIn.class,alias="st10",
+				on="st10.office_code=a.office_code",
+				columns = {@Column(includeEntity=XrStockIn.class)}),
 		}, orderBy="a.update_date DESC"
 )
 public class XrStockControl extends DataEntity<XrStockControl> {

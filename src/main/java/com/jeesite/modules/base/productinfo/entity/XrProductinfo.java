@@ -36,8 +36,7 @@ import java.util.Date;
 		@Column(name="xpd_rule_desccription", attrName="xpdRuleDesccription", label="规格描述"),
 		@Column(name="xpd_membership_prices", attrName="xpdMembershipPrices", label="会员价格"),
 		@Column(name="xpd_store_price", attrName="xpdStorePrice", label="门店价格"),
-		@Column(name="xpd_max_stock", attrName="xpdMaxStock", label="最高存量"),
-		@Column(name="xpd_safety_stock", attrName="xpdSafetyStock", label="安全存量"),
+		@Column(name="xpd_stock_num", attrName="xpdStockNum", label="库存数量"),
 		@Column(name="xpd_isgift", attrName="xpdIsgift", label="是否赠送"),
 		@Column(name="xpd_isdiscountinued", attrName="xpdIsdiscountinued", label="是否停用"),
 		@Column(name="xpd_end_sale", attrName="xpdEndSale", label="停止销售"),
@@ -66,8 +65,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	private String xpdRuleDesccription;		// 规格描述
 	private Double xpdMembershipPrices;		// 会员价格
 	private Double xpdStorePrice;		// 门店价格
-	private Long xpdMaxStock;		// 最高存量
-	private Long xpdSafetyStock;		// 安全存量
+	private Long xpdStockNum;		// 库存数量
 	private String xpdIsgift;		// 是否赠送
 	private String xpdIsdiscountinued;		// 是否停用
 	private String xpdEndSale;		// 停止销售
@@ -226,23 +224,15 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	public void setXpdStorePrice(Double xpdStorePrice) {
 		this.xpdStorePrice = xpdStorePrice;
 	}
-	
-	public Long getXpdMaxStock() {
-		return xpdMaxStock;
+
+	public Long getXpdStockNum() {
+		return xpdStockNum;
 	}
 
-	public void setXpdMaxStock(Long xpdMaxStock) {
-		this.xpdMaxStock = xpdMaxStock;
-	}
-	
-	public Long getXpdSafetyStock() {
-		return xpdSafetyStock;
+	public void setXpdStockNum(Long xpdStockNum) {
+		this.xpdStockNum = xpdStockNum;
 	}
 
-	public void setXpdSafetyStock(Long xpdSafetyStock) {
-		this.xpdSafetyStock = xpdSafetyStock;
-	}
-	
 	@Length(min=0, max=2, message="是否赠送长度不能超过 2 个字符")
 	public String getXpdIsgift() {
 		return xpdIsgift;

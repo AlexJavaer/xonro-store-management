@@ -94,7 +94,7 @@ public class ProjectController extends BaseController{
     @RequestMapping(value = {"collectProductDataRow", ""})
     public String collectProductDataRow(XrProjectinfo xrProjectinfo, Model model) {
         model.addAttribute("projectInfoData", xrProjectinfo);
-        return "modules/projectInfo/collectProjectDataRow";
+            return "modules/projectInfo/collectProjectDataRow";
     }
 
 

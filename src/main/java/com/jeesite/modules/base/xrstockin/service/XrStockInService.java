@@ -63,6 +63,7 @@ public class XrStockInService extends CrudService<XrStockInDao, XrStockIn> {
 	@Override
 	@Transactional(readOnly=false)
 	public void save(XrStockIn xrStockIn) {
+		xrStockIn.setStockType("10");
 		super.save(xrStockIn);
 		// 保存 XrStockIn子表
 		for (XrStockInS xrStockInS : xrStockIn.getXrStockInSList()){

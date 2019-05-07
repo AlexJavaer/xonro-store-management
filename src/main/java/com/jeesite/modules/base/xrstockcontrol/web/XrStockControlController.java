@@ -6,6 +6,8 @@ package com.jeesite.modules.base.xrstockcontrol.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,6 +71,10 @@ public class XrStockControlController extends BaseController {
 	@RequiresPermissions("xrstockcontrol:xrStockControl:view")
 	@RequestMapping(value = "form")
 	public String form(XrStockControl xrStockControl, Model model) {
+		if(xrStockControl.getIsNewRecord()){
+			xrStockControl.setUserCode(UserUtils.getUser().getCurrentUser().getUserCode());
+			xrStockControl.setOfficeCode(EmpUtils.getOffice().getOfficeCode());
+		}
 		model.addAttribute("xrStockControl", xrStockControl);
 		return "base/xrstockcontrol/xrStockControlForm";
 	}

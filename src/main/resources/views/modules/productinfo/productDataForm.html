@@ -148,7 +148,7 @@
 											</div>
 										</div>
 
-								<div class="row">
+								<!--<div class="row">
 									<div class="col-xs-6">
 										<div class="form-group">
 											<label class="control-label col-sm-3" title="">
@@ -167,14 +167,23 @@
 											</div>
 										</div>
 									</div>
-									</div>
+									</div>-->
 										<div class="row">
-											<div class="col-xs-6">
+											<!--<div class="col-xs-6">
 												<div class="form-group">
 													<label class="control-label col-sm-3" title="">
 														<span class="required hide">*</span> ${text('每含(件或瓶)')}：<i class="fa icon-question hide"></i></label>
 													<div class="col-sm-8">
 														<#form:input path="xpdEach" maxlength="100" class="form-control"/>
+													</div>
+												</div>
+											</div>-->
+											<div class="col-xs-6">
+												<div class="form-group">
+													<label class="control-label col-sm-3" title="">
+														<span class="required hide">*</span> ${text('单位')}：<i class="fa icon-question hide"></i></label>
+													<div class="col-sm-8">
+														<#form:select path="xpdPurchaseUnit" dictType="xpd_standard_unit" blankOption="true" class="form-control" />
 													</div>
 												</div>
 											</div>
@@ -235,22 +244,12 @@
 											<div class="col-xs-6">
 												<div class="form-group">
 													<label class="control-label col-sm-3" title="">
-														<span class="required hide">*</span> ${text('最高存量')}：<i class="fa icon-question hide"></i></label>
+														<span class="required hide">*</span> ${text('库存数量')}：<i class="fa icon-question hide"></i></label>
 													<div class="col-sm-8">
-														<#form:input path="xpdMaxStock" maxlength="100" class="form-control"/>
+														<#form:input path="xpdStockNum" maxlength="100" class="form-control" readonly="true"/>
 													</div>
 												</div>
 											</div>
-											<div class="col-xs-6">
-												<div class="form-group">
-													<label class="control-label col-sm-3" title="">
-														<span class="required hide">*</span> ${text('安全存量')}：<i class="fa icon-question hide"></i></label>
-													<div class="col-sm-8">
-														<#form:input path="xpdSafetyStock" maxlength="100" class="form-control"/>
-													</div>
-												</div>
-											</div>
-
 										</div>
 										<div class="row">
 											<div class="col-xs-6">

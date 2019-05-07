@@ -5,6 +5,8 @@ package com.jeesite.modules.base.xrstockcontrol.service;
 
 import java.util.List;
 
+import com.jeesite.modules.base.xrstockin.entity.XrStockIn;
+import com.jeesite.modules.base.xrstockin.entity.XrStockInS;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import com.jeesite.modules.base.xrstockcontrol.dao.XrStockControlDao;
  */
 @Service
 @Transactional(readOnly=true)
+@SuppressWarnings("all")
 public class XrStockControlService extends CrudService<XrStockControlDao, XrStockControl> {
 	
 	/**

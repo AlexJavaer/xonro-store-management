@@ -27,6 +27,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
 		@Column(name="user_name", attrName="userName", label="操作者"),
 		@Column(name="office_name", attrName="officeName", label="操作者组织"),
+		@Column(name="stock_type", attrName="stockType", label="入库状态"),
 	},
 	 orderBy="a.update_date DESC"
 )
@@ -38,6 +39,7 @@ public class XrStockIn extends DataEntity<XrStockIn> {
 	private List<XrStockInS> xrStockInSList = ListUtils.newArrayList();		// 子表列表
 	private String userName; //操作者
 	private String officeName; //操作者组织
+	private String stockType;//入库状态
 
 	public XrStockIn() {
 		this(null);
@@ -89,5 +91,13 @@ public class XrStockIn extends DataEntity<XrStockIn> {
 
 	public void setOfficeName(String officeName) {
 		this.officeName = officeName;
+	}
+
+	public String getStockType() {
+		return stockType;
+	}
+
+	public void setStockType(String stockType) {
+		this.stockType = stockType;
 	}
 }

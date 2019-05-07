@@ -11,5 +11,11 @@
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
-	
+
+	<select id="getByForm" resultType="XrProductinfo">
+		SELECT * FROM  xr_productinfo
+		<where>
+			${product_code} = #{productCode}
+		</where>
+	</select>
 </mapper>

@@ -143,48 +143,5 @@ public class XrMemberRechargeController extends BaseController {
 		return renderResult(Global.TRUE, text("删除会员充值资料成功！"));
 	}
 
-	/*@RequiresPermissions({"user"})*/
-	/*@RequestMapping({"treeData"})
-	@ResponseBody
-	public String  treeData( ) {
-		*//*List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		*//**//*MemberInfo where =  new MemberInfo();*//**//*
-		*//**//*where.setStatus("0");
-		where.setMiCode(miCode);*//**//*
-		List<MemberInfo> list = this.memberInfoService.findList(new MemberInfo());
-
-		for(int i = 0; i < list.size(); ++i) {
-			MemberInfo mi = (MemberInfo)list.get(i);
-			// 过滤非正常的数据
-			if (!TestTree.STATUS_NORMAL.equals(mi.getStatus())){
-				continue;
-			}
-			// 过滤被排除的编码（包括所有子级）
-			if (StringUtils.isNotBlank(excludeCode)){
-				if (mi.getId().equals(excludeCode)){
-					continue;
-				}
-				if (mi.getMiCode().contains("," + excludeCode + ",")){
-					continue;
-				}
-			}
-			if ("0".equals(mi.getStatus()) && (!StringUtils.isNotBlank(excludeCode) || !mi.getId().equals(excludeCode) && !mi.getMiCode().contains("," + excludeCode + ",")) && (!StringUtils.isNotBlank(miCode))) {
-				Map<String, Object> map = MapUtils.newHashMap();
-				map.put("id", mi.getId());
-				map.put("pId", mi.getMiCode());
-				String name = mi.getMiName();
-				if ("true".equals(isShowFullName) || "1".equals(isShowFullName)) {
-					name = mi.getMiName();
-				}
-
-				mapList.add(map);
-			}
-		}
-
-		return mapList;*//*
-		return "modules/xrMemberRecharge/xrMemberRechargeTabList";
-	}
-*/
-
 
 }
