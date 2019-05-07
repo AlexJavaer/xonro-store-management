@@ -363,7 +363,10 @@
 
 <script>
   function listselectCallback(id, action, index, layero){
-      console.log($("#projectInfoData").val());
+      var tagid = 'layui-layer-iframe'+index;
+      console.log(layero.find(".layui-layer-content").find("#"+tagid).contents().find("#selectData"));
+      //选中的字典数据
+      var selectDicrData = layero.find(".layui-layer-content").find("#"+tagid)[0].contentWindow.getSelectData();
     }
 
 
