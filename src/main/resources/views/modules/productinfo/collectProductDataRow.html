@@ -1,27 +1,27 @@
-<% layout('/layouts/default.html', {title: '项目信息管理', libs: ['dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '产品信息管理', libs: ['dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text('项目信息管理')}
+				<i class="fa fa-list-alt"></i> ${text('产品信息管理')}
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${projectInfoData}" action="${ctx}/projectInfo/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${productInfoData}" action="${ctx}/productInfo/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 			<div class="form-group">
-					<label class="control-label">${text('项目编号')}：</label>
+					<label class="control-label">${text('产品编号')}：</label>
 					<div class="control-inline">
-						<#form:input path="projectCode" maxlength="200" class="form-control width-120"/>
+						<#form:input path="productCode" maxlength="200" class="form-control width-120"/>
 					</div>
 				</div>
             <div class="form-group">
-                <label class="control-label">${text('项目名称')}：</label>
+                <label class="control-label">${text('产品名称')}：</label>
                 <div class="control-inline">
-					<#form:input path="projectName" maxlength="200" class="form-control width-120"/>
+					<#form:input path="productName" maxlength="200" class="form-control width-120"/>
                 </div>
             </div>
 				<div class="form-group">
@@ -52,27 +52,25 @@
     showCheckbox: false,
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text("项目编号")}', name:'projectCode', index:'a.project_code', width:150, align:"center", frozen:true,sortable:true, /*formatter: function(val, obj, row, act){
-		    console.log(row);
-			return '<a href="${ctx}/projectInfo/form?id='+row.projectCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';*/
-		},
-		{header:'${text("项目名称")}', name:'projectName', index:'a.project_name', width:150, align:"center"},
-        {header:'${text("标准价格")}', name:'xpNormPrice', index:'a.xp_norm_price', width:150, align:"center"},
-        {header:'${text("折扣类别")}', name:'xpDiscountCategory', index:'a.xp_discount_category', width:150, align:"center",formatter: function(val, obj, row, act){
-    		return js.getDictLabel(${@DictUtils.getDictListJson('xp_discount_cate')}, val, '${text("未知")}', true);
-		}},
-        {header:'${text("统计分类")}', name:'xpStatisticalClass', index:'a.xp_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){
-    		return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_class')}, val, '${text("未知")}', true);
-		}},
-		{header:'${text("归属部门")}', name:'xpStatisticalDept', index:'a.xp_statistical_dept', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_dept')}, val, '${text("未知")}', true);
-		}},
-        {header:'${text("回访间隔天数")}', name:'xpReturnInterval', index:'a.xp_return_interval', width:150, align:"center"},
-        {header:'${text("助记码")}', name:'xpMnemonicCode', index:'a.xp_mnemonic_code', width:150, align:"center"},
-        {header:'${text("停用")}', name:'xpIsblockup', index:'a.xp_isblockup', width:150, align:"center", formatter: function(val, obj, row, act){
-                return js.getDictLabel(${@DictUtils.getDictListJson('xp_isBlockUp')}, val, '${text("未知")}', true);
+        {header:'${text("产品编号")}', name:'productCode', index:'a.product_code', width:150, align:"center", frozen:true,sortable:true, formatter: function(val, obj, row, act){
+                console.log(row);
+                return '<a href="${ctx}/productInfo/form?id='+row.productCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
             }},
-        {header:'${text("备注")}', name:'xpRemarks', index:'a.xp_remarks', width:150, align:"center"},
+        {header:'${text("产品名称")}', name:'productName', index:'a.product_name', width:200, align:"center"},
+        {header:'${text("折扣类别")}', name:'xpdDiscountCategory', index:'a.xpd_discount_category', width:150, align:"center",formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('xpd_discount_category')}, val, '${text("未知")}', true);
+            }},
+        {header:'${text("统计分类")}', name:'xpdStatisticalClass', index:'a.xpd_statistical_class', width:150, align:"center",formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('xp_statistical_class')}, val, '${text("未知")}', true);
+            }},
+        {header:'${text("门店价格")}', name:'xpdStorePrice', index:'a.xpd_store_price', width:150, align:"center"},
+        {header:'${text("会员价格")}', name:'xpdMembershipPrices', index:'a.xpd_membership_prices', width:150, align:"center"},
+        {header:'${text("建档日期")}', name:'xpdFilingTime', index:'a.xpd_filing_time', width:150, align:"center"},
+        {header:'${text("助记码")}', name:'xpdMnemonicCode', index:'a.xpd_mnemonic_code', width:150, align:"center"},
+        {header:'${text("停用")}', name:'xpdIsdiscountinued', index:'a.xpd_isdiscountinued', width:150, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel(${@DictUtils.getDictListJson('xpd_isDiscountinue')}, val, '${text("未知")}', true);
+            }},
+        {header:'${text("备注")}', name:'xpdRemarks', index:'a.xpd_remarks', width:150, align:"center"},
         {header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){
                 return JSON.stringify(row);
             }},
@@ -139,7 +137,7 @@
         var html = [];
         $.each(selectData, function(key, value){
             selectNum ++;
-            html.push('<span class="tag" id="'+key+'_tags-input"><span>'+value.projectName+' </span>'
+            html.push('<span class="tag" id="'+key+'_tags-input"><span>'+value.productName+' </span>'
                 + '<a href="#" onclick="removeSelectTag(\''+key+'\');" title="取消选择">x</a></span>');
         });
         html.unshift('<div class="title">当前已选择<span id="selectNum">'+selectNum+'</span>项：</div>');

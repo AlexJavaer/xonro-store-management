@@ -19,6 +19,12 @@
             width: 12.333333%;
         }
     }
+	.ui-widget-content jqgrow ui-row-ltr jqgrid-new-row{
+		width: 1646px;
+	}
+	.ui-state-default ui-jqgrid-hdiv ui-corner-top{
+		width:1646px;
+	}
 </style>
 <div class="box-body" style="padding: 20px; background-color: #F2F2F2">
 <div class="main-content">
@@ -245,14 +251,14 @@
                                     <div class="layui-tab-item layui-show">
 										<h4 class="form-unit" style="font-size:16px">${text('项目消费表')}</h4>
 										<div class="ml10 mr10">
-											<table id="projectInfoDataChildDataGrid"></table>
+											<table id="projectInfoDataChildDataGrid" v-if="projectInfoData"></table>
 												<a href="#" id="projectInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择项目')}</a>
 											</div>
 									</div>
                                     <div class="layui-tab-item">
 										<h4 class="form-unit" style="font-size:16px">${text('购买产品表')}</h4>
 										<div class="ml10 mr10">
-											<table id="productInfoDataChildDataGrid"></table>
+											<table id="productInfoDataChildDataGrid" v-if="productInfoData" ></table>
 											<a href="#" id="productInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择产品')}</a>
 										</div>
 									</div>
@@ -288,24 +294,23 @@
             {header:'状态', name:'status', editable:true, hidden:true},
             {header:'主键', name:'id', editable:true, hidden:true},
             {header:'${text("父表主键")}', name:'collectMoney.cmCode', editable:true, hidden:true},
-            {header:'${text("项目名称")}', name:'projectName', width:150, editable:true,editoptions:{'maxlength':'128', 'class':'form-control'}},
             {header:'${text("项目编号")}', name:'projectCode', width:150, editable:true,
-                formatter: function(val, obj, row, act){
-                    return js.val(row, 'projectCode')+'|'+js.val(row, 'projectName');
+              formatter: function(val, obj, row, act){
+                    return js.val(row, 'projectCode')+'|'+js.val(row, 'projectCode');
                 }, editable: true, edittype: "custom", editoptions: {
-                    custom_element: function(val, editOptions) {
+                    custom_element: function(val, editOptions,row,obj) {
                         return js.template('listselectTpl', {
                             id: 'project_'+editOptions.id, title: '项目选择',
-                            name: 'projectCode', value: val.split('|')[0],
-                            labelName: 'projectName', labelValue: val.split('|')[1],
-                            url: '${ctx}/projectInfo/collectProductDataRow', cssClass: ''
+                           labelName: 'projectCode', labelValue: val.split('|')[0],
+                            url: '${ctx}/projectInfo/collectProjectDataRow?idName='+editOptions.id
+                           , cssClass: ''
                         });
                     }
                 }
-                // edittype: "text",editoptions:{'maxlength':'128', 'class':'form-control'}
-			},
-			{header:'${text("计价单位")}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text("标准价格")}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
+            },
+			{header:'${text("项目名称")}', name:'projectName', width:150, editable:true,editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+			{header:'${text("计价单位")}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+            {header:'${text("标准价格")}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number','readonly':'readonly'}},
             {header:'${text("计价方式")}', name:'xpPricingMethod', width:100, editable:true, edittype:'select',
 				editoptions: {
                     'class': 'form-control',
@@ -321,10 +326,10 @@
                 }
 
             },
-            {header:'${text("项目时长")}', name:'xpProjectTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text("安全次数")}', name:'xpSafetyTimes', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text("统一会员价格")}', name:'xpUniformMomberPrice', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text("备注")}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+            {header:'${text("项目时长")}', name:'xpProjectTime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+            {header:'${text("安全次数")}', name:'xpSafetyTimes', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+            {header:'${text("统一会员价格")}', name:'xpUniformMomberPrice', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+            {header:'${text("备注")}', name:'xpRemarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1','readonly':'readonly'}},
             {header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
                     var actions = [];
                     if (val == 'new'){
@@ -357,18 +362,80 @@
 <script id="listselectTpl" type="text/template">//<!--<div>
 <#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
-	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="false"/>
 </div>//--></script>
 
 
 <script>
+    var xpUniformMomberPrice;
   function listselectCallback(id, action, index, layero){
-      console.log($("#projectInfoData").val());
-      if(id == 'project_projectCode' && action == 'ok'){
+      var tagid = 'layui-layer-iframe'+index;
+      console.log(layero.find(".layui-layer-content").find("#"+tagid).contents().find("#selectData"));
+      //选中的字典数据
+      var selectDicData = layero.find(".layui-layer-content").find("#"+tagid)[0].contentWindow.getSelectData();
+      console.log(selectDicData);
+      var selectId = layero.find(".layui-layer-content").find("#"+tagid)[0].contentWindow.selectId;
+      var idName = layero.find(".layui-layer-content").find("#"+tagid)[0].contentWindow.idName;
+      console.log(idName);
+      var jqgId = $("#"+idName).parent().parent().parent("tr");
+      console.log(jqgId.attr("id"));
+      console.log(jqgId.find("td").eq(5).find("input[name='projectName']").val(selectDicData[selectId].projectName));
+      console.log(jqgId.find("td").eq(4).find("input[name='projectCode']").val(selectId));
+      console.log(jqgId.find("input[name='xpChargeUnit']").val(selectDicData[selectId].xpChargeUnit));
+      console.log(jqgId.find("input[name='xpNormPrice']").val(selectDicData[selectId].xpNormPrice));
+      console.log(jqgId.find("input[name='xpProjectTime']").val(selectDicData[selectId].xpProjectTime));
+      console.log(jqgId.find("input[name='xpSafetyTimes']").val(selectDicData[selectId].xpSafetyTimes));
+      console.log(jqgId.find("input[name='xpUniformMomberPrice']").val(selectDicData[selectId].xpUniformMomberPrice));
+      //获取选中xpPricingMethod的value
+      var xpPricingMethod= selectDicData[selectId].xpPricingMethod;
+      var xpPricingMethodText = $('#'+jqgId.attr("id")+'_xpPricingMethod option[value='+xpPricingMethod+']').text();
+      console.log(xpPricingMethodText);
+      var xpPricingMethodId = jqgId.find("td").eq(8).children().eq(1).children().children().children().eq(0).attr("id");
+      console.log($("#"+xpPricingMethodId).eq(0).text(xpPricingMethodText));
+      console.log($("#"+xpPricingMethodId).eq(0).attr("title",xpPricingMethodText));
+      console.log(jqgId.find("textarea[name='xpRemarks']").val(selectDicData[selectId].xpRemarks));
 
-          var projectCode = $("#projectCode").val();
-			console.log($("#projectCode").val(projectCode))
-	  }
+
+
+      //选择产品
+      console.log(jqgId.find("td").eq(5).find("input[name='productName']").val(selectDicData[selectId].productName));
+      console.log(jqgId.find("td").eq(4).find("input[name='productCode']").val(selectId));
+      console.log(jqgId.find("input[name='xpdMembershipPrices']").val(selectDicData[selectId].xpdMembershipPrices));
+      console.log(jqgId.find("input[name='xpdPurchaseUnit']").val(selectDicData[selectId].xpdPurchaseUnit));
+      console.log(jqgId.find("input[name='xpdStatisticalClass']").val(selectDicData[selectId].xpdStatisticalClass));
+      console.log(jqgId.find("input[name='xpdRemarks']").val(selectDicData[selectId].xpdRemarks));
+	  //选中xpdPurchaseUnit的value
+
+	  console.log(jqgId.find("td"));
+      var xpdPurchaseUnit = selectDicData[selectId].xpdPurchaseUnit;
+      console.log(jqgId.attr("id"));
+      var xpdPurchaseUnitText = $('#'+jqgId.attr("id")+'_xpdPurchaseUnit option[value='+xpdPurchaseUnit+']').text();
+      console.log(xpdPurchaseUnitText);
+      var xpdPurchaseUnitId = jqgId.find("td").eq(7).children().eq(1).children().eq(0).children().children().eq(0).attr("id");
+	  console.log($('#'+xpdPurchaseUnitId).text(xpdPurchaseUnitText));
+      console.log($('#'+xpdPurchaseUnitId).attr("title",xpdPurchaseUnitText));
+      //选中xpdStatisticalClass的value
+      var xpdStatisticalClass= selectDicData[selectId].xpdStatisticalClass;
+     /* console.log($('#jqg2_xpdStatisticalClass option[value='+xpdStatisticalClass+']').text());*/
+      var xpdStatisticalClassText = $('#'+jqgId.attr("id")+'_xpdStatisticalClass option[value='+xpdStatisticalClass+']').text();
+      var xpdStatisticalClassId = jqgId.find("td").eq(8).children().eq(1).children().eq(0).children().children().eq(0).attr("id");
+	  console.log($('#'+xpdStatisticalClassId).text(xpdStatisticalClassText));
+	  console.log($('#'+xpdStatisticalClassId).attr("title",xpdStatisticalClassText));
+
+	  var sqlValue = [];
+      console.log(jqgId.attr("id"));
+      console.log(jqgId.find("td").eq(4).find("input[name='productCode']").val());
+      var productCode = jqgId.find("td").eq(4).find("input[name='productCode']").val();
+      $.ajax({
+          type:"POST",
+          url:"${ctx}/memberInfo/mibalanceOrpaymentMoney",
+          data:{"productCode":productCode},
+          async:false,
+          dataType:"text"
+	  });
+
+
+
 
     }
 
@@ -385,11 +452,25 @@
             {header:'状态', name:'status', editable:true, hidden:true},
             {header:'主键', name:'id', editable:true, hidden:true},
             {header:'${text('父表主键')}', name:'collectMoney.cmCode', editable:true, hidden:true},
-            {header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text('产品编号')}', name:'productCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
-            {header:'${text('会员价格')}', name:'xpdMembershipPrices', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control'}},
+            {header:'${text('产品编号')}', name:'productCode', width:150, editable:true, edittype:'text',
+                formatter: function(val, obj, row, act){
+                    return js.val(row, 'productCode')+'|'+js.val(row, 'productCode');
+                }, editable: true, edittype: "custom", editoptions: {
+                    custom_element: function(val, editOptions,row,obj) {
+                        return js.template('listselectTpl', {
+                            id: 'product_'+editOptions.id, title: '产品选择',
+                            labelName: 'productCode', labelValue: val.split('|')[0],
+                            url: '${ctx}/productInfo/collectProductDataRow?idName='+editOptions.id
+                            , cssClass: ''
+                        });
+                    }
+                }
+			},
+			{header:'${text('产品名称')}', name:'productName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
+            {header:'${text('会员价格')}', name:'xpdMembershipPrices', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'128', 'class':'form-control','readonly':'readonly'}},
             {header:'${text('单位')}', name:'xpdPurchaseUnit', width:100,
-                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                editable:true, edittype:'select', editoptions:{
+                	'class':'form-control',
                     items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xpd_standard_unit')}),
                     itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
                         $(element).select2().on("change",function(){$(this).valid()});
@@ -397,14 +478,15 @@
                 }
             },
             {header:'${text('统计分类')}', name:'xpdStatisticalClass', width:100,
-                editable:true, edittype:'select', editoptions:{'class':'form-control',
+                editable:true, edittype:'select', editoptions:{
+                	'class':'form-control',
                     items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
                     itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
                         $(element).select2().on("change",function(){$(this).valid()});
                     }
                 }
             },
-            {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1'}},
+            {header:'${text('备注')}', name:'remarks', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'500', 'class':'form-control', 'rows':'1','readonly':'readonly'}},
             {header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
                     var actions = [];
                     if (val == 'new'){
@@ -512,6 +594,7 @@
         var oDiv1 = element.getElementsByClassName('layui-tab-item layui-show')[0];
         for(var i=0;i<oLi1.length;i++){
             oLi1[i].className="";
+
         }
         this.className="layui-this";
         for (var j=0;j<oDiv1.length;j++){

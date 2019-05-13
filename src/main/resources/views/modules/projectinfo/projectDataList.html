@@ -14,7 +14,7 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${projectInfoData}" action="${ctx}/projectInfo/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<div class="form-group">
+			<div class="form-group">
 					<label class="control-label">${text('项目编号')}：</label>
 					<div class="control-inline">
 						<#form:input path="projectCode" maxlength="200" class="form-control width-120"/>

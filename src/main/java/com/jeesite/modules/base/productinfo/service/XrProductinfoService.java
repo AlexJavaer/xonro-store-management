@@ -76,6 +76,9 @@ public class XrProductinfoService extends CrudService<XrProductinfoDao, XrProduc
 		}else if(!xrProductinfo.getIsNewRecord()&& xrProductinfo.getStatus().equals("2")){
 			//建档产品入库后，库存数量就是你出库后的数量
 			xrProductinfo.setXpdStockNum(xrProductinfo.getXpdStockNum());
+		}else if(!xrProductinfo.getIsNewRecord()&& xrProductinfo.getStatus().equals("3")){
+			//创建订单后消费购买产品，库存减少
+			xrProductinfo.setXpdStockNum(xrProductinfo.getXpdStockNum());
 		}
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();

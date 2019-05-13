@@ -3,7 +3,9 @@ package com.jeesite.modules.base.project.web.controller;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.base.collect.entity.XrCollectProjectinfo;
 import com.jeesite.modules.base.member.entity.MemberInfo;
+import com.jeesite.modules.base.productinfo.entity.XrProductinfo;
 import com.jeesite.modules.base.project.entity.XrProjectinfo;
 import com.jeesite.modules.base.project.service.XrProjectinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,12 +93,13 @@ public class ProjectController extends BaseController{
      * @param model
      * @return
      */
-    @RequestMapping(value = {"collectProductDataRow", ""})
-    public String collectProductDataRow(XrProjectinfo xrProjectinfo, Model model) {
+    @RequestMapping(value = {"collectProjectDataRow", ""})
+    public String collectProjectDataRow(XrProjectinfo xrProjectinfo, Model model,String idName) {
+        System.out.println(idName);
+        model.addAttribute("idName", idName);
         model.addAttribute("projectInfoData", xrProjectinfo);
             return "modules/projectInfo/collectProjectDataRow";
     }
-
 
 
 }

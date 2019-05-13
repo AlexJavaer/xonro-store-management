@@ -39,8 +39,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="xp_service_position", attrName="xpServicePosition", label="服务岗位"),
 		@Column(name="xp_service_time", attrName="xpServiceTime", label="服务项目时长"),
 		@Column(name="xp_project_predescription", attrName="xpProjectPredescription", label="项目预定描述"),
+		@Column(name="xp_remarks", attrName="xpRemarks", label="备注"),
 		@Column(name="user_code", attrName="userCode", label="用户编号"),
 		@Column(name="office_code", attrName="officeCode", label="组织编号")},
+
 
 		// 支持联合查询，如左右连接查询，支持设置查询自定义关联表的返回字段列
 		joinTable={
@@ -73,6 +75,8 @@ public class XrCollectProjectinfo extends DataEntity<XrCollectProjectinfo> {
 	private String xpProjectPredescription;		// 项目预定描述
 	private String userCode;		// 用户编号
 	private String officeCode;		// 组织编号
+
+	private String xpRemarks;		// 备注
 	
 	public XrCollectProjectinfo() {
 		this(null);
@@ -263,5 +267,12 @@ public class XrCollectProjectinfo extends DataEntity<XrCollectProjectinfo> {
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-	
+
+	public String getXpRemarks() {
+		return xpRemarks;
+	}
+
+	public void setXpRemarks(String xpRemarks) {
+		this.xpRemarks = xpRemarks;
+	}
 }

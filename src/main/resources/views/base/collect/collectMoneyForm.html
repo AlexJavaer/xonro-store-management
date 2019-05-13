@@ -5,14 +5,14 @@
 			<div class="box-title">
 				<i class="fa fa-list-alt"></i> ${text(collectMoney.isNewRecord ? '新增会员充值信息' : '编辑会员充值信息')}
 			</div>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			</div>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 		</div>
-		<#form:form id="inputForm" model="${collectMoney}" action="${ctx}/collect/collectMoney/save" method="post" class="form-horizontal">
-			<div class="box-body">
-				<div class="form-unit">${text('基本信息')}</div>
-				<#form:hidden path="cmCode"/>
+	</div>
+	<#form:form id="inputForm" model="${collectMoney}" action="${ctx}/collect/collectMoney/save" method="post" class="form-horizontal">
+	<div class="box-body">
+		<div class="form-unit">${text('基本信息')}</div>
+		<#form:hidden path="cmCode"/>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -374,7 +374,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 		{header:'${text('计价单位')}', name:'xpChargeUnit', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'32', 'class':'form-control required'}},
 		{header:'${text('助记码')}', name:'xpMnemonicCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
 		{header:'${text('标准价格')}', name:'xpNormPrice', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control number'}},
-		{header:'${text('折扣类别011')}', name:'xpDiscountCategory', width:100,
+		{header:'${text('折扣类别')}', name:'xpDiscountCategory', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_discount_cate')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -382,7 +382,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('统计分类011')}', name:'xpStatisticalClass', width:100,
+		{header:'${text('统计分类')}', name:'xpStatisticalClass', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_class')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -390,7 +390,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('归属部门003')}', name:'xpStatisticalDept', width:100,
+		{header:'${text('归属部门')}', name:'xpStatisticalDept', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_statistical_dept')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -398,7 +398,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('计价方式01')}', name:'xpPricingMethod', width:100,
+		{header:'${text('计价方式')}', name:'xpPricingMethod', width:100,
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('xp_pricing_method')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -446,7 +446,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 		{header:'${text('用户编号')}', name:'userCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
 		{header:'${text('机构编号')}', name:'officeCode.cmCode', editable:true, hidden:true},
 		{header:'${text('备注')}', name:'xpRemarks', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'500', 'class':'form-control'}},
-		{header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+		/*{header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
 				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#xrProjectinfoDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
@@ -455,7 +455,7 @@ $("#xrProjectinfoDataGrid").dataGrid({
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}
-		}
+		}*/
 	],
 
 	// 编辑表格参数

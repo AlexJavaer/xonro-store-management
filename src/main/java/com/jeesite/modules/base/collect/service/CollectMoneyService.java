@@ -4,7 +4,9 @@
 package com.jeesite.modules.base.collect.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.DataScope;
@@ -129,12 +131,8 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 		collectMoney.setUserCode(user);
 		collectMoney.setOfficeCode(office);
 
+
 		//会员购买产品后，产品库存减少
-
-		XrProductinfo productinfoData = xrProductinfoService.getByForm("product_code", collectMoney.getProductCode());
-
-		//产品的库存余额
-		Long xpdStockNum = productinfoData.getXpdStockNum();
 		
 
 		super.save(collectMoney);
@@ -176,12 +174,28 @@ public class CollectMoneyService extends CrudService<CollectMoneyDao, CollectMon
 					xrCollectProductinfoDao.update(xrCollectProductinfo);
 
 				}
+
+				XrProductinfo productinfoData = xrProductinfoService.getByForm("product_code", xrCollectProductinfo.getProductCode());
+
+				//产品库存数量
+				Long xpdStockNum = productinfoData.getXpdStockNum();
+				System.out.println(xpdStockNum);
+				if(xpdStockNum>0&& productinfoData.getProductCode().equals(xrCollectProductinfo.getProductCode())){
+                  List lists = new ArrayList();
+                  lists.add(xrCollectProductinfo.getProductCode());
+                    int productNum = lists.size();
+                    xpdStockNum = xpdStockNum-productNum;
+                    productinfoData.setXpdStockNum(xpdStockNum);
+                    productinfoData.setStatus("3");
+                    xrProductinfoService.save(productinfoData);
+                }
+
+
 			}else{
 				xrCollectProductinfoDao.delete(xrCollectProductinfo);
 			}
 
 		}
-
 	}
 
 	/**

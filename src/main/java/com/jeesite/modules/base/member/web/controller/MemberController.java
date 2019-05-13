@@ -94,7 +94,7 @@ public class MemberController extends BaseController{
 
        //会员卡有效日期
        memberInfo.setMiEffectiveDate(new Date());
-        memberInfo.setMiEndDate(new Date());
+        /*memberInfo.setMiEndDate(new Date());*/
         memberInfo.setCourseOfTreatmentNum(0);
         model.addAttribute("memberInfoData", memberInfo);
         return "modules/memberInfo/memberDataForm";
@@ -214,6 +214,7 @@ public class MemberController extends BaseController{
            collectMoney.setCmAccountBalance(miList.getMiBalance());
        }
         collectMoney.setCmDate(new Date());
+        collectMoney.setCmPaymentMoney(0L);
         model.addAttribute("collectMoney",collectMoney);
 
        return "modules/memberInfo/collectMoneyForm";
@@ -228,6 +229,17 @@ public class MemberController extends BaseController{
         }else{
             return "0";
         }
+    }
+
+
+    @RequestMapping(value = "paymentMoneyProject")
+    @ResponseBody
+    public void paymentMoneyProject(HttpServletRequest request, HttpServletResponse response,Model model,Long  xpUniformMomberPrice,Long oldPaymentMoney){
+        if(oldPaymentMoney>=0 && xpUniformMomberPrice>=0){
+            oldPaymentMoney+=xpUniformMomberPrice;
+
+        }
+
     }
 
 }

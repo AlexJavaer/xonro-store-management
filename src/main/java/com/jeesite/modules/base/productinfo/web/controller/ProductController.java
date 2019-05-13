@@ -168,4 +168,18 @@ public class ProductController extends BaseController {
             return "0";
         }
     }
+
+
+    /**
+     * 订单页面添加购买产品
+     * @param xrProjectinfo
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = {"collectProductDataRow", ""})
+    public String collectProductDataRow(XrProductinfo xrProductinfo, Model model,String idName) {
+        model.addAttribute("idName", idName);
+        model.addAttribute("productInfoData", xrProductinfo);
+        return "modules/productInfo/collectProductDataRow";
+    }
 }
