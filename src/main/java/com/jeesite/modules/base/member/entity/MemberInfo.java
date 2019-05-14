@@ -20,7 +20,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author Cyrsta-hu
  * @version 2019-04-18
  */
-@Table(name="member_info", alias="a", columns={
+@Table(name="member_info", alias="a",extWhereKeys="dsf",columns={
 		@Column(name="mi_code", attrName="miCode", label="会员编号", isPK=true),
 		@Column(name="mi_name", attrName="miName", label="会员姓名", queryType=QueryType.LIKE),
 		@Column(name="mi_gregorian_birthday", attrName="miGregorianBirthday", label="公历生日"),

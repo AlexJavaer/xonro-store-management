@@ -17,7 +17,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author Crysta-hu
  * @version 2019-05-06
  */
-@Table(name="xr_stock_out_single", alias="a", columns={
+@Table(name="xr_stock_out_single", alias="a",extWhereKeys="dsf", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="product_code", attrName="productCode", label="产品编号"),

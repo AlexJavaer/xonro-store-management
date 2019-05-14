@@ -251,14 +251,14 @@
                                     <div class="layui-tab-item layui-show">
 										<h4 class="form-unit" style="font-size:16px">${text('项目消费表')}</h4>
 										<div class="ml10 mr10">
-											<table id="projectInfoDataChildDataGrid" v-if="projectInfoData"></table>
+											<table id="projectInfoDataChildDataGrid" lay-filter="ProjectInfoData"></table>
 												<a href="#" id="projectInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择项目')}</a>
 											</div>
 									</div>
                                     <div class="layui-tab-item">
 										<h4 class="form-unit" style="font-size:16px">${text('购买产品表')}</h4>
 										<div class="ml10 mr10">
-											<table id="productInfoDataChildDataGrid" v-if="productInfoData" ></table>
+											<table id="productInfoDataChildDataGrid"  lay-filter="ProductInfoData" ></table>
 											<a href="#" id="productInfoDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10" data-method="offset" data-type="auto"><i class="fa fa-plus"></i> ${text('请选择产品')}</a>
 										</div>
 									</div>
@@ -391,8 +391,9 @@
       var xpPricingMethodText = $('#'+jqgId.attr("id")+'_xpPricingMethod option[value='+xpPricingMethod+']').text();
       console.log(xpPricingMethodText);
       var xpPricingMethodId = jqgId.find("td").eq(8).children().eq(1).children().children().children().eq(0).attr("id");
-      console.log($("#"+xpPricingMethodId).eq(0).text(xpPricingMethodText));
-      console.log($("#"+xpPricingMethodId).eq(0).attr("title",xpPricingMethodText));
+      console.log(xpPricingMethodId);
+      console.log($("#"+xpPricingMethodId).text(xpPricingMethodText));
+      console.log($("#"+xpPricingMethodId).attr("title",xpPricingMethodText));
       console.log(jqgId.find("textarea[name='xpRemarks']").val(selectDicData[selectId].xpRemarks));
 
 
@@ -421,20 +422,6 @@
       var xpdStatisticalClassId = jqgId.find("td").eq(8).children().eq(1).children().eq(0).children().children().eq(0).attr("id");
 	  console.log($('#'+xpdStatisticalClassId).text(xpdStatisticalClassText));
 	  console.log($('#'+xpdStatisticalClassId).attr("title",xpdStatisticalClassText));
-
-	  var sqlValue = [];
-      console.log(jqgId.attr("id"));
-      console.log(jqgId.find("td").eq(4).find("input[name='productCode']").val());
-      var productCode = jqgId.find("td").eq(4).find("input[name='productCode']").val();
-      $.ajax({
-          type:"POST",
-          url:"${ctx}/memberInfo/mibalanceOrpaymentMoney",
-          data:{"productCode":productCode},
-          async:false,
-          dataType:"text"
-	  });
-
-
 
 
     }
@@ -599,8 +586,11 @@
         this.className="layui-this";
         for (var j=0;j<oDiv1.length;j++){
             oDiv1[j].className="hide";
+           /* element.render('tab', 'ProductInfoData');*/
         }
         oDiv1[this.index].className="show";
+
+
 
     });
 </script>

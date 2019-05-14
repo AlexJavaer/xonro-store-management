@@ -19,7 +19,7 @@ import java.util.Date;
  * @author Crysta-hu
  * @version 2019-04-04
  */
-@Table(name="xr_productinfo", alias="a", columns={
+@Table(name="xr_productinfo", alias="a",extWhereKeys="dsf", columns={
 		@Column(name="product_code", attrName="productCode", label="产品编号", isPK=true),
 		@Column(name="product_name", attrName="productName", label="产品名称", queryType=QueryType.LIKE),
 		@Column(name="xpd_statistical_class", attrName="xpdStatisticalClass", label="统计分类"),
