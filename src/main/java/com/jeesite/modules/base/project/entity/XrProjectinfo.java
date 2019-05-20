@@ -49,6 +49,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="store_code", attrName="storeCode", label="店铺编号"),
 		@Column(name="user_code", attrName="userCode", label="用户编号"),
 		@Column(name="office_code", attrName="officeCode", label="机构编号"),
+		@Column(name="user_name", attrName="userName", label="操作者"),
+		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 		@Column(name="xp_remarks", attrName="xpRemarks", label="备注"),
 	}, orderBy="a.update_date DESC"
 )
@@ -83,6 +85,8 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	private String userCode;		// 用户编号
 	private String officeCode;		// 机构编号
 	private String xpRemarks;		// 备注
+	private String userName; //操作者
+	private String officeName; //操作者组织
 	
 	public XrProjectinfo() {
 		this(null);
@@ -335,5 +339,22 @@ public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	public void setXpRemarks(String xpRemarks) {
 		this.xpRemarks = xpRemarks;
 	}
-	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
 }

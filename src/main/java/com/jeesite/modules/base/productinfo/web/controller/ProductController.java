@@ -10,6 +10,7 @@ import com.jeesite.modules.base.xrstockin.entity.XrStockIn;
 import com.jeesite.modules.base.xrstockin.entity.XrStockInS;
 import com.jeesite.modules.base.xrstockinsingle.entity.XrStockInSingle;
 import com.jeesite.modules.base.xrstockoutsingle.entity.XrStockOutSingle;
+import com.jeesite.modules.msg.utils.MsgPushUtils;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import net.sf.ehcache.util.ProductInfo;

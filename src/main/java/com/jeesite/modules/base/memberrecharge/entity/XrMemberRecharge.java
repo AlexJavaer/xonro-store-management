@@ -46,6 +46,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
+		@Column(name="user_name", attrName="userName", label="操作者"),
+		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 		@Column(name="xmr_status", attrName="xmrStatus", label="状态"),
 	/*	joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity= MemberInfo.class, attrName="miName", alias="mn10",
@@ -84,6 +86,8 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	private String xmrStatus;		// 状态
 	private String xsCode;		// 门店编号
 	private String xsFullName;		// 门店名称
+	private String userName; //操作者
+	private String officeName; //操作者组织
 
 	public XrMemberRecharge() {
 		this(null);
@@ -299,5 +303,22 @@ public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	public void setXsFullName(String xsFullName) {
 		this.xsFullName = xsFullName;
 	}
-	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
 }

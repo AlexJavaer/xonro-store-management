@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.jeesite.common.entity.DataScope;
-import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.query.QueryDataScope;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -83,6 +82,8 @@ public class XrProductinfoService extends CrudService<XrProductinfoDao, XrProduc
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();
+		xrProductinfo.setUserName(UserUtils.getUser().getCurrentUser().getUserName());
+		xrProductinfo.setOfficeName(EmpUtils.getOffice().getOfficeName());
 		xrProductinfo.setUserCode(user);
 		xrProductinfo.setOfficeCode(office);
 		super.save(xrProductinfo);

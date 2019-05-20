@@ -44,6 +44,8 @@ import java.util.Date;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
+		@Column(name="user_name", attrName="userName", label="操作者"),
+		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 	}, orderBy="a.update_date DESC"
 )
 public class XrProductinfo extends DataEntity<XrProductinfo> {
@@ -72,6 +74,8 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	private String xpdRemarks;		// 产品备注
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
+	private String userName; //操作者
+	private String officeName; //操作者组织
 	
 	public XrProductinfo() {
 		this(null);
@@ -100,7 +104,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	}
 	
 	@NotBlank(message="统计分类不能为空")
-	@Length(min=0, max=2, message="统计分类长度不能超过 2 个字符")
+	@Length(min=0, max=2, message="统计分类长度不能超过 5 个字符")
 	public String getXpdStatisticalClass() {
 		return xpdStatisticalClass;
 	}
@@ -110,7 +114,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	}
 	
 	@NotBlank(message="存放仓库不能为空")
-	@Length(min=0, max=2, message="存放仓库长度不能超过 2 个字符")
+	@Length(min=0, max=2, message="存放仓库长度不能超过 5 个字符")
 	public String getXpdDepository() {
 		return xpdDepository;
 	}
@@ -138,7 +142,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	}
 	
 	@NotBlank(message="折扣类别不能为空")
-	@Length(min=0, max=2, message="折扣类别长度不能超过 2 个字符")
+	@Length(min=0, max=2, message="折扣类别长度不能超过5 个字符")
 	public String getXpdDiscountCategory() {
 		return xpdDiscountCategory;
 	}
@@ -157,7 +161,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 		this.xpdFilingTime = xpdFilingTime;
 	}
 	
-	@Length(min=0, max=2, message="进货单位长度不能超过 2 个字符")
+	@Length(min=0, max=2, message="进货单位长度不能超过 5个字符")
 	public String getXpdPurchaseUnit() {
 		return xpdPurchaseUnit;
 	}
@@ -287,5 +291,22 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
 }

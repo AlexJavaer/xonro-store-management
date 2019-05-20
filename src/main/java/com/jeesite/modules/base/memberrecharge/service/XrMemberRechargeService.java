@@ -103,6 +103,8 @@ public class XrMemberRechargeService extends CrudService<XrMemberRechargeDao, Xr
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();
+		xrMemberRecharge.setUserName(UserUtils.getUser().getCurrentUser().getUserName());
+		xrMemberRecharge.setOfficeName(EmpUtils.getOffice().getOfficeName());
 		xrMemberRecharge.setUserCode(user);
 		xrMemberRecharge.setOfficeCode(office);
 		super.save(xrMemberRecharge);

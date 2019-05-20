@@ -68,6 +68,8 @@ public class XrProjectinfoService extends CrudService<XrProjectinfoDao, XrProjec
 
 		String user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String office = EmpUtils.getOffice().getOfficeCode();
+		xrProjectinfo.setUserName(UserUtils.getUser().getCurrentUser().getUserName());
+		xrProjectinfo.setOfficeName(EmpUtils.getOffice().getOfficeName());
 		xrProjectinfo.setUserCode(user);
 		xrProjectinfo.setOfficeCode(office);
 		super.save(xrProjectinfo);

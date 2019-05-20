@@ -86,6 +86,8 @@ $('#dataGrid').dataGrid({
 		    console.log(row);
 			return '<a href="${ctx}/memberInfo/form?id='+row.miCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
 		}},
+        {header:'${text("门店名称")}', name:'officeName', index:'a.office_name', width:150, align:"center"},
+        {header:'${text("门店编号")}', name:'officeCode', index:'a.office_code', width:150, align:"center"},
 		{header:'${text("公历生日")}', name:'miGregorianBirthday', index:'a.mi_gregorian_birthday', width:150, align:"center"},
         {header:'${text("会员性别")}', name:'miSex', index:'a.mi_sex', width:150, align:"center", formatter: function(val, obj, row, act){
                 return js.getDictLabel(${@DictUtils.getDictListJson('mi_sex')}, val, '${text("未知")}', true);
@@ -98,6 +100,7 @@ $('#dataGrid').dataGrid({
         {header:'${text("标记状态")}', name:'miMarkStatus', index:'a.mi_mark_status', width:150, align:"center", formatter: function(val, obj, row, act){
                 return js.getDictLabel(${@DictUtils.getDictListJson('mi_mark_status')}, val, '${text("未知")}', true);
             }},
+
         {header:'${text("会员状态")}', name:'miMemberStatus', index:'a.mi_member_status', width:150, align:"center", formatter: function(val, obj, row, act){
                 return js.getDictLabel(${@DictUtils.getDictListJson('mi_member_status')}, val, '${text("未知")}', true);
             }},

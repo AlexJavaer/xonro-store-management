@@ -58,6 +58,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="user_code", attrName="userCode", label="用户ID"),
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
+		@Column(name="user_name", attrName="userName", label="操作者"),
+		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 		@Column(name="mi_file", attrName="miFile", label="附件"),
 	}, orderBy="a.update_date DESC"
 )
@@ -101,6 +103,8 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 	private String userCode;		// 用户ID
 	private String officeCode;		// 组织ID
 	private String miFile;		// 附件
+	private String userName; //操作者
+	private String officeName; //操作者组织
 	
 	public MemberInfo() {
 		this(null);
@@ -435,5 +439,23 @@ public class MemberInfo extends DataEntity<MemberInfo> {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
 	}
 }

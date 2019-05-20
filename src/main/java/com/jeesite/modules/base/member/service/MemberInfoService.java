@@ -95,6 +95,8 @@ public class MemberInfoService extends CrudService<MemberInfoDao, MemberInfo> {
 
 		String  user = UserUtils.getUser().getCurrentUser().getUserCode();
 		String  office = EmpUtils.getOffice().getOfficeCode();
+		memberInfo.setUserName(UserUtils.getUser().getCurrentUser().getUserName());
+		memberInfo.setOfficeName(EmpUtils.getOffice().getOfficeName());
 		memberInfo.setUserCode(user);
 		memberInfo.setOfficeCode(office);
 

@@ -14,6 +14,8 @@ import com.jeesite.modules.base.member.service.MemberInfoService;
 import com.jeesite.modules.base.memberrecharge.entity.XrMemberRecharge;
 import com.jeesite.modules.base.memberrecharge.service.XrMemberRechargeService;
 import com.jeesite.modules.config.MyBatisConfig;
+import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.sun.org.apache.bcel.internal.generic.CALOAD;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.beetl.ext.format.DateFormat;
@@ -83,6 +85,10 @@ public class MemberController extends BaseController{
            memberInfo.setMiCardNumber(IdGen.nextId());
            Long miBalance = 0L;
            memberInfo.setMiBalance(miBalance);
+           memberInfo.setUserName(UserUtils.getUser().getCurrentUser().getUserName());
+           memberInfo.setOfficeName(EmpUtils.getOffice().getOfficeName());
+           memberInfo.setUserCode(UserUtils.getUser().getCurrentUser().getUserCode());
+           memberInfo.setOfficeCode(EmpUtils.getOffice().getOfficeCode());
        }
 
 

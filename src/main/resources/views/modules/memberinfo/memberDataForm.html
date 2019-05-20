@@ -36,6 +36,48 @@
                         <div class="layui-card" style="border-width:1px 1px 1px 1px">
                             <div class="layui-card-body">
 				<#form:hidden path="mi_code"/>
+                 <#form:hidden path="userCode"/>
+                 <#form:hidden path="officeCode"/>
+                                <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="display: none">
+                                                <label class="control-label col-sm-3" title="">
+                                                    <span class="required hide">*</span> ${text('操作者编号')}：<i class="fa icon-question hide"></i></label>
+                                                <div class="col-sm-8">
+                                                    <#form:input path="userCode" maxlength="64" class="form-control" readonly="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="display: none">
+                                                <label class="control-label col-sm-3" title="">
+                                                    <span class="required hide">*</span> ${text('操作者')}：<i class="fa icon-question hide"></i></label>
+                                                <div class="col-sm-8">
+                                                    <#form:input path="userName" maxlength="64" class="form-control" readonly="true"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="form-group" style="display: none">
+                                                    <label class="control-label col-sm-3" title="">
+                                                        <span class="required hide">*</span> ${text('操作者组织编号')}：<i class="fa icon-question hide"></i></label>
+                                                    <div class="col-sm-8">
+                                                        <#form:input path="officeCode" maxlength="64" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="form-group" style="display: none">
+                                                    <label class="control-label col-sm-3" title="">
+                                                        <span class="required hide">*</span> ${text('操作者组织')}：<i class="fa icon-question hide"></i></label>
+                                                    <div class="col-sm-8">
+                                                        <#form:input path="officeName" maxlength="64" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
