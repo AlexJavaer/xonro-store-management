@@ -104,7 +104,7 @@ public class XrProductinfo extends DataEntity<XrProductinfo> {
 	}
 	
 	@NotBlank(message="统计分类不能为空")
-	@Length(min=0, max=2, message="统计分类长度不能超过 5 个字符")
+/*	@Length(min=0, max=2, message="统计分类长度不能超过 5 个字符")*/
 	public String getXpdStatisticalClass() {
 		return xpdStatisticalClass;
 	}
