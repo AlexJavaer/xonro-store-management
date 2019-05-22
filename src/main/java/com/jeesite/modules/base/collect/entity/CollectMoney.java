@@ -55,6 +55,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="product_name", attrName="productName", label="产品名称", queryType=QueryType.LIKE),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class CollectMoney extends DataEntity<CollectMoney> {
 	
 	private static final long serialVersionUID = 1L;

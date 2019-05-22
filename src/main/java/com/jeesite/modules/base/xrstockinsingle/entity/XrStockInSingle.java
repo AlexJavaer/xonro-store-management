@@ -33,6 +33,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrStockInSingle extends DataEntity<XrStockInSingle> {
 	
 	private static final long serialVersionUID = 1L;

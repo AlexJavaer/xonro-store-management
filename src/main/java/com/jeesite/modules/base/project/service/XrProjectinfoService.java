@@ -25,6 +25,7 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2019-04-08
  */
 @Service
+@SuppressWarnings("all")
 @Transactional(readOnly=true)
 public class XrProjectinfoService extends CrudService<XrProjectinfoDao, XrProjectinfo> {
 	

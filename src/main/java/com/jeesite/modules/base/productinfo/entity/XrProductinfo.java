@@ -48,6 +48,8 @@ import java.util.Date;
 		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrProductinfo extends DataEntity<XrProductinfo> {
 	
 	private static final long serialVersionUID = 1L;

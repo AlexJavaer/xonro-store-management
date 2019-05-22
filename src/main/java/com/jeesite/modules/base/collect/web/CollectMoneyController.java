@@ -30,6 +30,7 @@ import java.util.Date;
  * @version 2019-04-16
  */
 @Controller
+@SuppressWarnings("all")
 @RequestMapping(value = "${adminPath}/collectMoney")
 public class CollectMoneyController extends BaseController {
 

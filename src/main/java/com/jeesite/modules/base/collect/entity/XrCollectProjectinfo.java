@@ -51,6 +51,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 				columns={@Column(includeEntity=XrProjectinfo.class)}),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrCollectProjectinfo extends DataEntity<XrCollectProjectinfo> {
 	
 	private static final long serialVersionUID = 1L;

@@ -41,6 +41,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="office_code", attrName="officeCode", label="组织ID"),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrStore extends DataEntity<XrStore> {
 	
 	private static final long serialVersionUID = 1L;

@@ -63,6 +63,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="mi_file", attrName="miFile", label="附件"),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class MemberInfo extends DataEntity<MemberInfo> {
 	
 	private static final long serialVersionUID = 1L;

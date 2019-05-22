@@ -15,6 +15,7 @@ import java.util.HashMap;
  * @version 2019-04-18
  */
 @MyBatisDao
+@SuppressWarnings("all")
 public interface MemberInfoDao extends CrudDao<MemberInfo> {
 
     /**

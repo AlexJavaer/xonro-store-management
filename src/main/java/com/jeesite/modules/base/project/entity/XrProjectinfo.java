@@ -54,6 +54,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="xp_remarks", attrName="xpRemarks", label="备注"),
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrProjectinfo extends DataEntity<XrProjectinfo> {
 	
 	private static final long serialVersionUID = 1L;

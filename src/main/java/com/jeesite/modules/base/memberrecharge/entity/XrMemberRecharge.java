@@ -49,16 +49,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="user_name", attrName="userName", label="操作者"),
 		@Column(name="office_name", attrName="officeName", label="操作者组织"),
 		@Column(name="xmr_status", attrName="xmrStatus", label="状态"),
-	/*	joinTable={
-		@JoinTable(type=Type.LEFT_JOIN, entity= MemberInfo.class, attrName="miName", alias="mn10",
-				on="mn10.office_code = a.office_code", columns={
-				@Column(name="mi_code", attrName="miCode",label="产品编码", isPK=true),
-				@Column(name="mi_name", attrName="miName",label="产品名称", isQuery=false),
-				@Column(name="mi_card_number", attrName="miCardNumber", label="会员卡号"),
-				@Column(name="mi_card_type", attrName="miCardType", label="卡类别"),
-		}),*/
 	}, orderBy="a.update_date DESC"
 )
+
+@SuppressWarnings("all")
 public class XrMemberRecharge extends DataEntity<XrMemberRecharge> {
 	
 	private static final long serialVersionUID = 1L;
